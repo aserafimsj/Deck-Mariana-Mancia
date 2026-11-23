@@ -1,0 +1,933 @@
+<title>Patuscada — Identidade Visual</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Bungee&display=swap">
+<style>
+/* Conceito: "Lambe-lambe de madrugada" — cartaz colado no muro + letreiro de boteco.
+   Fundo escuro arroxeado, cartas como adesivos com sombra dura, cores de bar. Tema único (escuro) por decisão de marca. */
+:root {
+  color-scheme: dark;
+  --breu: #15101A;        /* fundo */
+  --breu-2: #211A28;      /* superfície */
+  --breu-3: #31283B;      /* borda / elevado */
+  --carta-preta: #0C090F;
+  --papel: #F3EFE7;       /* carta branca */
+  --tinta: #15101A;       /* texto sobre papel */
+  --texto: #EEE7F3;
+  --texto-2: #AE9FBB;
+  --amarelo: #FFCC1A;     /* ação principal */
+  --rosa: #FF3D8B;        /* destaque / vitória */
+  --ciano: #3FE0CF;       /* informação / juiz */
+  --vermelho: #FF4B3E;    /* sem filtro / erro */
+  --f-display: "Bungee", "Impact", "Arial Black", sans-serif;
+  --f-texto: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --sombra-dura: 5px 5px 0 #000;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--breu); }
+body {
+  background: var(--breu);
+  color: var(--texto);
+  font-family: var(--f-texto);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: center;
+  padding-block: 56px 48px;
+}
+.eyebrow { font-family: var(--f-texto); font-weight: 800; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ciano); }
+.logo { font-family: var(--f-display); font-size: clamp(44px, 9vw, 104px); line-height: .95; letter-spacing: -.01em; margin-top: 12px; display: flex; flex-wrap: wrap; }
+.logo span { display: inline-block; color: var(--papel); text-shadow: 4px 4px 0 var(--rosa); }
+.logo span:nth-child(odd) { transform: rotate(-4deg) translateY(2px); }
+.logo span:nth-child(3n) { transform: rotate(5deg) translateY(-4px); }
+.logo span:nth-child(4) { color: var(--amarelo); text-shadow: 4px 4px 0 #000; }
+.logo .bang { color: var(--amarelo); text-shadow: 4px 4px 0 #000; transform: rotate(10deg); }
+.tagline { font-size: clamp(18px, 2.4vw, 24px); font-weight: 700; font-stretch: 90%; margin-top: 20px; max-width: 30ch; }
+.hero-meta { margin-top: 20px; color: var(--texto-2); font-size: 14px; max-width: 52ch; }
+.fan { position: relative; height: 340px; }
+.fan .card { position: absolute; width: 200px; }
+.fan .card:nth-child(1) { left: 6%; top: 30px; transform: rotate(-12deg); }
+.fan .card:nth-child(2) { left: 28%; top: 6px; transform: rotate(3deg); z-index: 2; }
+.fan .card:nth-child(3) { left: 50%; top: 60px; transform: rotate(14deg); }
+.tape::before { content: ""; position: absolute; top: -12px; left: 50%; width: 70px; height: 24px; transform: translateX(-50%) rotate(-4deg); background: rgba(255, 204, 26, .55); mix-blend-mode: normal; }
+
+/* ---------- Seções ---------- */
+section.block { padding-block: 48px; border-top: 2px dashed var(--breu-3); }
+.sec-head { display: grid; gap: 8px; margin-bottom: 28px; max-width: 68ch; }
+.sec-head h2 { font-family: var(--f-display); font-size: clamp(26px, 4vw, 36px); line-height: 1.05; color: var(--papel); }
+.sec-head p { color: var(--texto-2); }
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pillar { background: var(--breu-2); border-radius: 16px; padding: 20px; display: grid; gap: 8px; align-content: start; }
+.pillar h3 { font-family: var(--f-texto); font-weight: 900; font-stretch: 85%; font-size: 20px; }
+.pillar p { color: var(--texto-2); font-size: 15px; }
+
+/* Paleta */
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+.sw { border-radius: 14px; overflow: hidden; background: var(--breu-2); border: 2px solid var(--breu-3); }
+.sw .chip { height: 96px; }
+.sw .info { padding: 10px 12px 12px; display: grid; gap: 2px; }
+.sw b { font-weight: 800; font-size: 14px; }
+.sw code { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--texto-2); }
+.sw small { color: var(--texto-2); font-size: 12px; line-height: 1.35; }
+
+/* Tipografia */
+.type-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.type-card { background: var(--breu-2); border-radius: 16px; padding: 24px; display: grid; gap: 12px; align-content: start; }
+.type-card .big-d { font-family: var(--f-display); font-size: 56px; line-height: 1; color: var(--amarelo); }
+.type-card .big-t { font-family: var(--f-texto); font-weight: 900; font-stretch: 80%; font-size: 56px; line-height: 1; color: var(--papel); }
+.type-card .label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; color: var(--ciano); }
+.type-card p { color: var(--texto-2); font-size: 15px; }
+.scale { display: grid; gap: 10px; margin-top: 16px; background: var(--breu-2); border-radius: 16px; padding: 24px; }
+.scale div { display: flex; align-items: baseline; gap: 16px; min-width: 0; }
+.scale code { flex: 0 0 120px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: var(--texto-2); }
+.scale span { min-width: 0; overflow-wrap: anywhere; }
+
+/* ---------- Cartas ---------- */
+.card {
+  position: relative; border-radius: 16px; padding: 18px 16px 14px; aspect-ratio: 5 / 7; max-width: 100%;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+  font-family: var(--f-texto); font-weight: 800; font-stretch: 92%; line-height: 1.18;
+  user-select: none;
+}
+.card .txt { font-size: 18px; overflow-wrap: anywhere; }
+.card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--f-display); font-size: 9px; letter-spacing: .04em; }
+.card.preta { background: var(--carta-preta); color: var(--papel); border: 2px solid var(--breu-3); box-shadow: 6px 6px 0 var(--rosa); }
+.card.preta .txt { font-size: 20px; }
+.card.preta .foot { color: var(--texto-2); }
+.blank { display: inline-block; min-width: 3.2em; border-bottom: 3px solid var(--amarelo); transform: translateY(-3px); }
+.filled { color: var(--amarelo); }
+.card.branca { background: var(--papel); color: var(--tinta); box-shadow: var(--sombra-dura); }
+.card.branca .foot { color: #8a7f92; }
+.pick2 { position: absolute; top: -10px; right: 12px; background: var(--amarelo); color: var(--tinta); font-family: var(--f-display); font-size: 11px; padding: 4px 8px; border-radius: 8px; transform: rotate(4deg); box-shadow: 2px 2px 0 #000; }
+.card.sel { outline: 3px solid var(--amarelo); outline-offset: 2px; box-shadow: 6px 6px 0 var(--amarelo); transform: translateY(-12px) rotate(0deg) !important; }
+.stamp { position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%) rotate(-14deg); font-family: var(--f-display); font-size: 26px; color: var(--rosa); border: 4px solid var(--rosa); border-radius: 10px; padding: 2px 10px; background: rgba(243, 239, 231, .85); letter-spacing: .02em; }
+.card-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; align-items: start; }
+.card-cap { margin-top: 14px; font-size: 13px; color: var(--texto-2); }
+.card-cap b { color: var(--texto); display: block; font-size: 14px; }
+.lvl-dot { display: inline-flex; gap: 3px; }
+.lvl-dot i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .25; }
+.lvl-dot i.on { opacity: 1; }
+
+/* ---------- Componentes ---------- */
+.comp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.comp { background: var(--breu-2); border-radius: 16px; padding: 22px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.comp > .label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 800; color: var(--ciano); }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn {
+  font-family: var(--f-display); font-size: 17px; letter-spacing: .02em; text-transform: uppercase;
+  min-height: 56px; padding: 0 22px; border-radius: 14px; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+.btn:active { transform: translate(3px, 3px); }
+.btn-pri { background: var(--amarelo); color: var(--tinta); box-shadow: 4px 4px 0 #000; }
+.btn-pri:active { box-shadow: 1px 1px 0 #000; }
+.btn-sec { background: transparent; color: var(--papel); border: 2px solid var(--papel); }
+.btn-rosa { background: var(--rosa); color: #fff; box-shadow: 4px 4px 0 #000; }
+.btn-ghost { background: var(--breu-3); color: var(--texto); font-size: 14px; min-height: 44px; }
+.btn[disabled] { background: var(--breu-3); color: var(--texto-2); box-shadow: none; cursor: not-allowed; }
+.btn-block { width: 100%; }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--texto-2); }
+.input { width: 100%; min-height: 54px; border-radius: 12px; border: 2px solid var(--breu-3); background: var(--breu); color: var(--texto); font: 700 18px var(--f-texto); padding: 0 14px; }
+.input:focus { outline: none; border-color: var(--amarelo); }
+.hint { font-size: 13px; color: var(--texto-2); }
+.hint.err { color: var(--vermelho); font-weight: 700; }
+.code { font-family: var(--f-display); font-size: 40px; letter-spacing: .12em; color: var(--amarelo); background: var(--carta-preta); border: 2px dashed var(--amarelo); border-radius: 14px; padding: 8px 16px; text-align: center; }
+.players { display: grid; gap: 8px; }
+.player { display: flex; align-items: center; gap: 12px; background: var(--breu); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.ava { flex: 0 0 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-display); font-size: 15px; color: var(--tinta); border: 2px solid #000; }
+.player .nm { font-weight: 800; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+.player.off { opacity: .5; }
+.tag { font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.tag-host { background: var(--amarelo); color: var(--tinta); }
+.tag-juiz { background: var(--ciano); color: var(--tinta); }
+.tag-ok { background: transparent; color: var(--ciano); border: 1.5px solid var(--ciano); }
+.tag-off { background: var(--breu-3); color: var(--texto-2); }
+.timer { position: relative; width: 64px; height: 64px; flex: 0 0 64px; }
+.timer svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.timer .num { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--f-display); font-size: 17px; }
+.progress { display: flex; gap: 6px; }
+.progress i { width: 26px; height: 8px; border-radius: 99px; background: var(--breu-3); }
+.progress i.on { background: var(--ciano); }
+.toast { display: inline-flex; align-items: center; gap: 10px; background: var(--papel); color: var(--tinta); font-weight: 800; padding: 12px 16px; border-radius: 12px; box-shadow: 4px 4px 0 var(--rosa); max-width: 100%; }
+.toast.err { box-shadow: 4px 4px 0 var(--vermelho); }
+.level { font-family: var(--f-display); font-size: 13px; padding: 6px 10px; border-radius: 10px; color: var(--tinta); white-space: nowrap; }
+.lv1 { background: var(--ciano); } .lv2 { background: var(--amarelo); } .lv3 { background: var(--rosa); color: #fff; }
+.lv4 { background: repeating-linear-gradient(-45deg, var(--vermelho) 0 10px, #c4271d 10px 20px); color: #fff; text-shadow: 1px 1px 0 #000; }
+
+/* Níveis */
+.levels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.lv-card { background: var(--breu-2); border-radius: 16px; padding: 18px; display: grid; gap: 10px; align-content: start; border: 2px solid transparent; }
+.lv-card.danger { border-color: var(--vermelho); }
+.lv-card p { font-size: 14px; color: var(--texto-2); }
+.lv-card .how { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--texto); }
+.warn-box { margin-top: 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+
+/* Tom de voz */
+.voice { width: 100%; border-collapse: collapse; font-size: 15px; }
+.voice-wrap { overflow-x: auto; background: var(--breu-2); border-radius: 16px; }
+.voice th { text-align: left; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ciano); padding: 14px 18px; border-bottom: 2px solid var(--breu-3); }
+.voice td { padding: 12px 18px; border-bottom: 1px solid var(--breu-3); vertical-align: top; }
+.voice td:first-child { color: var(--texto-2); white-space: nowrap; }
+.voice td:nth-child(2) { color: var(--texto-2); text-decoration: line-through; text-decoration-color: var(--vermelho); }
+.voice td:last-child { font-weight: 800; color: var(--papel); }
+.voice tr:last-child td { border-bottom: 0; }
+
+/* ---------- Protótipo ---------- */
+.proto { display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 40px; align-items: start; }
+.proto-notes { display: grid; gap: 16px; align-content: start; }
+.proto-notes ol { margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--texto-2); }
+.proto-notes ol b { color: var(--texto); }
+.jump { display: flex; flex-wrap: wrap; gap: 8px; }
+.jump button { font: 800 13px var(--f-texto); background: var(--breu-2); color: var(--texto); border: 2px solid var(--breu-3); border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+.jump button[aria-current="true"] { border-color: var(--amarelo); color: var(--amarelo); }
+.phone { width: 390px; max-width: 100%; height: 780px; border-radius: 44px; border: 10px solid #000; background: var(--breu); position: relative; overflow: hidden; box-shadow: 0 0 0 2px var(--breu-3), 14px 14px 0 var(--rosa); }
+.screen { position: absolute; inset: 0; overflow-y: auto; padding: 22px 18px 24px; display: flex; flex-direction: column; gap: 16px; }
+.scr-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.back { background: var(--breu-2); border: 0; color: var(--texto); width: 44px; height: 44px; border-radius: 12px; font: 900 20px var(--f-texto); cursor: pointer; }
+.scr-title { font-family: var(--f-display); font-size: 22px; color: var(--papel); }
+.home-logo { font-family: var(--f-display); font-size: 46px; line-height: .95; text-align: center; margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; }
+.home-logo span { display: inline-block; color: var(--papel); text-shadow: 3px 3px 0 var(--rosa); }
+.home-logo span:nth-child(odd) { transform: rotate(-5deg); }
+.home-logo span:nth-child(4) { color: var(--amarelo); text-shadow: 3px 3px 0 #000; }
+.home-sub { text-align: center; color: var(--texto-2); font-weight: 700; }
+.home-cards { position: relative; height: 170px; margin: 8px 0; }
+.home-cards .card { position: absolute; width: 110px; padding: 10px; }
+.home-cards .card .txt { font-size: 12px; }
+.home-cards .card .foot { font-size: 6px; }
+.home-cards .card:nth-child(1) { left: 50%; margin-left: -120px; transform: rotate(-10deg); }
+.home-cards .card:nth-child(2) { left: 50%; margin-left: -10px; transform: rotate(8deg); top: 6px; }
+.home-actions { display: grid; gap: 12px; margin-top: auto; }
+.home-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-btn { font: 800 14px var(--f-texto); min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid var(--breu-3); background: var(--breu-2); color: var(--texto); cursor: pointer; }
+.chip-btn[aria-pressed="true"] { border-color: var(--amarelo); background: var(--amarelo); color: var(--tinta); }
+.chip-btn.l4[aria-pressed="true"] { border-color: var(--vermelho); background: var(--vermelho); color: #fff; }
+.stepper { display: flex; align-items: center; gap: 10px; }
+.stepper button { width: 44px; height: 44px; border-radius: 12px; border: 0; background: var(--breu-3); color: var(--texto); font: 900 22px var(--f-texto); cursor: pointer; }
+.stepper output { font-family: var(--f-display); font-size: 24px; min-width: 2ch; text-align: center; color: var(--amarelo); }
+.code-boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.code-boxes input { width: 100%; height: 60px; text-align: center; font: 400 28px var(--f-display); text-transform: uppercase; background: var(--breu); color: var(--amarelo); border: 2px solid var(--breu-3); border-radius: 12px; }
+.code-boxes input:focus { outline: none; border-color: var(--amarelo); }
+.game-hud { display: flex; align-items: center; gap: 12px; }
+.game-hud .meta { flex: 1; display: grid; gap: 6px; min-width: 0; }
+.game-hud .rnd { font-family: var(--f-display); font-size: 14px; color: var(--texto-2); }
+.game-black { width: 76%; margin: 4px auto 0; }
+.game-black .txt { font-size: 19px; }
+.hand-label { font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--texto-2); }
+.hand { display: flex; gap: 12px; overflow-x: auto; padding: 18px 4px 14px; margin: 0 -18px; padding-left: 18px; padding-right: 18px; scroll-snap-type: x mandatory; }
+.hand .card { flex: 0 0 140px; scroll-snap-align: center; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
+.hand .card .txt { font-size: 15px; }
+.hand .card:nth-child(odd) { transform: rotate(-2deg); }
+.hand .card:nth-child(even) { transform: rotate(2deg); }
+.sent-box { display: grid; gap: 14px; justify-items: center; text-align: center; padding: 10px 0; }
+.sent-box .card { width: 130px; transform: rotate(-3deg); }
+.sent-box .card .txt { font-size: 14px; }
+.sent-box h3 { font-family: var(--f-display); font-size: 20px; color: var(--ciano); }
+.banner { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(21, 16, 26, .92); z-index: 5; text-align: center; padding: 24px; }
+.banner div { font-family: var(--f-display); font-size: 30px; line-height: 1.1; color: var(--amarelo); transform: rotate(-4deg); text-shadow: 3px 3px 0 #000; }
+.judge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.flip { perspective: 900px; cursor: pointer; border: 0; background: none; padding: 0; text-align: left; }
+.flip-in { position: relative; aspect-ratio: 5 / 7; transition: transform .45s cubic-bezier(.3, 1.4, .5, 1); transform-style: preserve-3d; }
+.flip.open .flip-in { transform: rotateY(180deg); }
+.flip .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; aspect-ratio: auto; }
+.flip .face.back { transform: rotateY(180deg); }
+.flip .face .txt { font-size: 14px; }
+.flip .cover { background: var(--breu-2); border: 2px dashed var(--breu-3); color: var(--amarelo); display: grid; place-items: center; font-family: var(--f-display); font-size: 40px; }
+.flip.chosen .face.back { outline: 3px solid var(--rosa); outline-offset: 2px; box-shadow: 6px 6px 0 var(--rosa); }
+.win-card { width: 84%; margin: 0 auto; }
+.win-card .txt { font-size: 20px; }
+.who { text-align: center; display: grid; gap: 4px; }
+.who b { font-family: var(--f-display); font-size: 24px; color: var(--rosa); }
+.score-row { display: flex; align-items: center; gap: 10px; background: var(--breu-2); border-radius: 12px; padding: 8px 12px; }
+.score-row .nm { flex: 1; font-weight: 800; }
+.score-row .pts { font-family: var(--f-display); font-size: 18px; color: var(--amarelo); font-variant-numeric: tabular-nums; }
+.score-row.lead { box-shadow: inset 0 0 0 2px var(--amarelo); }
+.bump { animation: bump .5s ease; }
+@keyframes bump { 40% { transform: scale(1.5); color: var(--rosa); } }
+.trophy { text-align: center; display: grid; gap: 6px; margin-top: 8px; }
+.trophy .big { font-family: var(--f-display); font-size: 30px; line-height: 1.05; color: var(--papel); }
+.trophy .big em { font-style: normal; color: var(--amarelo); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { background: var(--breu-2); border-radius: 12px; padding: 12px; display: grid; gap: 2px; }
+.stat small { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--texto-2); }
+.stat b { font-size: 15px; }
+.how-step { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start; background: var(--breu-2); border-radius: 14px; padding: 14px; }
+.how-step .n { font-family: var(--f-display); font-size: 28px; color: var(--amarelo); line-height: 1; }
+.how-step b { display: block; font-size: 16px; }
+.how-step p { font-size: 14px; color: var(--texto-2); }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--breu-2); border-radius: 14px; padding: 14px; font-weight: 800; }
+.sw-tog { width: 56px; height: 32px; border-radius: 99px; background: var(--breu-3); border: 0; position: relative; cursor: pointer; flex: 0 0 56px; }
+.sw-tog::after { content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: var(--texto-2); transition: transform .15s ease; }
+.sw-tog[aria-checked="true"] { background: var(--amarelo); }
+.sw-tog[aria-checked="true"]::after { transform: translateX(24px); background: var(--tinta); }
+.modal { position: absolute; inset: 0; background: rgba(0, 0, 0, .75); z-index: 8; display: flex; align-items: flex-end; }
+.sheet { background: var(--breu-2); border-top: 4px solid var(--vermelho); border-radius: 22px 22px 0 0; padding: 22px 18px; display: grid; gap: 12px; width: 100%; max-height: 92%; overflow-y: auto; }
+.sheet h3, .warn-demo h3 { font-family: var(--f-display); font-size: 22px; color: var(--vermelho); }
+.sheet ul, .warn-demo ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; color: var(--texto-2); }
+.sheet .no, .warn-demo .no { color: var(--texto); font-weight: 700; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 800; font-size: 14px; }
+.check input { width: 22px; height: 22px; accent-color: var(--vermelho); flex: 0 0 22px; margin-top: 1px; }
+.warn-demo { background: var(--breu-2); border: 2px solid var(--vermelho); border-radius: 16px; padding: 20px; display: grid; gap: 12px; align-content: start; }
+.confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 6; }
+.confetti i { position: absolute; top: -20px; width: 10px; height: 16px; border-radius: 2px; animation: fall 1.8s ease-in forwards; }
+@keyframes fall { to { transform: translateY(820px) rotate(540deg); opacity: .9; } }
+.screen-in { animation: slidein .28s cubic-bezier(.2, 1.2, .4, 1); }
+@keyframes slidein { from { transform: translateX(24px); opacity: 0; } }
+
+/* Próximos passos */
+.ask { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.ask div { background: var(--breu-2); border-radius: 16px; padding: 20px; display: grid; gap: 8px; align-content: start; }
+.ask b { font-family: var(--f-display); font-size: 18px; color: var(--amarelo); font-weight: 400; }
+.ask p { color: var(--texto-2); font-size: 15px; }
+
+@media (max-width: 920px) {
+  .hero, .proto, .type-grid, .warn-box { grid-template-columns: minmax(0, 1fr); }
+  .card-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .levels, .comp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pillars, .ask { grid-template-columns: minmax(0, 1fr); }
+  .proto .phone { justify-self: center; }
+  .fan { height: 300px; max-width: 420px; }
+}
+@media (max-width: 560px) {
+  .levels, .comp-grid { grid-template-columns: minmax(0, 1fr); }
+  .fan .card { width: 150px; }
+  .fan { height: 250px; }
+  .phone { border: 0; border-radius: 20px; box-shadow: 0 0 0 2px var(--breu-3); height: 720px; }
+  .card-row { gap: 16px; }
+  .scale code { flex-basis: 84px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">Etapa 2 · Proposta de identidade visual · v1</div>
+    <h1 class="logo" aria-label="Patuscada!"><span>P</span><span>A</span><span>T</span><span>U</span><span>S</span><span>C</span><span>A</span><span>D</span><span>A</span><span class="bang">!</span></h1>
+    <p class="tagline">O jogo das respostas que você não devia dar.</p>
+    <p class="hero-meta">Conceito <b>“Lambe-lambe de madrugada”</b>: o cartaz colado no muro da festa, o letreiro do boteco que fecha às 4h e as cartas como adesivos jogados na mesa. Tudo escuro, com cor só onde tem ação ou risada.</p>
+  </div>
+  <div class="fan" aria-hidden="true">
+    <div class="card branca"><div class="txt">Um áudio de 7 minutos da sogra.</div><div class="foot"><span>PATUSCADA</span></div></div>
+    <div class="card preta tape"><div class="txt">Minha terapeuta disse que eu preciso parar com <span class="blank"></span>.</div><div class="foot"><span>PATUSCADA</span><span class="lvl-dot"><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+    <div class="card branca"><div class="txt">Pix de R$ 3,50 com a descrição “saudades”.</div><div class="foot"><span>PATUSCADA</span></div></div>
+  </div>
+</header>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>Três princípios</h2>
+    <p>Eles decidem os casos que a paleta e os componentes não cobrem.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar"><h3>Caos organizado</h3><p>Cartas tortas, fita adesiva e carimbos dão bagunça visual. Por baixo, a grade é rígida: botões sempre no mesmo lugar e uma ação principal por tela.</p></div>
+    <div class="pillar"><h3>Papel no escuro</h3><p>O fundo some e as cartas brilham. A carta é o objeto mais claro da tela, então o olho vai direto para o texto que importa.</p></div>
+    <div class="pillar"><h3>Barulho na hora certa</h3><p>Animação forte só em três momentos: revelar respostas, anunciar o vencedor e fechar a partida. O resto é rápido e quieto para não atrasar a mesa.</p></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>Paleta</h2>
+    <p>Fundo arroxeado em vez de preto puro, para as cores de bar vibrarem sem cansar a vista. Cada cor tem um papel fixo: amarelo é ação, rosa é vitória, ciano é informação, vermelho é perigo e nível Sem Filtro.</p>
+  </div>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--breu)"></div><div class="info"><b>Breu da Madrugada</b><code>#15101A</code><small>Fundo de todas as telas</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--breu-2)"></div><div class="info"><b>Fumaça</b><code>#211A28 · #31283B</code><small>Superfícies e bordas</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--papel)"></div><div class="info"><b>Papel de Bar</b><code>#F3EFE7</code><small>Carta branca · contraste 17:1 com a tinta</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--amarelo)"></div><div class="info"><b>Amarelo Fiado</b><code>#FFCC1A</code><small>Botão principal, lacuna da carta, código da sala</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--rosa)"></div><div class="info"><b>Rosa Escândalo</b><code>#FF3D8B</code><small>Vitória, carimbo, sombra da carta pergunta</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--ciano)"></div><div class="info"><b>Azul Piscina de Prédio</b><code>#3FE0CF</code><small>Juiz, progresso, “respondeu”</small></div></div>
+    <div class="sw"><div class="chip" style="background:var(--vermelho)"></div><div class="info"><b>Vermelho Sem Filtro</b><code>#FF4B3E</code><small>Nível 4, erros, tempo acabando</small></div></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>Tipografia</h2>
+    <p>Duas famílias gratuitas, com acentuação completa em português.</p>
+  </div>
+  <div class="type-grid">
+    <div class="type-card">
+      <span class="label">Display · Bungee</span>
+      <div class="big-d">VOCÊ É O JUIZ!</div>
+      <p>Letreiro urbano, só em caixa-alta. Uso restrito: logo, botões, código da sala, títulos e anúncios de rodada. Nunca em texto corrido.</p>
+    </div>
+    <div class="type-card">
+      <span class="label">Texto e cartas · Archivo</span>
+      <div class="big-t">Um boleto vencido.</div>
+      <p>Grotesca com eixo de largura variável. Nas cartas, peso 800 e largura 92%: cabe mais texto sem perder leitura em tela de 360 px. Na interface, pesos 400 a 900.</p>
+    </div>
+  </div>
+  <div class="scale" aria-label="Escala tipográfica">
+    <div><code>Display 30</code><span style="font-family:var(--f-display);font-size:30px;color:var(--amarelo)">CRIS VENCEU!</span></div>
+    <div><code>Carta pergunta 20</code><span style="font-weight:800;font-stretch:92%;font-size:20px">Qual é o segredo para conquistar alguém?</span></div>
+    <div><code>Carta resposta 16</code><span style="font-weight:800;font-stretch:92%;font-size:16px">A última coxinha da festa.</span></div>
+    <div><code>Botão 17</code><span style="font-family:var(--f-display);font-size:17px">MANDAR ESSA</span></div>
+    <div><code>Texto 16</code><span>Esperando a galera entrar…</span></div>
+    <div><code>Rótulo 12</code><span style="font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-2)">Sua mão · 7 cartas</span></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>Cartas</h2>
+    <p>Proporção de baralho (5:7), cantos de 16 px e sombra dura deslocada, como adesivo. A carta pergunta tem sombra rosa e a resposta, sombra preta. Os pontinhos no rodapé indicam o nível de humor.</p>
+  </div>
+  <div class="card-row">
+    <div>
+      <div class="card preta"><div class="txt">Qual é o verdadeiro motivo do grupo da família estar em silêncio?</div><div class="foot"><span>PATUSCADA</span><span class="lvl-dot"><i class="on"></i><i></i><i></i><i></i></span></div></div>
+      <p class="card-cap"><b>Pergunta</b>Pergunta direta</p>
+    </div>
+    <div>
+      <div class="card preta"><span class="pick2">ESCOLHA 2</span><div class="txt"><span class="blank"></span> + <span class="blank"></span> = sexta-feira perfeita.</div><div class="foot"><span>PATUSCADA</span><span class="lvl-dot"><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+      <p class="card-cap"><b>Pergunta com 2 lacunas</b>Selo amarelo avisa</p>
+    </div>
+    <div>
+      <div class="card branca"><div class="txt">Um pombo com problemas de autoestima.</div><div class="foot"><span>PATUSCADA</span></div></div>
+      <p class="card-cap"><b>Resposta</b>Em repouso</p>
+    </div>
+    <div>
+      <div class="card branca sel"><div class="txt">Chinelo voador de alta precisão.</div><div class="foot"><span>PATUSCADA</span></div></div>
+      <p class="card-cap"><b>Resposta escolhida</b>Sobe e ganha contorno amarelo</p>
+    </div>
+    <div>
+      <div class="card branca"><div class="txt">Uma reunião que poderia ser um e-mail.</div><div class="foot"><span>PATUSCADA</span></div><span class="stamp">VENCEU!</span></div>
+      <p class="card-cap"><b>Vencedora</b>Carimbo rosa com animação</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>Componentes</h2>
+    <p>Botões com no mínimo 56 px de altura e alvos de toque de 44 px ou mais. O botão principal afunda ao toque, como um botão físico.</p>
+  </div>
+  <div class="comp-grid">
+    <div class="comp">
+      <span class="label">Botões</span>
+      <div class="row"><button class="btn btn-pri" type="button">Bora jogar</button><button class="btn btn-sec" type="button">Entrar</button></div>
+      <div class="row"><button class="btn btn-rosa" type="button">Essa é a melhor</button><button class="btn btn-pri" type="button" disabled>Faltam 2</button></div>
+    </div>
+    <div class="comp">
+      <span class="label">Campo e código da sala</span>
+      <div class="field"><label for="demo-nick">Seu apelido</label><input class="input" id="demo-nick" value="Ana" maxlength="16"><span class="hint">Até 16 caracteres. É assim que a galera vai te ver.</span></div>
+      <div class="code" aria-label="Código da sala KZ7PA">KZ7PA</div>
+    </div>
+    <div class="comp">
+      <span class="label">Jogadores</span>
+      <div class="players">
+        <div class="player"><span class="ava" style="background:var(--amarelo)">A</span><span class="nm">Ana (você)</span><span class="tag tag-host">Anfitriã</span></div>
+        <div class="player"><span class="ava" style="background:var(--ciano)">B</span><span class="nm">Beto</span><span class="tag tag-juiz">Juiz</span></div>
+        <div class="player"><span class="ava" style="background:var(--rosa)">C</span><span class="nm">Cris</span><span class="tag tag-ok">Respondeu ✓</span></div>
+        <div class="player off"><span class="ava" style="background:var(--papel)">D</span><span class="nm">Duda</span><span class="tag tag-off">Caiu da rede</span></div>
+      </div>
+    </div>
+    <div class="comp">
+      <span class="label">Tempo, progresso e avisos</span>
+      <div class="row">
+        <div class="timer" role="img" aria-label="42 segundos restantes"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="#31283B" stroke-width="6"/><circle cx="32" cy="32" r="27" fill="none" stroke="#FFCC1A" stroke-width="6" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="50"/></svg><span class="num">42</span></div>
+        <div class="timer" role="img" aria-label="8 segundos restantes"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="#31283B" stroke-width="6"/><circle cx="32" cy="32" r="27" fill="none" stroke="#FF4B3E" stroke-width="6" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="147"/></svg><span class="num" style="color:var(--vermelho)">8</span></div>
+        <div style="display:grid;gap:6px"><span class="hint">2 de 3 responderam</span><div class="progress"><i class="on"></i><i class="on"></i><i></i></div></div>
+      </div>
+      <div class="toast">Beto entrou na farra</div>
+      <div class="toast err">Essa sala não existe ou a festa já acabou.</div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>Níveis de humor</h2>
+    <p>O nível aparece como selo na sala de espera e como pontinhos em cada carta. O nível 4 tem listras de fita de isolamento e exige confirmação de cada jogador.</p>
+  </div>
+  <div class="levels">
+    <div class="lv-card"><span class="level lv1" style="justify-self:start">DE LEVE</span><p>Absurdo e zoeira do dia a dia. Dá para jogar com a tia.</p><span class="how">Livre</span></div>
+    <div class="lv-card"><span class="level lv2" style="justify-self:start">PICANTE</span><p>Duplo sentido, palavrão leve, vergonha alheia.</p><span class="how">Padrão</span></div>
+    <div class="lv-card"><span class="level lv3" style="justify-self:start">PESADO</span><p>Palavrão, sexo entre adultos, humor negro, escatologia.</p><span class="how">Anfitrião escolhe</span></div>
+    <div class="lv-card danger"><span class="level lv4" style="justify-self:start">SEM FILTRO</span><p>Humor negro extremo, religião, política, tragédia, mau gosto proposital.</p><span class="how">Anfitrião + aceite de cada jogador</span></div>
+  </div>
+  <div class="warn-box">
+    <div class="warn-demo">
+      <h3>Sem Filtro. Sério mesmo.</h3>
+      <p class="hint">Aviso mostrado a cada jogador antes de receber cartas numa sala nível 4.</p>
+      <ul>
+        <li>Humor negro com morte, doença e tragédias</li>
+        <li>Sexo explícito, sem rodeios</li>
+        <li>Religião, política e drogas</li>
+        <li>Combinações que podem ofender de verdade</li>
+      </ul>
+      <p class="no">O que não aparece nem aqui: conteúdo sexual com menores, cartas feitas para atacar um grupo e nomes de pessoas reais.</p>
+      <label class="check"><input type="checkbox" id="demo-18"> Tenho 18 anos ou mais e topo jogar assim.</label>
+    </div>
+    <div class="comp">
+      <span class="label">Por que listras</span>
+      <p class="hint" style="font-size:15px">A fita de isolamento é reconhecida na hora, sem precisar ler. O selo fica fixo no topo da sala durante toda a partida, para ninguém entrar desavisado depois.</p>
+      <div class="row"><span class="level lv4">SEM FILTRO</span><span class="level lv3">PESADO</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>Tom de voz</h2>
+    <p>Fala como o amigo mais engraçado da mesa: curto, brasileiro, debochado. Nunca cruel com o jogador e nunca ambíguo em instrução ou erro.</p>
+  </div>
+  <div class="voice-wrap">
+    <table class="voice">
+      <thead><tr><th>Momento</th><th>Genérico</th><th>Patuscada</th></tr></thead>
+      <tbody>
+        <tr><td>Botão iniciar</td><td>Iniciar partida</td><td>Começar a farra</td></tr>
+        <tr><td>Enviar resposta</td><td>Confirmar seleção</td><td>Mandar essa</td></tr>
+        <tr><td>Resposta enviada</td><td>Aguardando outros jogadores</td><td>Enviada. Agora é rezar.</td></tr>
+        <tr><td>Você é o juiz</td><td>Você é o juiz desta rodada</td><td>Você é o juiz. Seja justo. Ou não.</td></tr>
+        <tr><td>Sala de espera</td><td>Aguardando jogadores (2/3)</td><td>Falta 1 pessoa para a farra começar</td></tr>
+        <tr><td>Código inválido</td><td>Erro: sala não encontrada</td><td>Essa sala não existe ou a festa já acabou. Confere o código?</td></tr>
+        <tr><td>Jogador caiu</td><td>Usuário desconectado</td><td>Duda caiu da rede. A vaga fica guardada por 1 minuto.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="block" id="prototipo">
+  <div class="sec-head">
+    <h2>Protótipo navegável</h2>
+    <p>Abra no celular e jogue uma rodada de mentira. Os dados são de exemplo: não há servidor nem outros jogadores de verdade.</p>
+  </div>
+  <div class="proto">
+    <div class="proto-notes">
+      <ol>
+        <li><b>Início:</b> JOGAR cria sala com regras padrão num toque. CRIAR SALA abre as regras.</li>
+        <li><b>Criar sala:</b> experimente o nível Sem Filtro para ver o aviso.</li>
+        <li><b>Espera:</b> código grande, compartilhar e iniciar.</li>
+        <li><b>Jogo:</b> toque numa carta e depois em MANDAR ESSA.</li>
+        <li><b>Revelação:</b> nesta demonstração você vira o juiz. Toque para virar cada resposta e escolha a melhor.</li>
+        <li><b>Vencedor e resultado:</b> a frase completa aparece montada na carta.</li>
+      </ol>
+      <div>
+        <p class="hand-label" style="margin-bottom:8px">Pular para a tela</p>
+        <div class="jump" id="jump"></div>
+      </div>
+    </div>
+
+    <div class="phone" id="phone">
+      <!-- Início -->
+      <div class="screen" data-screen="home">
+        <div class="home-logo" aria-label="Patuscada!"><span>P</span><span>A</span><span>T</span><span>U</span><span>S</span><span>C</span><span>A</span><span>D</span><span>A</span><span style="color:var(--amarelo)">!</span></div>
+        <p class="home-sub">O jogo das respostas que você não devia dar.</p>
+        <div class="home-cards" aria-hidden="true">
+          <div class="card preta"><div class="txt">Qual é o segredo para conquistar alguém?</div><div class="foot"><span>PATUSCADA</span></div></div>
+          <div class="card branca"><div class="txt">Um boleto vencido.</div><div class="foot"><span>PATUSCADA</span></div></div>
+        </div>
+        <div class="home-actions">
+          <button class="btn btn-pri btn-block" data-go="lobby" data-quick="1" type="button">Jogar</button>
+          <button class="btn btn-sec btn-block" data-go="create" type="button">Criar sala</button>
+          <button class="btn btn-sec btn-block" data-go="join" type="button">Entrar em uma sala</button>
+          <div class="home-mini">
+            <button class="btn btn-ghost" data-go="how" type="button">Como jogar</button>
+            <button class="btn btn-ghost" data-go="settings" type="button">Configurações</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Criar sala -->
+      <div class="screen" data-screen="create" hidden>
+        <div class="scr-top"><button class="back" data-go="home" type="button" aria-label="Voltar">←</button><span class="scr-title">CRIAR SALA</span><span style="width:44px"></span></div>
+        <div class="field"><label for="p-nick">Seu apelido</label><input class="input" id="p-nick" value="Ana" maxlength="16" autocomplete="nickname"></div>
+        <div class="field"><label>Pontos para vencer</label><div class="stepper"><button type="button" data-step="-1" aria-label="Menos pontos">−</button><output id="p-points">7</output><button type="button" data-step="1" aria-label="Mais pontos">+</button></div></div>
+        <div class="field"><label>Tempo para responder</label><div class="chips" id="p-timer"><button class="chip-btn" type="button" aria-pressed="false">Sem tempo</button><button class="chip-btn" type="button" aria-pressed="false">45 s</button><button class="chip-btn" type="button" aria-pressed="true">60 s</button><button class="chip-btn" type="button" aria-pressed="false">90 s</button></div></div>
+        <div class="field"><label>Nível de humor</label><div class="chips" id="p-level"><button class="chip-btn" type="button" aria-pressed="false" data-lv="1">De Leve</button><button class="chip-btn" type="button" aria-pressed="true" data-lv="2">Picante</button><button class="chip-btn" type="button" aria-pressed="false" data-lv="3">Pesado</button><button class="chip-btn l4" type="button" aria-pressed="false" data-lv="4">Sem Filtro</button></div></div>
+        <div class="field"><label>Máximo de jogadores</label><div class="chips" id="p-max"><button class="chip-btn" type="button" aria-pressed="false">4</button><button class="chip-btn" type="button" aria-pressed="false">6</button><button class="chip-btn" type="button" aria-pressed="true">8</button><button class="chip-btn" type="button" aria-pressed="false">10</button></div></div>
+        <button class="btn btn-pri btn-block" data-go="lobby" type="button" style="margin-top:auto">Criar sala</button>
+      </div>
+
+      <!-- Entrar -->
+      <div class="screen" data-screen="join" hidden>
+        <div class="scr-top"><button class="back" data-go="home" type="button" aria-label="Voltar">←</button><span class="scr-title">ENTRAR</span><span style="width:44px"></span></div>
+        <div class="field"><label for="j-nick">Seu apelido</label><input class="input" id="j-nick" value="Ana" maxlength="16"></div>
+        <div class="field"><label>Código da sala</label>
+          <div class="code-boxes" id="j-code">
+            <input id="jc1" maxlength="1" value="K" aria-label="Letra 1"><input id="jc2" maxlength="1" value="Z" aria-label="Letra 2"><input id="jc3" maxlength="1" value="7" aria-label="Letra 3"><input id="jc4" maxlength="1" value="P" aria-label="Letra 4"><input id="jc5" maxlength="1" value="" aria-label="Letra 5">
+          </div>
+          <span class="hint" id="j-hint">Pede o código para quem criou a sala. Ou abre o link que te mandaram.</span>
+        </div>
+        <button class="btn btn-pri btn-block" id="j-go" type="button" style="margin-top:auto">Entrar na sala</button>
+      </div>
+
+      <!-- Como jogar -->
+      <div class="screen" data-screen="how" hidden>
+        <div class="scr-top"><button class="back" data-go="home" type="button" aria-label="Voltar">←</button><span class="scr-title">COMO JOGAR</span><span style="width:44px"></span></div>
+        <div class="how-step"><span class="n">1</span><div><b>Alguém vira juiz</b><p>A cada rodada, uma pessoa diferente é o juiz e revela a carta pergunta.</p></div></div>
+        <div class="how-step"><span class="n">2</span><div><b>Todo mundo responde</b><p>Escolha da sua mão a carta resposta mais absurda para completar a frase.</p></div></div>
+        <div class="how-step"><span class="n">3</span><div><b>O juiz escolhe</b><p>As respostas aparecem sem nome. O juiz lê em voz alta e escolhe a melhor.</p></div></div>
+        <div class="how-step"><span class="n">4</span><div><b>Quem fizer 7 pontos vence</b><p>Cada vitória vale 1 ponto. Dá para mudar isso ao criar a sala.</p></div></div>
+        <button class="btn btn-pri btn-block" data-go="home" type="button" style="margin-top:auto">Entendi, bora</button>
+      </div>
+
+      <!-- Configurações -->
+      <div class="screen" data-screen="settings" hidden>
+        <div class="scr-top"><button class="back" data-go="home" type="button" aria-label="Voltar">←</button><span class="scr-title">AJUSTES</span><span style="width:44px"></span></div>
+        <div class="toggle-row"><span>Sons</span><button class="sw-tog" role="switch" aria-checked="true" aria-label="Sons" type="button"></button></div>
+        <div class="toggle-row"><span>Vibração</span><button class="sw-tog" role="switch" aria-checked="true" aria-label="Vibração" type="button"></button></div>
+        <div class="toggle-row"><span>Menos animação</span><button class="sw-tog" role="switch" aria-checked="false" aria-label="Menos animação" type="button"></button></div>
+        <div class="field"><label for="s-nick">Apelido padrão</label><input class="input" id="s-nick" value="Ana" maxlength="16"></div>
+      </div>
+
+      <!-- Sala de espera -->
+      <div class="screen" data-screen="lobby" hidden>
+        <div class="scr-top"><button class="back" data-go="home" type="button" aria-label="Sair da sala">←</button><span class="scr-title">SALA</span><span class="level lv2" id="l-level">PICANTE</span></div>
+        <div style="display:grid;gap:6px;text-align:center"><span class="hand-label">Código da sala</span><div class="code">KZ7PA</div></div>
+        <button class="btn btn-sec btn-block" id="l-share" type="button">Chamar a galera</button>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="hand-label">Jogadores · <span id="l-count">3</span>/8</span><span class="hint">Mínimo 3</span></div>
+        <div class="players" id="l-players"></div>
+        <button class="btn btn-pri btn-block" data-go="game" type="button" style="margin-top:auto">Começar a farra</button>
+      </div>
+
+      <!-- Jogo -->
+      <div class="screen" data-screen="game" hidden>
+        <div class="game-hud">
+          <div class="timer" aria-live="off"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="#31283B" stroke-width="6"/><circle id="g-ring" cx="32" cy="32" r="27" fill="none" stroke="#FFCC1A" stroke-width="6" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="0"/></svg><span class="num" id="g-num">60</span></div>
+          <div class="meta"><span class="rnd">RODADA 3 · 4 JOGADORES</span><div class="row" style="gap:8px"><span class="tag tag-juiz">Juiz: Beto</span><span class="hint" id="g-prog-t">0 de 3 responderam</span></div><div class="progress" id="g-prog"><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="card preta game-black"><div class="txt">Minha terapeuta disse que eu preciso parar com <span class="blank"></span>.</div><div class="foot"><span>PATUSCADA</span><span class="lvl-dot"><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+        <div id="g-play">
+          <span class="hand-label">Sua mão · toque para escolher</span>
+          <div class="hand" id="g-hand"></div>
+          <button class="btn btn-pri btn-block" id="g-send" type="button" disabled>Escolha uma carta</button>
+        </div>
+        <div class="sent-box" id="g-sent" hidden>
+          <div class="card branca" id="g-sent-card"><div class="txt"></div><div class="foot"><span>PATUSCADA</span></div></div>
+          <h3>ENVIADA. AGORA É REZAR.</h3>
+          <p class="hint">Ninguém vê quem mandou o quê até o juiz decidir.</p>
+        </div>
+      </div>
+
+      <!-- Revelação / julgamento -->
+      <div class="screen" data-screen="judge" hidden>
+        <div class="scr-top"><span class="tag tag-juiz">Você é o juiz</span><span class="rnd" style="font-family:var(--f-display);font-size:14px;color:var(--texto-2)">RODADA 4</span></div>
+        <div class="card preta game-black" style="width:70%"><div class="txt">O síndico mandou um comunicado proibindo <span class="blank"></span> na piscina.</div><div class="foot"><span>PATUSCADA</span></div></div>
+        <p class="hint" id="jd-hint" style="text-align:center">Toque em cada carta para revelar. Lê em voz alta, faz suspense.</p>
+        <div class="judge-grid" id="jd-grid"></div>
+        <button class="btn btn-rosa btn-block" id="jd-pick" type="button" disabled style="margin-top:auto">Revele todas</button>
+      </div>
+
+      <!-- Vencedor da rodada -->
+      <div class="screen" data-screen="win" hidden>
+        <span class="rnd" style="font-family:var(--f-display);font-size:14px;color:var(--texto-2);text-align:center">RODADA 4 · RESULTADO</span>
+        <div class="card preta win-card" style="position:relative"><div class="txt" id="w-text"></div><div class="foot"><span>PATUSCADA</span></div><span class="stamp" style="top:auto;bottom:18%">VENCEU!</span></div>
+        <div class="who"><span class="hint">Resposta de</span><b id="w-who">CRIS</b><span class="hint">+1 ponto</span></div>
+        <div class="players" id="w-score"></div>
+        <button class="btn btn-pri btn-block" data-go="result" type="button" style="margin-top:auto">Pular para o fim (demo)</button>
+      </div>
+
+      <!-- Resultado -->
+      <div class="screen" data-screen="result" hidden>
+        <div class="trophy"><span class="hand-label">Fim da partida</span><div class="big"><em>CRIS</em><br>VENCEU A PATUSCADA!</div><span class="hint">7 pontos em 11 rodadas</span></div>
+        <div class="players">
+          <div class="score-row lead"><span class="ava" style="background:var(--rosa)">C</span><span class="nm">1º Cris</span><span class="pts">7</span></div>
+          <div class="score-row"><span class="ava" style="background:var(--amarelo)">A</span><span class="nm">2º Ana (você)</span><span class="pts">5</span></div>
+          <div class="score-row"><span class="ava" style="background:var(--ciano)">B</span><span class="nm">3º Beto</span><span class="pts">3</span></div>
+          <div class="score-row"><span class="ava" style="background:var(--papel)">D</span><span class="nm">4º Duda</span><span class="pts">1</span></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><small>Carta campeã</small><b>Chinelo voador de alta precisão</b></div>
+          <div class="stat"><small>Mais rápido</small><b>Beto · 6 s por resposta</b></div>
+          <div class="stat"><small>Duração</small><b>18 minutos</b></div>
+          <div class="stat"><small>Juiz mais exigente</small><b>Duda</b></div>
+        </div>
+        <button class="btn btn-pri btn-block" data-go="lobby" type="button">Jogar novamente</button>
+        <button class="btn btn-sec btn-block" data-go="home" type="button">Voltar ao menu</button>
+      </div>
+
+      <!-- Aviso nível 4 -->
+      <div class="modal" id="m-l4" hidden>
+        <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="m-l4-t">
+          <h3 id="m-l4-t">Sem Filtro. Sério mesmo.</h3>
+          <ul>
+            <li>Humor negro com morte, doença e tragédias</li>
+            <li>Sexo explícito, sem rodeios</li>
+            <li>Religião, política e drogas</li>
+            <li>Combinações que podem ofender de verdade</li>
+          </ul>
+          <p class="no" style="font-size:14px">Cada jogador vai ver este aviso e precisa aceitar antes de entrar.</p>
+          <label class="check"><input type="checkbox" id="m-l4-ok"> Tenho 18 anos ou mais e topo jogar assim.</label>
+          <button class="btn btn-pri btn-block" id="m-l4-yes" type="button" disabled style="background:var(--vermelho);color:#fff">Ativar Sem Filtro</button>
+          <button class="btn btn-ghost btn-block" id="m-l4-no" type="button">Melhor não</button>
+        </div>
+      </div>
+
+      <div class="banner" id="banner" hidden><div>TODO MUNDO<br>RESPONDEU!</div></div>
+      <div class="confetti" id="confetti"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="sec-head">
+    <h2>O que preciso de você</h2>
+    <p>Com isso aprovado, a identidade vira tokens no código na Etapa 3.</p>
+  </div>
+  <div class="ask">
+    <div><b>Aprovar ou ajustar</b><p>Paleta, tipografia, estilo das cartas e tom de voz. Pode ser tão simples quanto “mais rosa, menos amarelo”.</p></div>
+    <div><b>Testar no celular</b><p>Jogue uma rodada no protótipo. Diga onde travou, o que ficou pequeno e o que não deu vontade de tocar.</p></div>
+    <div><b>Mandar frases do Patuscada</b><p>Lista simples, uma por linha, com P (pergunta) ou R (resposta). Eu faço as variações e classifico por nível.</p></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  var phone = document.getElementById('phone');
+  var screens = Array.prototype.slice.call(phone.querySelectorAll('.screen'));
+  var names = { home: 'Início', create: 'Criar sala', join: 'Entrar', lobby: 'Espera', game: 'Jogo', judge: 'Revelação', win: 'Vencedor', result: 'Resultado', how: 'Como jogar', settings: 'Ajustes' };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var level = 2, timerId = null, timeouts = [];
+  var LEVELS = { 1: ['DE LEVE', 'lv1'], 2: ['PICANTE', 'lv2'], 3: ['PESADO', 'lv3'], 4: ['SEM FILTRO', 'lv4'] };
+  var hand = ['Um áudio de 7 minutos da sogra.', 'Pix de R$ 3,50 com a descrição “saudades”.', 'O tio do pavê em modo turbo.', 'Coach quântico de autoconhecimento.', 'A última coxinha da festa.', 'Responder “kkkk” sem ter rido.', 'Dançar forró com o ex no casamento do primo.'];
+  var answers = [
+    { t: 'Chinelo voador de alta precisão.', who: 'Cris' },
+    { t: 'Um grupo de WhatsApp chamado “Família 100% Unida”.', who: 'Duda' },
+    { t: 'Um pombo com problemas de autoestima.', who: 'Ana' }
+  ];
+  var current = 'home';
+
+  function clearTimers() { clearInterval(timerId); timerId = null; timeouts.forEach(clearTimeout); timeouts = []; }
+  function later(fn, ms) { timeouts.push(setTimeout(fn, ms)); }
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fill(answer) { var a = answer.replace(/\.$/, ''); return a.charAt(0).toLowerCase() + a.slice(1); }
+
+  // Pular para tela
+  var jump = document.getElementById('jump');
+  ['home', 'create', 'join', 'lobby', 'game', 'judge', 'win', 'result'].forEach(function (k) {
+    var b = el('button', null, names[k]); b.type = 'button'; b.dataset.target = k;
+    b.addEventListener('click', function () { go(k); });
+    jump.appendChild(b);
+  });
+
+  function go(name) {
+    clearTimers();
+    document.getElementById('banner').hidden = true;
+    document.getElementById('m-l4').hidden = true;
+    screens.forEach(function (s) {
+      var on = s.dataset.screen === name;
+      s.hidden = !on;
+      if (on) { s.classList.remove('screen-in'); void s.offsetWidth; s.classList.add('screen-in'); s.scrollTop = 0; }
+    });
+    Array.prototype.forEach.call(jump.children, function (b) { b.setAttribute('aria-current', b.dataset.target === name ? 'true' : 'false'); });
+    current = name;
+    if (name === 'lobby') initLobby();
+    if (name === 'game') initGame();
+    if (name === 'judge') initJudge();
+    if (name === 'win') initWin();
+    if (name === 'result') confetti();
+  }
+
+  phone.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-go]');
+    if (!t) return;
+    if (t.dataset.quick) setLevel(2);
+    go(t.dataset.go);
+  });
+
+  // Criar sala
+  var pts = 7;
+  phone.querySelectorAll('[data-step]').forEach(function (b) {
+    b.addEventListener('click', function () { pts = Math.max(3, Math.min(15, pts + Number(b.dataset.step))); document.getElementById('p-points').textContent = pts; });
+  });
+  function chipGroup(id, onPick) {
+    var g = document.getElementById(id);
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('.chip-btn'); if (!b) return;
+      if (onPick && onPick(b) === false) return;
+      g.querySelectorAll('.chip-btn').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    });
+  }
+  chipGroup('p-timer'); chipGroup('p-max');
+  chipGroup('p-level', function (b) {
+    if (b.dataset.lv === '4') { openL4(); return false; }
+    setLevel(Number(b.dataset.lv));
+  });
+  function setLevel(n) {
+    level = n;
+    document.querySelectorAll('#p-level .chip-btn').forEach(function (x) { x.setAttribute('aria-pressed', Number(x.dataset.lv) === n ? 'true' : 'false'); });
+  }
+  var l4ok = document.getElementById('m-l4-ok'), l4yes = document.getElementById('m-l4-yes');
+  function openL4() { l4ok.checked = false; l4yes.disabled = true; document.getElementById('m-l4').hidden = false; }
+  l4ok.addEventListener('change', function () { l4yes.disabled = !l4ok.checked; });
+  l4yes.addEventListener('click', function () { setLevel(4); document.getElementById('m-l4').hidden = true; });
+  document.getElementById('m-l4-no').addEventListener('click', function () { document.getElementById('m-l4').hidden = true; });
+
+  // Entrar
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#j-code input'));
+  boxes.forEach(function (inp, i) {
+    inp.addEventListener('input', function () {
+      inp.value = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (inp.value && boxes[i + 1]) boxes[i + 1].focus();
+    });
+    inp.addEventListener('keydown', function (e) { if (e.key === 'Backspace' && !inp.value && boxes[i - 1]) boxes[i - 1].focus(); });
+  });
+  document.getElementById('j-go').addEventListener('click', function () {
+    var code = boxes.map(function (b) { return b.value; }).join('');
+    var hint = document.getElementById('j-hint');
+    if (code.length < 5) { hint.textContent = 'O código tem 5 caracteres. Falta ' + (5 - code.length) + '.'; hint.className = 'hint err'; return; }
+    hint.textContent = 'Pede o código para quem criou a sala. Ou abre o link que te mandaram.'; hint.className = 'hint';
+    go('lobby');
+  });
+
+  // Ajustes
+  phone.querySelectorAll('.sw-tog').forEach(function (t) {
+    t.addEventListener('click', function () { t.setAttribute('aria-checked', t.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); });
+  });
+
+  // Sala de espera
+  function player(c, n, tag, tagCls, off) {
+    var p = el('div', 'player' + (off ? ' off' : ''));
+    p.innerHTML = '<span class="ava" style="background:' + c + '">' + n.charAt(0) + '</span><span class="nm">' + esc(n) + '</span>' + (tag ? '<span class="tag ' + tagCls + '">' + tag + '</span>' : '');
+    return p;
+  }
+  function initLobby() {
+    var lv = LEVELS[level], badge = document.getElementById('l-level');
+    badge.textContent = lv[0]; badge.className = 'level ' + lv[1];
+    var list = document.getElementById('l-players'); list.innerHTML = '';
+    list.appendChild(player('var(--amarelo)', 'Ana (você)', 'Anfitriã', 'tag-host'));
+    list.appendChild(player('var(--ciano)', 'Beto'));
+    list.appendChild(player('var(--rosa)', 'Cris'));
+    document.getElementById('l-count').textContent = '3';
+    later(function () {
+      list.appendChild(player('var(--papel)', 'Duda', 'Acabou de entrar', 'tag-ok'));
+      document.getElementById('l-count').textContent = '4';
+    }, 1400);
+  }
+  document.getElementById('l-share').addEventListener('click', function (e) {
+    var b = e.currentTarget, txt = 'Bora jogar Patuscada? Sala KZ7PA';
+    try { navigator.clipboard.writeText(txt).catch(function () {}); } catch (err) {}
+    b.textContent = 'Convite copiado!';
+    later(function () { b.textContent = 'Chamar a galera'; }, 1600);
+  });
+
+  // Jogo
+  var selected = null;
+  function initGame() {
+    selected = null;
+    document.getElementById('g-play').hidden = false;
+    document.getElementById('g-sent').hidden = true;
+    var send = document.getElementById('g-send'); send.disabled = true; send.textContent = 'Escolha uma carta';
+    var h = document.getElementById('g-hand'); h.innerHTML = '';
+    hand.forEach(function (t, i) {
+      var c = el('button', 'card branca', '<span class="txt">' + esc(t) + '</span><span class="foot"><span>PATUSCADA</span></span>');
+      c.type = 'button'; c.style.border = '0'; c.style.textAlign = 'left';
+      c.addEventListener('click', function () {
+        selected = i;
+        h.querySelectorAll('.card').forEach(function (x) { x.classList.toggle('sel', x === c); });
+        send.disabled = false; send.textContent = 'Mandar essa';
+      });
+      h.appendChild(c);
+    });
+    setProgress(0);
+    var total = 60, left = total, ring = document.getElementById('g-ring'), num = document.getElementById('g-num');
+    function draw() {
+      num.textContent = left; ring.setAttribute('stroke-dashoffset', String(169.6 * (1 - left / total)));
+      var hot = left <= 10; ring.setAttribute('stroke', hot ? '#FF4B3E' : '#FFCC1A'); num.style.color = hot ? 'var(--vermelho)' : '';
+    }
+    draw();
+    timerId = setInterval(function () { left = Math.max(0, left - 1); draw(); }, 1000);
+    later(function () { setProgress(1); }, 2500);
+  }
+  function setProgress(n) {
+    document.querySelectorAll('#g-prog i').forEach(function (i, k) { i.classList.toggle('on', k < n); });
+    document.getElementById('g-prog-t').textContent = n + ' de 3 responderam';
+  }
+  document.getElementById('g-send').addEventListener('click', function () {
+    if (selected == null) return;
+    document.getElementById('g-play').hidden = true;
+    document.getElementById('g-sent').hidden = false;
+    document.querySelector('#g-sent-card .txt').textContent = hand[selected];
+    if (navigator.vibrate) { try { navigator.vibrate(30); } catch (e) {} }
+    setProgress(2);
+    later(function () { setProgress(3); }, 1100);
+    later(function () { document.getElementById('banner').hidden = false; }, 1800);
+    later(function () { go('judge'); }, 3300);
+  });
+
+  // Revelação
+  var chosen = null;
+  function initJudge() {
+    chosen = null;
+    var g = document.getElementById('jd-grid'); g.innerHTML = '';
+    var btn = document.getElementById('jd-pick'); btn.disabled = true; btn.textContent = 'Revele todas';
+    document.getElementById('jd-hint').textContent = 'Toque em cada carta para revelar. Lê em voz alta, faz suspense.';
+    answers.forEach(function (a, i) {
+      var f = el('button', 'flip');
+      f.type = 'button'; f.setAttribute('aria-label', 'Resposta ' + (i + 1) + ', toque para revelar');
+      f.innerHTML = '<div class="flip-in"><div class="card face cover">?</div><div class="card branca face back"><span class="txt">' + esc(a.t) + '</span><span class="foot"><span>PATUSCADA</span></span></div></div>';
+      f.addEventListener('click', function () {
+        if (!f.classList.contains('open')) {
+          f.classList.add('open'); f.setAttribute('aria-label', a.t);
+          var all = g.querySelectorAll('.flip.open').length === answers.length;
+          if (all) { btn.textContent = 'Escolha a melhor'; document.getElementById('jd-hint').textContent = 'Agora toque na sua favorita.'; }
+          return;
+        }
+        if (g.querySelectorAll('.flip.open').length < answers.length) return;
+        chosen = i;
+        g.querySelectorAll('.flip').forEach(function (x) { x.classList.toggle('chosen', x === f); });
+        btn.disabled = false; btn.textContent = 'Essa é a melhor';
+      });
+      g.appendChild(f);
+    });
+  }
+  document.getElementById('jd-pick').addEventListener('click', function () { if (chosen != null) go('win'); });
+
+  // Vencedor
+  function initWin() {
+    var a = answers[chosen == null ? 0 : chosen];
+    document.getElementById('w-text').innerHTML = 'O síndico mandou um comunicado proibindo <span class="filled">' + esc(fill(a.t)) + '</span> na piscina.';
+    document.getElementById('w-who').textContent = a.who.toUpperCase();
+    var base = { Cris: 4, Ana: 4, Beto: 3, Duda: 1 };
+    var colors = { Cris: 'var(--rosa)', Ana: 'var(--amarelo)', Beto: 'var(--ciano)', Duda: 'var(--papel)' };
+    var list = document.getElementById('w-score'); list.innerHTML = '';
+    var order = Object.keys(base).map(function (k) { return [k, base[k] + (k === a.who ? 1 : 0)]; }).sort(function (x, y) { return y[1] - x[1]; });
+    order.forEach(function (r, idx) {
+      var row = el('div', 'score-row' + (idx === 0 ? ' lead' : ''));
+      var label = r[0] === 'Ana' ? 'Ana (você)' : r[0];
+      row.innerHTML = '<span class="ava" style="background:' + colors[r[0]] + '">' + r[0].charAt(0) + '</span><span class="nm">' + label + '</span><span class="pts">' + (r[0] === a.who ? r[1] - 1 : r[1]) + '</span>';
+      list.appendChild(row);
+      if (r[0] === a.who) later(function () { var p = row.querySelector('.pts'); p.textContent = r[1]; p.classList.add('bump'); }, 700);
+    });
+    confetti();
+  }
+
+  function confetti() {
+    if (reduce) return;
+    var box = document.getElementById('confetti'); box.innerHTML = '';
+    var cols = ['#FFCC1A', '#FF3D8B', '#3FE0CF', '#F3EFE7'];
+    for (var i = 0; i < 46; i++) {
+      var c = el('i'); c.style.left = (Math.random() * 100) + '%'; c.style.background = cols[i % cols.length];
+      c.style.animationDelay = (Math.random() * .5) + 's'; c.style.transform = 'rotate(' + (Math.random() * 180) + 'deg)';
+      box.appendChild(c);
+    }
+    later(function () { box.innerHTML = ''; }, 2600);
+  }
+
+  go('home');
+})();
+</script>

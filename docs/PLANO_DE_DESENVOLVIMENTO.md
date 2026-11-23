@@ -1,6 +1,6 @@
 # PLANO DE DESENVOLVIMENTO — PATUSCADA
 
-> Versão 1.0 · 23/11/2026 · Status: **aguardando aprovação**
+> Versão 1.1 · 23/11/2026 · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 2 (identidade visual)
 > Papéis nesta etapa: Product Manager + Arquiteto de Software
 > Nenhuma linha de código de produto foi escrita. A implementação começa depois da sua aprovação.
 
@@ -293,7 +293,7 @@ erDiagram
   user_roles { uuid user_id FK text role "admin | editor" }
   decks { uuid id PK text slug text name boolean is_free boolean is_active int sort_order }
   categories { uuid id PK text slug text name text color boolean is_active }
-  black_cards { uuid id PK uuid deck_id FK uuid category_id FK text text smallint pick "1 ou 2" smallint humor_level "1 a 3" text status "draft | active | archived" }
+  black_cards { uuid id PK uuid deck_id FK uuid category_id FK text text smallint pick "1 ou 2" smallint humor_level "1 a 4" text status "draft | active | archived" }
   white_cards { uuid id PK uuid deck_id FK uuid category_id FK text text smallint humor_level text status }
   rooms { uuid id PK text code UK uuid host_id FK text status "lobby | playing | closed" text visibility "private | public" jsonb settings boolean locked timestamptz last_activity_at }
   room_players { uuid room_id FK uuid user_id FK text nickname smallint seat boolean is_kicked timestamptz joined_at timestamptz last_seen_at }
@@ -319,7 +319,7 @@ erDiagram
 - `UNIQUE (room_id, user_id)` e `UNIQUE (room_id, lower(nickname))` em `room_players`.
 - `UNIQUE (round_id, player_id)` em `submissions` → impossível duas respostas do mesmo jogador na mesma rodada, mesmo com bug.
 - `rounds.winning_submission_id` é coluna única por rodada → impossível dois votos do juiz.
-- `CHECK (pick IN (1,2))`, `CHECK (humor_level BETWEEN 1 AND 3)`, `CHECK (status IN (...))`.
+- `CHECK (pick IN (1,2))`, `CHECK (humor_level BETWEEN 1 AND 4)`, `CHECK (status IN (...))`.
 - Cartas nunca são apagadas fisicamente se já foram usadas: são **arquivadas** (preserva o histórico e as estatísticas).
 - `rooms.code` gerado no servidor com alfabeto `ABCDEFGHJKMNPQRSTUVWXYZ23456789` e verificação de colisão.
 - Salas inativas há mais de 2 h são fechadas por rotina agendada (`pg_cron`).
@@ -388,7 +388,7 @@ flowchart TD
 
 **Jogo**
 - Modo 1 (sala privada por código) e Modo 2 (convite por link/WhatsApp).
-- Modo 4 parcial (personalização): pontos para vencer (3–15, padrão 7), cartas na mão (5–10, padrão 7), temporizador (desligado / 45 / 60 / 90 s), categorias, nível de humor (leve / médio / pesado), máx. jogadores (3–10), limite de rodadas (opcional).
+- Modo 4 parcial (personalização): pontos para vencer (3–15, padrão 7), cartas na mão (5–10, padrão 7), temporizador (desligado / 45 / 60 / 90 s), categorias, nível de humor (De Leve / Picante / Pesado / Sem Filtro — ver 8.3), máx. jogadores (3–10), limite de rodadas (opcional).
 - Juiz rotativo, cartas de 1 e 2 lacunas, revelação anônima, placar, resultado, jogar novamente.
 - Reconexão, presença online/offline, migração de anfitrião, remoção de jogador, pausa automática.
 
@@ -435,8 +435,8 @@ flowchart TD
 
 | # | Decisão | Minha recomendação |
 |---|---|---|
-| D1 | **Direitos do jogo.** Existe um Patuscada físico com cartas e regulamento oficiais? Temos permissão para usar nome, cartas e regras? Quem é o titular? | Se houver conteúdo oficial, ele entra pelo `seed`/importação CSV. Se não, crio ~100 cartas pretas e ~400 brancas **originais** para os playtests. |
-| D2 | **Nível de humor e limites.** "Politicamente incorreto" até onde? | Três níveis (leve/médio/pesado) e uma **linha vermelha fixa**: nada de discurso de ódio contra grupos, nem conteúdo sexual envolvendo menores, nem violência real. Isso protege o produto juridicamente e nas lojas de apps. |
+| D1 | **Direitos do jogo.** | ✅ **Decidido (23/11):** o Patuscada físico é um jogo privado. Vamos criar um jogo **próprio** com a mecânica pergunta/resposta (mecânica de jogo não é protegida). Conteúdo = cartas originais + **variações** de frases do Patuscada fornecidas por você. Não usaremos cartas de jogos comerciais (FDP, CAH etc.). Conteúdo criado pelos usuários fica para fase futura (o campo `author_id` já está previsto). |
+| D2 | **Nível de humor e limites.** | ✅ **Decidido (23/11):** **quatro níveis**, sendo o 4º um nível "sem filtro" para adultos, que só se ativa por escolha explícita e vem com aviso detalhado do que pode aparecer. Detalhes e limites legais na seção 8.3. |
 | D3 | **Classificação etária.** | 18+ com aviso na entrada; modo "leve" para grupos mistos. |
 | D4 | **Idioma.** | Apenas PT-BR no MVP, código preparado para i18n. |
 | D5 | **Mínimo/máximo de jogadores.** | 3 a 10. |
@@ -444,7 +444,9 @@ flowchart TD
 | D7 | **Contas de infraestrutura.** Você cria as contas Supabase e Vercel (gratuitas) e me passa as chaves pelo painel de segredos do ambiente? | Sim; documentarei o passo a passo. Até lá, desenvolvo o motor e a interface com testes locais. |
 | D8 | **Domínio.** Já existe? | Verificar disponibilidade de `patuscada.com.br` / `.app`. |
 | D9 | **Marca.** O nome "Patuscada" está registrado no INPI? | Consultar antes do lançamento público. |
-| D10 | **Fusão das Fases 3 e 4 do briefing.** | Recomendo fortemente (ver 9.1). |
+| D10 | **Fusão das Fases 3 e 4 do briefing.** | ✅ **Aprovado (23/11).** |
+
+D3 a D9 seguem com as recomendações acima como padrão até você dizer o contrário.
 
 ### 8.2 Riscos técnicos e de produto
 
@@ -460,6 +462,25 @@ flowchart TD
 | Problema de direitos autorais/marca | Desconhecida | Alto | D1 e D9 resolvidas antes do lançamento público. |
 | Docker indisponível no ambiente de desenvolvimento | Certa | Baixo | Postgres local para migrations; projeto Supabase de desenvolvimento na nuvem para Realtime/Auth. |
 | Escopo crescer antes da validação | Alta | Alto | Corte rígido do MVP (7.2) e decisões guiadas por playtests. |
+
+### 8.3 Níveis de humor (decisão D2)
+
+| Nível | Nome | O que aparece | Como se ativa |
+|---|---|---|---|
+| 1 | **De Leve** | Absurdo, nonsense, zoeira do dia a dia. Dá para jogar com a tia. | Livre |
+| 2 | **Picante** | Duplo sentido, palavrão leve, vergonha alheia. | Livre (padrão) |
+| 3 | **Pesado** | Palavrão, sexo explícito entre adultos, humor negro, escatologia, drogas. | Anfitrião escolhe |
+| 4 | **Sem Filtro** | Tudo do nível 3 levado ao extremo: humor negro com morte, doença e tragédia, religião, política, sexo sem rodeios, mau gosto proposital. | Anfitrião escolhe **e** cada jogador confirma um aviso detalhado ao entrar. Selo vermelho fixo na sala. Nunca é padrão e nunca aparecerá em salas públicas. |
+
+**O que fica fora até do nível 4.** São poucos itens e todos vêm de lei ou de risco de remoção da plataforma, não de gosto:
+
+1. **Conteúdo sexual envolvendo menores.** Crime (ECA, art. 241); proibido em qualquer contexto.
+2. **Cartas cuja graça é desumanizar um grupo** por raça, etnia, religião, orientação sexual, identidade de gênero ou deficiência. Incitar discriminação é crime no Brasil (Lei 7.716/89; o STF estendeu a homofobia e a transfobia). Piadas que *tocam* nesses temas podem existir; o que sai é a carta que existe só para atacar o grupo.
+3. **Pessoas reais privadas citadas pelo nome.** Risco de difamação.
+
+Na prática o nível 4 continua pesadíssimo, porque o choque vem das combinações que os próprios jogadores montam. Eu escrevo cartas dos níveis 1 a 4 dentro desses limites. As que você trouxer do Patuscada passam pela mesma régua.
+
+**Consequências técnicas:** `humor_level` passa a aceitar 1–4; a sala guarda o nível máximo; quem entra numa sala nível 4 vê o aviso antes de receber cartas; o aceite fica registrado em `room_players.accepted_level4_at`. Se um dia houver app nas lojas (Apple/Google), o nível 4 provavelmente terá de ficar só na versão web.
 
 ---
 
