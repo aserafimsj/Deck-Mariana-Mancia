@@ -2,10 +2,11 @@
 
 Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cartas resposta e um juiz rotativo. Joga no celular, sem cadastro, entrando por código ou link.
 
-**Status:** Etapa 3 (Fundação) concluída. Próximas: Etapa 4 (motor do jogo) e Etapa 5 (multiplayer e telas da partida).
+**Status:** Etapas 3 (Fundação) e 4 (motor do jogo) concluídas. Próxima: Etapa 5 (multiplayer e telas da partida).
 
 - [Plano de desenvolvimento](docs/PLANO_DE_DESENVOLVIMENTO.md)
 - [Identidade visual e protótipo](docs/identidade-visual/index.html)
+- [Regras do jogo como o motor aplica](docs/REGRAS.md)
 
 ## O que já funciona
 
@@ -17,7 +18,8 @@ Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cart
 | Gravação segura do estado da partida | Função atômica com controle de versão e proteção contra ação duplicada. |
 | Login anônimo | Código pronto (`ensureAnonymousSession`); entra em uso na Etapa 5. |
 | PWA | Manifesto e ícones; instalável. Funcionamento offline fica para a Etapa 6. |
-| Testes e CI | 39 testes unitários, 33 de banco, 6 ponta a ponta. GitHub Actions roda tudo a cada push. |
+| Motor do jogo | Regras completas em `src/engine/` (função pura, determinística): rodadas, juiz, tempo, desconexões, anfitrião, pausa. Cada jogador recebe só o que pode ver. |
+| Testes e CI | 94 testes unitários (incluindo simulação de partidas aleatórias), 33 de banco, 6 ponta a ponta. GitHub Actions roda tudo a cada push. |
 
 ## Tecnologias
 
@@ -88,7 +90,7 @@ O painel administrativo chega na Etapa 7.
 
 | Comando | O que testa | Precisa de |
 |---|---|---|
-| `pnpm test` | Regras, validações, texto das cartas, autenticação | Nada |
+| `pnpm test` | Motor do jogo (inclui 200 partidas simuladas), validações, texto das cartas, autenticação | Nada |
 | `pnpm test:db` | Migrations, seed, RLS, restrições, gravação atômica do estado | Postgres (abaixo) |
 | `pnpm test:e2e` | Telas reais num celular simulado | Chromium do Playwright |
 | `pnpm check` | Lint + tipos + testes unitários | Nada |
@@ -121,6 +123,7 @@ src/
   app/              Rotas: telas e /api
   components/       ui/ (botões, cabeçalho) · brand/ (logo) · game/ (cartas, selos)
   hooks/            Hooks de React (preferências locais)
+  engine/           Motor do jogo: regras, projeção por jogador (sem I/O, sem relógio)
   lib/              Regras e validações compartilhadas (sem dependência de servidor)
   lib/supabase/     Cliente do navegador e sessão anônima
   server/           Só servidor: cliente com chave secreta, autenticação de requisições
