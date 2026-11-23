@@ -48,5 +48,9 @@ jobs:
         run: pnpm build
       - name: Instalar navegador
         run: pnpm exec playwright install --with-deps chromium
-      - name: Testes ponta a ponta
-        run: pnpm exec playwright test
+      - name: Banco para os testes ponta a ponta
+        run: pnpm db:e2e
+      - name: Testes ponta a ponta (inclui partida com 3 navegadores)
+        run: pnpm test:e2e
+        env:
+          E2E_DB_URL: postgres://postgres:postgres@localhost:5432/scragbadum_e2e

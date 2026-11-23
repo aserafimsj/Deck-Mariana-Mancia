@@ -1,6 +1,6 @@
 import { Logo } from "@/components/brand/Logo";
 import { GameCard } from "@/components/game/GameCard";
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/Button";
 import { Screen } from "@/components/ui/ScreenHeader";
 
 export default function HomePage() {
@@ -21,19 +21,15 @@ export default function HomePage() {
       </div>
 
       <nav className="mt-auto grid gap-3" aria-label="Menu principal">
-        {/* As salas chegam na Etapa 5 (multiplayer). Os botões ficam visíveis, mas desligados, para não fingir que funcionam. */}
-        <Button block disabled aria-describedby="em-breve">
+        <ButtonLink href="/criar?rapido=1" block>
           Jogar
-        </Button>
-        <Button block variant="secondary" disabled aria-describedby="em-breve">
+        </ButtonLink>
+        <ButtonLink href="/criar" block variant="secondary">
           Criar sala
-        </Button>
-        <Button block variant="secondary" disabled aria-describedby="em-breve">
+        </ButtonLink>
+        <ButtonLink href="/entrar" block variant="secondary">
           Entrar em uma sala
-        </Button>
-        <p id="em-breve" className="text-center text-sm text-texto-2">
-          As salas abrem na próxima etapa do desenvolvimento.
-        </p>
+        </ButtonLink>
         <div className="grid grid-cols-2 gap-2.5">
           <ButtonLink href="/como-jogar" variant="ghost">
             Como jogar

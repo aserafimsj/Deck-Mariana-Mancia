@@ -40,6 +40,12 @@ describe.skipIf(!ADMIN_URL)("servidor do jogo (serviço + banco real)", () => {
 
   const send = (user: string, code: string, action: GameAction, id = randomUUID()) => act(deps, user, code, action, id);
 
+  /** Cartas para responder: tantas quantas a pergunta pede (1 ou 2). */
+  async function answerCards(user: string, code: string): Promise<string[]> {
+    const v = data(await viewRoom(deps, user, code)).view;
+    return v.you!.hand.slice(0, v.round!.blackCard.pick).map((c) => c.id);
+  }
+
   it("cria a sala e grava tudo no banco", async () => {
     const r = data(await createRoom(deps, users.ana, { nickname: "  Ana  ", settings: { pointsToWin: 5 } }));
     expect(r.code).toMatch(/^[A-Z2-9]{5}$/);
@@ -93,10 +99,9 @@ describe.skipIf(!ADMIN_URL)("servidor do jogo (serviço + banco real)", () => {
     const views = async () => Object.fromEntries(await Promise.all(Object.entries(users).slice(0, 3).map(async ([k, id]) => [k, data(await viewRoom(deps, id, code))])));
     let v = await views();
     const judge = v.ana.view.round!.judgeId;
-    for (const [name, id] of Object.entries(users).slice(0, 3)) {
+    for (const id of Object.values(users).slice(0, 3)) {
       if (id === judge) continue;
-      const card = v[name].view.you!.hand[0]!;
-      r = data(await send(id, code, { type: "SUBMIT", cardIds: [card.id] }));
+      r = data(await send(id, code, { type: "SUBMIT", cardIds: await answerCards(id, code) }));
     }
     expect(r.view.phase).toBe("judging");
     for (let i = 0; i < 2; i++) r = data(await send(judge, code, { type: "REVEAL_NEXT" }));
@@ -119,12 +124,12 @@ describe.skipIf(!ADMIN_URL)("servidor do jogo (serviço + banco real)", () => {
     const v = data(await viewRoom(deps, users.beto, code));
     const judge = v.view.round!.judgeId;
     const player = judge === users.beto ? users.cris : users.beto;
-    const hand = data(await viewRoom(deps, player, code)).view.you!.hand;
+    const cards = await answerCards(player, code);
     const id = randomUUID();
-    const first = data(await send(player, code, { type: "SUBMIT", cardIds: [hand[0]!.id] }, id));
-    const second = data(await send(player, code, { type: "SUBMIT", cardIds: [hand[0]!.id] }, id));
+    const first = data(await send(player, code, { type: "SUBMIT", cardIds: cards }, id));
+    const second = data(await send(player, code, { type: "SUBMIT", cardIds: cards }, id));
     expect(second.version).toBe(first.version);
-    expect(second.view.you!.hand).toHaveLength(6);
+    expect(second.view.you!.hand).toHaveLength(7 - cards.length);
   });
 
   it("ações simultâneas de jogadores diferentes: todas valem (tentativa automática)", async () => {
@@ -133,8 +138,8 @@ describe.skipIf(!ADMIN_URL)("servidor do jogo (serviço + banco real)", () => {
     data(await send(users.ana, code, { type: "START_GAME" }));
     const judge = data(await viewRoom(deps, users.ana, code)).view.round!.judgeId;
     const players = [users.ana, users.beto, users.cris, users.duda].filter((u) => u !== judge);
-    const hands = await Promise.all(players.map(async (u) => data(await viewRoom(deps, u, code)).view.you!.hand[0]!.id));
-    const results = await Promise.all(players.map((u, i) => send(u, code, { type: "SUBMIT", cardIds: [hands[i]!] })));
+    const hands = await Promise.all(players.map((u) => answerCards(u, code)));
+    const results = await Promise.all(players.map((u, i) => send(u, code, { type: "SUBMIT", cardIds: hands[i]! })));
     for (const r of results) expect(r.ok).toBe(true);
     const after = data(await viewRoom(deps, judge, code));
     expect(after.view.phase).toBe("judging");
@@ -183,4 +188,18 @@ describe.skipIf(!ADMIN_URL)("servidor do jogo (serviço + banco real)", () => {
     data(await send(users.cris, code, { type: "LEAVE" }));
     data(await joinRoom(deps, users.duda, code, { nickname: "cris" }));
   });
+
+  it("juiz tocando rápido em duas cartas: as duas revelações valem", async () => {
+    const code = await roomWith3();
+    data(await send(users.ana, code, { type: "START_GAME" }));
+    const judge = data(await viewRoom(deps, users.ana, code)).view.round!.judgeId;
+    for (const u of [users.ana, users.beto, users.cris].filter((x) => x !== judge)) {
+      data(await send(u, code, { type: "SUBMIT", cardIds: await answerCards(u, code) }));
+    }
+    const [a, b] = await Promise.all([send(judge, code, { type: "REVEAL_NEXT" }), send(judge, code, { type: "REVEAL_NEXT" })]);
+    expect([a, b].filter((x) => !x.ok)).toEqual([]);
+    const v = data(await viewRoom(deps, judge, code));
+    expect(v.view.round!.answers.every((x) => x.cards !== null)).toBe(true);
+  });
 });
+

@@ -2,7 +2,7 @@
 
 Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cartas resposta e um juiz rotativo. Joga no celular, sem cadastro, entrando por código ou link.
 
-**Status:** Etapas 3 (Fundação) e 4 (motor do jogo) concluídas. Próxima: Etapa 5 (multiplayer e telas da partida).
+**Status:** Etapas 3 e 4 concluídas. Etapa 5 (multiplayer e telas) jogável localmente; falta publicar no Supabase/Vercel.
 
 - [Plano de desenvolvimento](docs/PLANO_DE_DESENVOLVIMENTO.md)
 - [Identidade visual e protótipo](docs/identidade-visual/index.html)
@@ -12,14 +12,16 @@ Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cart
 
 | Parte | Situação |
 |---|---|
-| Tela inicial, Como jogar, Configurações | Funcionando. Os botões de sala aparecem desligados até a Etapa 5. |
+| Partida completa | Criar sala, entrar por código ou link, sala de espera, respostas, revelação, vencedor, placar, fim de partida e jogar novamente. Testado com 3 navegadores jogando juntos. |
+| Tela inicial, Como jogar, Configurações | Funcionando. |
 | Identidade visual (cores, fontes, cartas, botões) | Componentes prontos em `src/components`. |
 | Banco de dados | Esquema completo, regras de acesso (RLS) e 22 cartas pergunta + 60 cartas resposta originais. |
 | Gravação segura do estado da partida | Função atômica com controle de versão e proteção contra ação duplicada. |
-| Login anônimo | Código pronto (`ensureAnonymousSession`); entra em uso na Etapa 5. |
+| Login | Anônimo pelo Supabase (sem cadastro). Em desenvolvimento, login local de teste. |
 | PWA | Manifesto e ícones; instalável. Funcionamento offline fica para a Etapa 6. |
 | Motor do jogo | Regras completas em `src/engine/` (função pura, determinística): rodadas, juiz, tempo, desconexões, anfitrião, pausa. Cada jogador recebe só o que pode ver. |
-| Testes e CI | 94 testes unitários (incluindo simulação de partidas aleatórias), 33 de banco, 6 ponta a ponta. GitHub Actions roda tudo a cada push. |
+| Servidor do jogo | Rotas em `src/app/api/rooms`: valida tudo, grava com controle de versão, repete sozinho se duas ações chegam juntas, ignora reenvios e avisa os celulares em tempo real. |
+| Testes e CI | 101 testes unitários (incluindo partidas simuladas), 47 de banco, 10 ponta a ponta. GitHub Actions roda tudo a cada push. |
 
 ## Tecnologias
 
@@ -39,7 +41,29 @@ pnpm install
 pnpm dev
 ```
 
-Abra http://localhost:3000. Sem Supabase configurado, as telas atuais funcionam normalmente e `/api/health` responde `"supabase": "not_configured"`.
+Abra http://localhost:3000.
+
+### Jogar localmente, sem Supabase
+
+Dá para jogar partidas de verdade no computador (abra várias janelas anônimas para simular os jogadores):
+
+```bash
+pnpm db:local
+```
+
+```bash
+DATABASE_URL=postgres://postgres@localhost:54329/postgres node scripts/db-setup.mjs
+```
+
+Crie um `.env.local` com:
+
+```
+SUPABASE_DB_URL=postgres://postgres@localhost:54329/scragbadum_dev
+DEV_AUTH_SECRET=um-segredo-qualquer-com-16-ou-mais
+NEXT_PUBLIC_DEV_AUTH=1
+```
+
+e rode `pnpm dev`. Sem tempo real, os celulares se atualizam a cada 2,5 segundos.
 
 ## Configurar o Supabase
 
@@ -65,7 +89,8 @@ npx supabase db push --include-seed
 
    Sem a CLI: cole no **SQL Editor** do painel, nesta ordem, os arquivos de `supabase/migrations/` e depois `supabase/seed.sql`.
 
-5. Confira: `pnpm dev` e abra http://localhost:3000/api/health. Deve aparecer `"database": "ok"`.
+5. Copie a URL do **Transaction pooler** (Painel > Connect, porta 6543) para `SUPABASE_DB_URL`.
+6. Confira: `pnpm dev` e abra http://localhost:3000/api/health. Deve aparecer `"database": "ok"`.
 
 ### Limpeza automática de salas
 
@@ -92,7 +117,7 @@ O painel administrativo chega na Etapa 7.
 |---|---|---|
 | `pnpm test` | Motor do jogo (inclui 200 partidas simuladas), validações, texto das cartas, autenticação | Nada |
 | `pnpm test:db` | Migrations, seed, RLS, restrições, gravação atômica do estado | Postgres (abaixo) |
-| `pnpm test:e2e` | Telas reais num celular simulado | Chromium do Playwright |
+| `pnpm test:e2e` | Telas reais num celular simulado, incluindo uma partida com 3 navegadores | Chromium do Playwright + `pnpm db:e2e` |
 | `pnpm check` | Lint + tipos + testes unitários | Nada |
 
 Os testes de banco criam um banco temporário, aplicam tudo e apagam no final. Para ter um Postgres local sem Docker:
@@ -112,7 +137,7 @@ Para os testes ponta a ponta, instale o navegador uma vez com `pnpm exec playwri
 ## Publicar na Vercel
 
 1. Importe o repositório em https://vercel.com/new.
-2. Em **Settings > Environment Variables**, cadastre as três variáveis do Supabase.
+2. Em **Settings > Environment Variables**, cadastre as variáveis do Supabase e a `SUPABASE_DB_URL`. Não cadastre `DEV_AUTH_SECRET` nem `NEXT_PUBLIC_DEV_AUTH` na produção.
 3. Em **Settings > Functions**, escolha a região **São Paulo (gru1)**, perto do banco.
 4. Depois do deploy, abra `/api/health` no domínio publicado para conferir.
 
@@ -126,7 +151,7 @@ src/
   engine/           Motor do jogo: regras, projeção por jogador (sem I/O, sem relógio)
   lib/              Regras e validações compartilhadas (sem dependência de servidor)
   lib/supabase/     Cliente do navegador e sessão anônima
-  server/           Só servidor: cliente com chave secreta, autenticação de requisições
+  server/           Só servidor: serviço do jogo, banco, autenticação, tempo real, limites
 supabase/
   migrations/       Esquema e políticas de acesso, versionados
   seed.sql          Cartas iniciais (originais)
@@ -141,4 +166,7 @@ docs/               Plano, identidade visual
 - O servidor é a única fonte da verdade. O navegador só pede ações; quem valida e grava é o servidor.
 - Nenhuma tabela de jogo aceita escrita direta do navegador (RLS). O estado completo da partida (`game_states`) não é legível por jogadores.
 - A chave secreta do Supabase só existe no servidor (`src/server/`, protegido por `server-only`).
-- Toda ação de jogo terá um `client_action_id`: reenvios não duplicam nada.
+- Toda ação de jogo tem um `client_action_id`: reenvios não duplicam nada.
+- O canal de tempo real só transporta o número da versão; cada celular busca a própria visão.
+- Limite de requisições por usuário e por IP (por instância do servidor; um limite global fica para a Etapa 8).
+- Pendências de segurança registradas para a Etapa 8: verificação do certificado do banco quando `SUPABASE_DB_CA_CERT` não estiver definido, CSP completa e lista de termos bloqueados em apelidos.

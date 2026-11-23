@@ -4,8 +4,8 @@ test.describe("fundação", () => {
   test("tela inicial mostra o logo e o menu, sem rolagem lateral", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Scragbadum!" })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Jogar" })).toBeDisabled();
-    await expect(page.getByText("As salas abrem na próxima etapa")).toBeVisible();
+    await expect(page.getByRole("link", { name: "Jogar", exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Entrar em uma sala" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Como jogar" })).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(0);

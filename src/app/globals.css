@@ -75,3 +75,11 @@ body {
   animation: none !important;
   transition: none !important;
 }
+
+/* Animações do jogo (desligadas por "menos animação") */
+@keyframes sheet-up { from { transform: translateY(40px); opacity: 0; } }
+@keyframes pop-in { from { transform: scale(.85); opacity: 0; } }
+@keyframes stamp { 0% { transform: translate(-50%, -50%) rotate(-14deg) scale(2.4); opacity: 0; } 60% { opacity: 1; } 100% { transform: translate(-50%, -50%) rotate(-14deg) scale(1); } }
+@keyframes rise { from { transform: translateY(16px); opacity: 0; } }
+@keyframes flip-in { from { transform: rotateY(90deg); } }
+@keyframes bump { 40% { transform: scale(1.5); color: var(--color-rosa); } }
