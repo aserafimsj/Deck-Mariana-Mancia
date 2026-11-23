@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* Identidade "Lambe-lambe de madrugada" — ver docs/identidade-visual/index.html.
+   A paleta padrão do Tailwind é desligada para só existirem as cores da marca. */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-breu: #15101a;
+  --color-breu-2: #211a28;
+  --color-breu-3: #31283b;
+  --color-carta-preta: #0c090f;
+  --color-papel: #f3efe7;
+  --color-tinta: #15101a;
+  --color-texto: #eee7f3;
+  --color-texto-2: #ae9fbb;
+  --color-amarelo: #ffcc1a;
+  --color-rosa: #ff3d8b;
+  --color-ciano: #3fe0cf;
+  --color-vermelho: #ff4b3e;
+
+  --font-display: "Bungee", Impact, "Arial Black", sans-serif;
+  --font-sans: "Archivo Variable", "Helvetica Neue", Arial, sans-serif;
+
+  --shadow-dura: 5px 5px 0 #000;
+  --shadow-dura-sm: 4px 4px 0 #000;
+  --shadow-press: 1px 1px 0 #000;
+  --shadow-rosa: 6px 6px 0 var(--color-rosa);
+  --shadow-amarelo: 6px 6px 0 var(--color-amarelo);
+
+  --radius-carta: 16px;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-breu);
+  color: var(--color-texto);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-ciano);
+  outline-offset: 3px;
+}
+
+/* Lacuna da carta pergunta */
+.card-blank {
+  display: inline-block;
+  min-width: 3.2em;
+  border-bottom: 3px solid var(--color-amarelo);
+  transform: translateY(-3px);
+}
+
+/* Preferência de movimento: do sistema ou da tela de Configurações */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation: none !important;
+  transition: none !important;
+}

@@ -1,6 +1,6 @@
 # PLANO DE DESENVOLVIMENTO — SCRAGBADUM!
 
-> Versão 1.2 · 23/11/2026 · Nome provisório: **Scragbadum!** · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 2 (identidade visual)
+> Versão 1.3 · 23/11/2026 · Nome provisório: **Scragbadum!** · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 3 concluída (fundação); próxima: 4 (motor de jogo)
 > Papéis nesta etapa: Product Manager + Arquiteto de Software
 > Nenhuma linha de código de produto foi escrita. A implementação começa depois da sua aprovação.
 
@@ -496,9 +496,9 @@ Cada etapa termina com uma **entrega verificável** e sua validação antes de s
 
 | Etapa | Conteúdo | Entrega / critério de aceite | Duração estimada |
 |---|---|---|---|
-| **1. Planejamento** | Este documento | Plano aprovado, decisões D1–D10 respondidas | ✅ em revisão |
-| **2. Identidade visual** | Paleta, tipografia, estilo das cartas, componentes, tom de voz dos textos, protótipo navegável das telas principais (HTML) | Proposta visual aprovada por você; protótipo testado em celular real | 3–5 dias |
-| **3. Fundação** | Projeto Next.js + TS + Tailwind + tokens; Supabase (migrations, RLS, seed), auth anônima, CI, Sentry, estrutura de pastas | `pnpm test` e CI verdes; deploy de preview funcionando | 2–3 dias |
+| **1. Planejamento** | Este documento | Plano aprovado, decisões D1–D10 respondidas | ✅ concluída |
+| **2. Identidade visual** | Paleta, tipografia, estilo das cartas, componentes, tom de voz dos textos, protótipo navegável das telas principais (HTML) | Proposta visual aprovada por você; protótipo testado em celular real | ✅ aprovada (23/11) |
+| **3. Fundação** | Projeto Next.js + TS + Tailwind + tokens; Supabase (migrations, RLS, seed), auth anônima, CI, estrutura de pastas | Testes e build verdes; CI no GitHub Actions. Deploy de preview aguarda as contas Supabase/Vercel. Sentry movido para a Etapa 9 (exige conta e DSN) | ✅ concluída (23/11) |
 | **4. Motor de jogo** | `engine/` completo: tipos, reducer, projeção, baralho, rodízio, temporizador, desconexões; testes unitários + simulação de milhares de partidas aleatórias | Cobertura ≥ 90%; zero vazamento nos testes de projeção; simulações sem estado inválido | 4–6 dias |
 | **5. Multiplayer + telas do jogo** | API de salas/ações/visão, Broadcast + Presence, reconexão; telas inicial, criar, entrar, espera, jogo, revelação, placar, resultado, como jogar, configurações | Partida completa entre 4 navegadores no E2E; teste manual com celulares | 7–10 dias |
 | **6. Polimento de experiência** | Animações, sons, vibração, estados de carregamento e erro, PWA, acessibilidade, performance | Lighthouse ≥ 90 (mobile) em performance e acessibilidade; checklist de UX aprovado | 3–5 dias |
