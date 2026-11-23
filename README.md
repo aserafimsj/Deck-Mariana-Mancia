@@ -15,7 +15,8 @@ Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cart
 | Partida completa | Criar sala, entrar por código ou link, sala de espera, respostas, revelação, vencedor, placar, fim de partida e jogar novamente. Testado com 3 navegadores jogando juntos. |
 | Tela inicial, Como jogar, Configurações | Funcionando. |
 | Identidade visual (cores, fontes, cartas, botões) | Componentes prontos em `src/components`. |
-| Banco de dados | Esquema completo, regras de acesso (RLS) e 22 cartas pergunta + 60 cartas resposta originais. |
+| Banco de dados | Esquema completo e regras de acesso (RLS). |
+| Cartas | 107 perguntas e 308 respostas originais nos 4 níveis, em `content/baralho-base.json`. |
 | Gravação segura do estado da partida | Função atômica com controle de versão e proteção contra ação duplicada. |
 | Login | Anônimo pelo Supabase (sem cadastro). Em desenvolvimento, login local de teste. |
 | PWA | Manifesto e ícones; instalável. Funcionamento offline fica para a Etapa 6. |
@@ -111,6 +112,21 @@ select id, 'admin' from auth.users where email = 'voce@exemplo.com';
 
 O painel administrativo chega na Etapa 7.
 
+## Cartas
+
+As cartas ficam em `content/baralho-base.json` (texto, nível de 1 a 4, categoria). Lacunas são `___`; duas lacunas viram carta "ESCOLHA 2".
+Depois de editar, gere o seed e rode os testes, que conferem repetições, tamanhos, lacunas e se cada nível tem cartas para uma sala cheia:
+
+```bash
+pnpm cartas
+```
+
+```bash
+pnpm test
+```
+
+Na Etapa 7, o painel administrativo passa a ser o jeito principal de gerenciar cartas, sem mexer em código.
+
 ## Testes
 
 | Comando | O que testa | Precisa de |
@@ -154,11 +170,12 @@ src/
   server/           Só servidor: serviço do jogo, banco, autenticação, tempo real, limites
 supabase/
   migrations/       Esquema e políticas de acesso, versionados
-  seed.sql          Cartas iniciais (originais)
+  seed.sql          Gerado a partir de content/baralho-base.json (pnpm cartas)
   config.toml       Configuração da CLI do Supabase
 tests/
   unit/  db/  e2e/
-docs/               Plano, identidade visual
+content/            Cartas do baralho base (fonte do seed)
+docs/               Plano, identidade visual, regras
 ```
 
 ## Regras de segurança do projeto

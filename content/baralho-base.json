@@ -1,0 +1,2129 @@
+{
+ "baralho": {
+  "slug": "base",
+  "nome": "Baralho Base",
+  "descricao": "O baralho que vem com o jogo.",
+  "gratuito": true
+ },
+ "categorias": [
+  {
+   "slug": "cotidiano",
+   "nome": "Cotidiano",
+   "cor": "#3FE0CF"
+  },
+  {
+   "slug": "familia",
+   "nome": "Família",
+   "cor": "#FFCC1A"
+  },
+  {
+   "slug": "trabalho",
+   "nome": "Trabalho",
+   "cor": "#AE9FBB"
+  },
+  {
+   "slug": "internet",
+   "nome": "Internet",
+   "cor": "#FF3D8B"
+  },
+  {
+   "slug": "relacionamentos",
+   "nome": "Relacionamentos",
+   "cor": "#FF4B3E"
+  },
+  {
+   "slug": "absurdo",
+   "nome": "Absurdo",
+   "cor": "#F3EFE7"
+  },
+  {
+   "slug": "comida",
+   "nome": "Comida",
+   "cor": "#FFCC1A"
+  },
+  {
+   "slug": "brasilidades",
+   "nome": "Brasilidades",
+   "cor": "#3FE0CF"
+  }
+ ],
+ "perguntas": [
+  {
+   "texto": "Qual é o segredo para conquistar alguém?",
+   "nivel": 1,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Qual é o verdadeiro motivo do grupo da família estar em silêncio?",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Minha terapeuta disse que eu preciso parar com ___.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O síndico mandou um comunicado proibindo ___ na piscina.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "___ + ___ = sexta-feira perfeita.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Na reunião de segunda, o chefe apresentou a nova estratégia: ___.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "O que a vovó guarda dentro do pote de sorvete?",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Qual é o próximo grande sucesso das redes sociais?",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "No meu currículo, em \"outras habilidades\": ___.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "O que estragou o churrasco de domingo?",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Meu horóscopo de hoje: cuidado com ___.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Nunca subestime o poder de ___.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que tem dentro da gaveta de bagunça da sua casa?",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "A nova novela das nove conta a história de ___.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Qual é o pior presente de amigo secreto?",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O Brasil só vai pra frente quando acabar com ___.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Qual é o cheiro oficial de segunda-feira?",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "A vizinha de baixo bateu na porta reclamando de ___.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O que o cachorro pensa quando olha para você?",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Minha mãe disse que, na minha idade, ela já tinha ___.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Promoção imperdível no supermercado: leve ___ e ganhe ___.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "O segredo da receita da vovó é ___.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Por que o motorista de aplicativo cancelou a corrida?",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Qual é a última coisa que você quer ouvir de um dentista?",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "No churrasco, o tio sempre traz ___.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "A próxima moda das redes sociais vai ser ___.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Qual é o verdadeiro motivo do atraso do ônibus?",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O que tem no fundo da bolsa da sua tia?",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Meu plano para ficar rico: ___.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "O que realmente acontece na reunião de condomínio?",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Minha tatuagem tem um significado profundo: ___.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que o professor de educação física faz nas férias?",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Fui ao médico e ele receitou ___.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Qual é o maior mistério do universo?",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que a Receita Federal descobriu sobre mim?",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Meu talento escondido é ___.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Qual é o tema da festa de 40 anos do seu primo?",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Ganhei na loteria e a primeira coisa que comprei foi ___.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Qual é a pior coisa para fazer numa entrevista de emprego?",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "___: o filme. Em breve nos cinemas.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que vai acontecer quando a internet cair para sempre?",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Antes de dormir, eu sempre penso em ___.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Primeiro ___, depois ___. É assim que a vida funciona.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que o GPS diz quando você erra o caminho pela terceira vez?",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Qual é o ingrediente secreto do pastel da feira?",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Por que o jogo de domingo foi interrompido?",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Primeiro encontro perfeito: jantar, vinho e ___.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que tem no histórico de pesquisa do seu tio?",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Eu não estava bêbado, eu só estava ___.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Meu ex me trocou por ___.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Fui demitido por causa de ___ e, sinceramente, faria de novo.",
+   "nivel": 2,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Na despedida de solteiro, tudo deu errado por causa de ___ e ___.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que o padre confessou para o padre?",
+   "nivel": 2,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "A nova fantasia de Carnaval mais vendida do ano: ___.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "No meu velório, quero que toque ___.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O que fez a festa da firma acabar mais cedo?",
+   "nivel": 2,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "O que eu encontrei no celular do meu namorado?",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Por que me expulsaram do bloco de Carnaval?",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "A minha ressaca tem nome e sobrenome: ___.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O que não pode faltar num primeiro encontro de aplicativo?",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Meu histórico do navegador em uma palavra: ___.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Por que eu fui bloqueado no grupo do condomínio?",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Qual é o verdadeiro motivo do divórcio da vizinha?",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Eu só bebo socialmente. Quer dizer, ___.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "No meu perfil de namoro está escrito: \"Gosto de ___ e ___\".",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que o meu chefe faz trancado na sala dele?",
+   "nivel": 2,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Qual é a pior coisa para gritar na hora errada?",
+   "nivel": 2,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que a vizinha ouviu através da parede?",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Minha mãe me pegou fazendo ___.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O que eu falei bêbado no áudio de quatro minutos?",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "O que tem de especial no meu story de melhores amigos?",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Apaguei a mensagem, mas todo mundo já tinha visto ___.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "O que me fez vomitar no Réveillon?",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "A nova lei aprovada em Brasília proíbe ___.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Por que o casamento foi cancelado no altar?",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que tem de verdade dentro do salgadinho da festa?",
+   "nivel": 2,
+   "categoria": "comida"
+  },
+  {
+   "texto": "O que realmente acontece no motel da beira da estrada?",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Meu testamento tem uma cláusula só: ___.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O que me faz pensar na morte toda segunda-feira?",
+   "nivel": 3,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Sexo bom é aquele que termina com ___.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que realmente acontece na sauna do clube?",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Meu último arrependimento antes de morrer vai ser ___.",
+   "nivel": 3,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Qual é o fetiche mais estranho da cidade?",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que eu deveria ter apagado antes de emprestar o celular?",
+   "nivel": 3,
+   "categoria": "internet"
+  },
+  {
+   "texto": "O médico olhou o exame e disse: \"Isso explica ___\".",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Por que o padre foi transferido de paróquia às pressas?",
+   "nivel": 3,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que o legista encontrou?",
+   "nivel": 3,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "A pior coisa para sussurrar durante o sexo: ___.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que tem no pote escondido debaixo da cama?",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Fui preso por ___ e solto por ___.",
+   "nivel": 3,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O segredo de uma vida sexual longa e feliz é ___.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O que aconteceu no banheiro da rodoviária?",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Meu terapeuta pediu demissão depois que eu contei sobre ___.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O que o vovô deixou de herança no fundo do armário?",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O que Deus faz quando ninguém está rezando?",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Qual vai ser a causa da minha morte, segundo a minha família?",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "No inferno tem fila especial para quem ___.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que o coveiro faz no plantão da madrugada?",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "A última coisa que o paciente ouviu antes de apagar foi ___.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Qual é o verdadeiro destino do dinheiro do dízimo?",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O candidato prometeu ___ e entregou ___.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Meu plano funerário inclui ___.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O que rolou no after do velório?",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Jesus voltou e a primeira coisa que ele fez foi ___.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O que o deputado realmente cheira no gabinete?",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Causa da morte no atestado: ___.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "A nova doença venérea foi batizada em homenagem a ___.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  }
+ ],
+ "respostas": [
+  {
+   "texto": "Um áudio de 7 minutos da sogra.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um pombo com problemas de autoestima.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Pix de R$ 3,50 com a descrição \"saudades\".",
+   "nivel": 1,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma reunião que poderia ser um e-mail.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "O tio do pavê em modo turbo.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Chinelo voador de alta precisão.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Coach quântico de autoconhecimento.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um boleto vencido.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "A última coxinha da festa.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Responder \"kkkk\" sem ter rido.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Dançar forró com o ex no casamento do primo.",
+   "nivel": 1,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um grupo de WhatsApp chamado \"Família 100% Unida\".",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um ventilador de teto girando no máximo.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Fingir que está digitando para não atender a ligação.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma planilha com abas coloridas e nenhum propósito.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "O vizinho furando a parede às 7h de domingo.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um pastel de vento.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "A cobrança do condomínio.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma capivara influencer.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "A senha do Wi-Fi escrita num guardanapo.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O cachorro do vizinho latindo em código Morse.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Uma tia que manda bom dia com GIF de flor.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um estagiário com acesso de administrador.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um \"vamos marcar\" que nunca vai acontecer.",
+   "nivel": 1,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Trinta abas abertas no navegador.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um sofá que já foi de três donos.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O silêncio constrangedor do elevador.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma pochete cheia de moedas de cinco centavos.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "A tampa de pote que não fecha nenhum pote.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma live de três horas sobre produtividade.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um feedback \"construtivo\" na frente de todo mundo.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um bolo de pote sem bolo.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um cupom de desconto vencido ontem.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um ganso com crise existencial.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Acordar com uma música de comercial na cabeça.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um pen drive de 2 GB com a vida inteira dentro.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "A tia que pergunta \"e os namoradinhos?\".",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um cachorro caramelo dono da rua.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O som da internet discada.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma panela de pressão apitando às 11h.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Arroz requentado pela quarta vez.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um vendedor de pano de prato no semáforo.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "A fila do banco às 15h59.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um mosquito que sobreviveu a três raquetes elétricas.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um guarda-chuva esquecido no ônibus.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Dormir de meia.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O controle remoto embrulhado em plástico.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma briga de família pela herança de uma geladeira.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Achar dinheiro no bolso da calça lavada.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O \"visualizou e não respondeu\".",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um influencer de pão de queijo.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um gato que derruba tudo da mesa olhando nos seus olhos.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um galo que canta às 3 da manhã.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O aplicativo do banco pedindo atualização.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "O cunhado que entende de tudo.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um pacote de salgadinho que só vem com ar.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Uma senha que exige letra, número, símbolo e sangue.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um ex-participante de reality fazendo publi de chá.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um avô que manda áudio com o celular colado no ouvido.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "A professora de Matemática da quinta série.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "O pagode de domingo do vizinho.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Uma pizza de banana com canela.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um chinelo arrebentado amarrado com arame.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O carro do ovo passando na rua.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O silêncio depois do \"precisamos conversar\".",
+   "nivel": 1,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Trinta notificações do grupo da escola.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um casamento com open bar de refrigerante.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Esquecer o nome da pessoa no meio da conversa.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um pombo com cargo de gerência.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "A conta de luz de dezembro.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um pastel de feira do tamanho de um travesseiro.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um sofá-cama que nunca vira cama.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Bater o dedinho na quina da cama.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um papagaio que xinga a vizinha pelo nome.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "A tia do zap jurando que a vacina pega Wi-Fi.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um elevador que para em todos os andares.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um vizinho que lava a calçada com mangueira por duas horas.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Comer o recheio e devolver o biscoito.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Uma lasanha congelada às 2 da manhã.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um currículo com \"pacote Office avançado\".",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um jacaré no lago do condomínio.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um amigo que diz \"tô chegando\" ainda em casa.",
+   "nivel": 1,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O motorista de aplicativo que conta a vida inteira.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um karaokê com microfone que dá choque.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Uma pomada que serve para tudo.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O potinho de pomada mentolada da vó.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um feriado que cai no sábado.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Assistir série na velocidade 2x.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma coleção de sachês de ketchup.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um chuveiro que só esquenta de um lado.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma plantinha que morreu de tanto ser regada.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "A prova de direção na ladeira.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Velas de aniversário que não apagam nunca.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um curso de inglês que promete fluência em três semanas.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um cachorro que late para a própria sombra.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O eco da sala vazia no dia da mudança.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma briga de trânsito entre dois carrinhos de supermercado.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "A internet do vizinho com a senha \"12345678\".",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma capivara atravessando a marginal.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um frango assado girando hipnoticamente na padaria.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um despertador com soneca infinita.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma figurinha repetida do álbum da Copa.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um narrador gritando gol por quatro minutos.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "A taxa de conveniência do ingresso.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um balde de pipoca de 60 reais.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um formulário que precisa ser impresso, assinado e escaneado.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um tio no churrasco com a camisa aberta até o umbigo.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um pato de estimação chamado Roberto.",
+   "nivel": 1,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O ronco do pai que faz a parede tremer.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma cadeira de plástico que racha quando você senta.",
+   "nivel": 1,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um bebê reborn com consulta marcada no pediatra.",
+   "nivel": 1,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um primo que vende suplemento milagroso.",
+   "nivel": 1,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma sobremesa que leva leite condensado e mais leite condensado.",
+   "nivel": 1,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Uma marmita com o nome escrito na tampa.",
+   "nivel": 1,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Gente que bate palma quando o avião pousa.",
+   "nivel": 1,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Ficar de olho no status \"online\" do crush.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma ressaca que dura até quarta-feira.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um nude acidentalmente enviado no grupo do trabalho.",
+   "nivel": 2,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Beijar alguém só porque o bloco parou.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um \"oi sumida\" às 3 da manhã.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A conta do bar dividida igualmente mesmo eu tendo bebido água.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma tatuagem com o nome do ex.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Fingir orgasmo e fingir que gostou do presente no mesmo dia.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um date que levou a mãe.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um banheiro químico no terceiro dia de festival.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O primo que vende curso de enriquecimento.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma cueca da sorte que nunca foi lavada.",
+   "nivel": 2,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Vomitar no carro de aplicativo e dar cinco estrelas para o motorista.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma calcinha esquecida no carro do pai.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um happy hour que virou sequestro emocional.",
+   "nivel": 2,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Mandar áudio chorando e depois apagar.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O corretor automático trocando \"amor\" por \"ânus\".",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um date que pediu Pix da metade do refrigerante.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Acordar de ressaca abraçado num cone de trânsito.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um \"sextou\" às 9h da manhã de terça.",
+   "nivel": 2,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Dar match com o próprio chefe.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma calcinha bege de vó.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um encontro às cegas com a ex do seu irmão.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O áudio que era para ser só para o amigo.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Peidar no silêncio da prova.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Acenar de volta para quem estava acenando para outra pessoa.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma cueca furada no dia do exame médico.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Beijar e descobrir que a pessoa comeu alho.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma ressaca moral nível campeonato.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um tio que fica pelado na piscina depois da quinta cerveja.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma foto de perfil de dez anos atrás.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Vomitar no sapato do segurança.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um nude com o dedão na frente da câmera.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um fiscal de cu alheio.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um \"kkk\" seco depois de uma piada pesada.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "O cara do bar que jura que já foi jogador profissional.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Uma camisinha guardada na carteira desde 2015.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O amigo que some quando chega a conta.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Fazer xixi na piscina e fingir que não.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um crush que responde com \"kkk\" e mais nada.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A mãe que descobriu o perfil secreto.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Ficar pelado e descobrir que a janela estava aberta.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um boy lixo reciclável.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um casamento de três dias com DJ de pagode.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Cachaça artesanal destilada no banheiro.",
+   "nivel": 2,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um tapa na bunda na hora errada.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma vovó arrasando no baile da terceira idade.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O ex que voltou só para buscar o carregador.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma tatuagem de golfinho no cóccix.",
+   "nivel": 2,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um \"oi, tudo bem?\" que vira pedido de dinheiro.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Dormir na casa do date e acordar com a família toda na sala.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O cheiro do banheiro depois do feijão da sogra.",
+   "nivel": 2,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Um rolê que começou no bar e terminou no hospital.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma DR por causa de uma curtida antiga.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O cara que pede \"só um gole\" e bebe metade.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Descobrir pelo story que você levou um bolo.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma tanga de crochê na praia.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um bafo de cachaça de Carnaval.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Chorar no banheiro da balada.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O tio que conta piada de pavê com duplo sentido.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um motel com espelho no teto e cheiro de desinfetante.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma ex que virou coach de relacionamento.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Fingir que está bêbado para justificar o beijo.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um \"boa noite, linda\" do contato salvo como \"Não Atender\".",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Mandar o print da conversa para a própria pessoa da conversa.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um aplicativo de namoro só para síndicos.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "A conta do motel no cartão da empresa.",
+   "nivel": 2,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um cachorro que se lambe na frente das visitas.",
+   "nivel": 2,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "A depilação com cera quente.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Acordar sem saber onde estacionou o carro e a dignidade.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma piscina de plástico cheia de cerveja.",
+   "nivel": 2,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O ex que curte foto de 2016 às 4h.",
+   "nivel": 2,
+   "categoria": "internet"
+  },
+  {
+   "texto": "O \"foi mal, galera\" depois de destruir o churrasco.",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um banheiro de festa sem tranca.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Os amigos do pai no grupo \"Só Tiozão\".",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um primeiro beijo com aparelho nos dentes.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um vizinho que canta no chuveiro às 6h.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Sair do banheiro com papel higiênico preso no sapato.",
+   "nivel": 2,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um encontro romântico num rodízio de pizza.",
+   "nivel": 2,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A sogra perguntando se o casal \"já está encomendando\".",
+   "nivel": 2,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um sexo tão ruim que virou amizade.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma diarreia em pleno casamento.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O velório mais animado da cidade.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um brinquedo erótico que vibra sozinho na reunião.",
+   "nivel": 3,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Herdar só as dívidas.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma camisinha furada e muita fé.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A carne misteriosa do churrasco de beira de estrada.",
+   "nivel": 3,
+   "categoria": "comida"
+  },
+  {
+   "texto": "O plano de saúde negando tudo, inclusive a sua existência.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma suruba organizada por planilha.",
+   "nivel": 3,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um vibrador com a bateria fraca.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Gemer baixinho para não acordar a sogra.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma gonorreia de estimação.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Pegar no sono durante o sexo.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um ménage com a vizinha e muito arrependimento.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um pau de selfie usado para outra coisa.",
+   "nivel": 3,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma diarreia explosiva no primeiro encontro.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O vídeo íntimo que vazou no grupo da família.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um enterro com o caixão errado.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma camisinha sabor feijoada.",
+   "nivel": 3,
+   "categoria": "comida"
+  },
+  {
+   "texto": "Sexo no carro com o freio de mão na lombar.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma calcinha comestível vencida.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma ereção na hora do hino nacional.",
+   "nivel": 3,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Uma cagada que entupiu o prédio inteiro.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um swing que terminou em divórcio.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O tio que morreu e deixou um pen drive cheio de pornô.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um fio de cabelo no lugar errado.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A ressaca de cocaína de segunda-feira.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Fazer cocô na casa do crush e a descarga não funcionar.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um orgasmo fingido digno de Oscar.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um consolo esquecido na mala da viagem em família.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um velório com open bar.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma herpes que volta todo Carnaval.",
+   "nivel": 3,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um sex shop com promoção de Black Friday.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O cheiro de maconha no elevador do condomínio.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma fantasia sexual envolvendo o carteiro.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma vasectomia feita no ponto de ônibus.",
+   "nivel": 3,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Chupar picolé de um jeito sensual demais na frente da sogra.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Um sonho erótico com o chefe.",
+   "nivel": 3,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Mijar no carro do ex.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O coveiro tirando selfie.",
+   "nivel": 3,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um nude enviado para o grupo da igreja.",
+   "nivel": 3,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma bunda branca brilhando na praia de nudismo.",
+   "nivel": 3,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um exame de toque com médico de mão gelada.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Morrer engasgado com uma azeitona.",
+   "nivel": 3,
+   "categoria": "comida"
+  },
+  {
+   "texto": "A pornografia que o algoritmo acha que você curte.",
+   "nivel": 3,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Uma suruba com regimento interno de condomínio.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um drink com nome de doença venérea.",
+   "nivel": 3,
+   "categoria": "comida"
+  },
+  {
+   "texto": "O vizinho que transa gritando o próprio nome.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Vomitar dentro da própria bolsa.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um laxante no café da firma.",
+   "nivel": 3,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Uma cueca freada exposta no varal.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Fazer amor de meia.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A camisinha que ficou lá dentro.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma brochada épica no aniversário de namoro.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O papel higiênico acabar no pior momento.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um testamento que só deixa dívidas e um papagaio.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma lap dance desastrosa na despedida de solteira.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um pau pequeno com muita autoestima.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A cerveja quente da festa depois do enterro.",
+   "nivel": 3,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma alergia a látex descoberta tarde demais.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um baseado do tamanho de uma baguete.",
+   "nivel": 3,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O espelho do motel que caiu no meio da noite.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um cachorro que trouxe a cueca do vizinho de presente.",
+   "nivel": 3,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Uma foto íntima mal enquadrada.",
+   "nivel": 3,
+   "categoria": "internet"
+  },
+  {
+   "texto": "Um sexo tão silencioso que parecia velório.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Uma lavagem intestinal ao vivo.",
+   "nivel": 3,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Uma dentadura que caiu no meio do beijo.",
+   "nivel": 3,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um peido durante o sexo oral.",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O dinheiro do dízimo pagando a lancha do pastor.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um enterro em que o morto abriu o olho.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Morrer no meio do sexo e ser encontrado assim.",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "A urna com as cinzas da vó usada como cinzeiro.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma orgia no retiro espiritual.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O deputado com a cueca recheada de dinheiro.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "A cocaína do camarote VIP.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Uma doença venérea com nome em latim.",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Rezar para o ex morrer.",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "O inferno, mas com fila do INSS.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Um velório com transmissão ao vivo e patrocínio.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Pomada para hemorroida usada como protetor labial.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "O padre que sabe os pecados do bairro inteiro e conta tudo no bar.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Ressuscitar só para cobrar uma dívida.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Sexo anal sem aviso prévio.",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um atestado de óbito com a causa \"burrice\".",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um santo que só faz milagre mediante Pix.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Uma overdose de energético no velório.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "A alma vendida em dez parcelas sem juros.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Uma autópsia feita com faca de churrasco.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um candidato que compra voto com dentadura.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Gozar e chorar ao mesmo tempo.",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um necrotério com som automotivo.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Uma igreja que aceita cartão no confessionário.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um exame de fezes entregue em pote de sorvete.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Satanás pedindo para sair do grupo da família.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Jesus multiplicando cervejas no churrasco.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Um esquema de corrupção controlado por planilha.",
+   "nivel": 4,
+   "categoria": "trabalho"
+  },
+  {
+   "texto": "Um caixão alugado.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Masturbação no banheiro do avião.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Herdar o pulmão do vovô fumante.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Morrer atropelado pelo carro de som de um candidato.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "O pastor curando uma ereção ao vivo na TV.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Transar no confessionário.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "O cheiro do necrotério no verão.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "A camisinha furada que virou herdeiro.",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  },
+  {
+   "texto": "Um surto de diarreia no navio de cruzeiro.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Um traficante que aceita vale-refeição.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "A tia que morreu e continua mandando bom dia por mensagem agendada.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "Uma colonoscopia sem anestesia.",
+   "nivel": 4,
+   "categoria": "cotidiano"
+  },
+  {
+   "texto": "Ser cremado com o celular no bolso e ele explodir.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Ser enterrado no jazigo errado.",
+   "nivel": 4,
+   "categoria": "familia"
+  },
+  {
+   "texto": "O Diabo fazendo hora extra no Brasil.",
+   "nivel": 4,
+   "categoria": "brasilidades"
+  },
+  {
+   "texto": "Uma sessão de descarrego com o ex.",
+   "nivel": 4,
+   "categoria": "absurdo"
+  },
+  {
+   "texto": "Transar no cemitério para \"sentir a energia\".",
+   "nivel": 4,
+   "categoria": "relacionamentos"
+  }
+ ]
+}
