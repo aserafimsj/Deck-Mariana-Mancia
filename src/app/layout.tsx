@@ -3,6 +3,7 @@ import "@fontsource/bungee/latin-400.css";
 import "@fontsource-variable/archivo/wdth.css";
 import "./globals.css";
 import { MotionPreference } from "@/components/MotionPreference";
+import { ServiceWorker } from "@/components/ServiceWorker";
 
 export const metadata: Metadata = {
   title: {
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="pt-BR" className="h-full">
       <body className="min-h-full">
         <MotionPreference />
+        <ServiceWorker />
         {children}
       </body>
     </html>

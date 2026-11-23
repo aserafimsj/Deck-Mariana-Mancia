@@ -59,8 +59,11 @@ export function Scoreboard({ players, highlight, pointsToWin }: { players: Playe
         <li key={p.id} className={`flex items-center gap-2.5 rounded-xl bg-breu-2 px-3 py-2 ${p.score === top && top > 0 ? "shadow-[inset_0_0_0_2px_var(--color-amarelo)]" : ""}`}>
           <Avatar name={p.nickname} seat={p.seat} />
           <span className="min-w-0 flex-1 truncate font-extrabold">{p.nickname}</span>
-          <span className={`font-display text-lg text-amarelo tabular-nums ${p.id === highlight ? "animate-[bump_.6s_ease]" : ""}`} aria-label={`${p.score} de ${pointsToWin} pontos`}>
-            {p.score}
+          <span className={`font-display text-lg text-amarelo tabular-nums ${p.id === highlight ? "animate-[bump_.6s_ease]" : ""}`}>
+            <span aria-hidden="true">{p.score}</span>
+            <span className="sr-only">
+              {p.score} de {pointsToWin} pontos
+            </span>
           </span>
         </li>
       ))}

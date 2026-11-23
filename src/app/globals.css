@@ -83,3 +83,4 @@ body {
 @keyframes rise { from { transform: translateY(16px); opacity: 0; } }
 @keyframes flip-in { from { transform: rotateY(90deg); } }
 @keyframes bump { 40% { transform: scale(1.5); color: var(--color-rosa); } }
+@keyframes confetti-fall { to { transform: translateY(110vh) rotate(540deg); } }

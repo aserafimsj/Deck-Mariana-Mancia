@@ -36,13 +36,15 @@ export function GameCard({ kind, text, level, pick = 1, selected = false, winner
       )}
       <p className={`${TEXT_SIZE[size]} [overflow-wrap:anywhere]`}>
         {splitCardText(text).map((part, i) =>
-          part.type === "blank" ? <span key={i} className="card-blank" aria-label="lacuna" /> : <span key={i}>{part.value}</span>,
+          part.type === "blank" ? <span key={i} className="card-blank">
+              <span className="sr-only">lacuna</span>
+            </span> : <span key={i}>{part.value}</span>,
         )}
       </p>
-      <div className={`flex items-center justify-between gap-2 font-display text-[9px] tracking-[.04em] ${isQuestion ? "text-texto-2" : "text-[#8a7f92]"}`}>
+      <div className={`flex items-center justify-between gap-2 font-display text-[9px] tracking-[.04em] ${isQuestion ? "text-texto-2" : "text-[#6b6175]"}`}>
         <span>SCRAGBADUM!</span>
         {isQuestion && level && (
-          <span className="inline-flex gap-[3px]" aria-label={`Nível de humor ${level}`}>
+          <span className="inline-flex gap-[3px]" role="img" aria-label={`Nível de humor ${level}`}>
             {[1, 2, 3, 4].map((n) => (
               <i key={n} className={`size-[7px] rounded-full bg-current ${n <= level ? "opacity-100" : "opacity-25"}`} />
             ))}
@@ -50,7 +52,7 @@ export function GameCard({ kind, text, level, pick = 1, selected = false, winner
         )}
       </div>
       {winner && (
-        <span className="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-[14deg] rounded-[10px] border-4 border-rosa bg-papel/85 px-2.5 py-0.5 font-display text-[26px] text-rosa">
+        <span className="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-[14deg] rounded-[10px] border-4 border-[#d61f6e] bg-papel/85 px-2.5 py-0.5 font-display text-[26px] text-[#d61f6e]">
           VENCEU!
         </span>
       )}

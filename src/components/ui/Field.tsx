@@ -50,7 +50,7 @@ export function Chips<T extends string | number>({
             aria-pressed={on}
             onClick={() => onChange(o.value)}
             className={`min-h-11 rounded-xl border-2 px-3.5 text-sm font-extrabold transition-colors ${
-              on ? (red ? "border-vermelho bg-vermelho text-white" : "border-amarelo bg-amarelo text-tinta") : "border-breu-3 bg-breu-2 text-texto"
+              on ? (red ? "border-vermelho bg-vermelho text-tinta" : "border-amarelo bg-amarelo text-tinta") : "border-breu-3 bg-breu-2 text-texto"
             }`}
           >
             {o.label}

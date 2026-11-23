@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Level4Warning } from "@/components/room/Level4Warning";
+import { StickyActions } from "@/components/ui/StickyActions";
 import { Button } from "@/components/ui/Button";
 import { Hint, Label, TextInput } from "@/components/ui/Field";
 import { useNicknameField } from "@/hooks/useDefaultNickname";
@@ -84,9 +85,11 @@ export function JoinRoomForm() {
           {error?.field === "code" ? error.text : "Pede o código para quem criou a sala. Ou abre o link que te mandaram."}
         </Hint>
       </div>
-      <Button type="submit" block disabled={busy} className="mt-auto">
-        {busy ? "Entrando..." : "Entrar na sala"}
-      </Button>
+      <StickyActions>
+        <Button type="submit" block disabled={busy}>
+          {busy ? "Entrando..." : "Entrar na sala"}
+        </Button>
+      </StickyActions>
       <Level4Warning
         open={askLevel4}
         confirmLabel="Topo, entrar"

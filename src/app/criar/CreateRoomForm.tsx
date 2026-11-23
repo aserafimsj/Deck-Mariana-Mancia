@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { SettingsControls } from "@/components/room/SettingsControls";
+import { StickyActions } from "@/components/ui/StickyActions";
 import { Button } from "@/components/ui/Button";
 import { Hint, Label, TextInput } from "@/components/ui/Field";
 import { useNicknameField } from "@/hooks/useDefaultNickname";
@@ -65,9 +66,11 @@ export function CreateRoomForm() {
         </button>
       )}
 
-      <Button type="submit" block disabled={busy} className="mt-auto">
-        {busy ? "Criando..." : "Criar sala"}
-      </Button>
+      <StickyActions>
+        <Button type="submit" block disabled={busy}>
+          {busy ? "Criando..." : "Criar sala"}
+        </Button>
+      </StickyActions>
     </form>
   );
 }

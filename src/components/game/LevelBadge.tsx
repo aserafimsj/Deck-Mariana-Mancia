@@ -3,8 +3,8 @@ import { humorLevelInfo, type HumorLevel } from "@/lib/game-config";
 const STYLE: Record<HumorLevel, string> = {
   1: "bg-ciano text-tinta",
   2: "bg-amarelo text-tinta",
-  3: "bg-rosa text-white",
-  4: "text-white [text-shadow:1px_1px_0_#000] bg-[repeating-linear-gradient(-45deg,var(--color-vermelho)_0_10px,#c4271d_10px_20px)]",
+  3: "bg-rosa text-tinta",
+  4: "text-tinta bg-[repeating-linear-gradient(-45deg,var(--color-vermelho)_0_10px,#ff7a70_10px_20px)]",
 };
 
 export function LevelBadge({ level, className = "" }: { level: HumorLevel; className?: string }) {

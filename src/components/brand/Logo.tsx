@@ -8,7 +8,7 @@ type Props = { className?: string; as?: "h1" | "div" };
 /** Logo tipográfico. O "B" fica em amarelo (o "ba-dum" da piada). */
 export function Logo({ className = "text-[clamp(2rem,10vw,3.25rem)]", as: Tag = "div" }: Props) {
   return (
-    <Tag aria-label="Scragbadum!" className={`flex flex-nowrap justify-center font-display leading-[.95] ${className}`}>
+    <Tag aria-label="Scragbadum!" role={Tag === "div" ? "img" : undefined} className={`flex flex-nowrap justify-center font-display leading-[.95] ${className}`}>
       {LETTERS.map((letter, i) => (
         <span
           key={i}

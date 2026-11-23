@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GameCard } from "@/components/game/GameCard";
 import { LevelBadge } from "@/components/game/LevelBadge";
 import { Button } from "@/components/ui/Button";
 import { Sheet } from "@/components/ui/Modal";
+import { StickyActions } from "@/components/ui/StickyActions";
 import { useCountdown } from "@/hooks/useCountdown";
 import { useLocalSettings } from "@/hooks/useLocalSettings";
+import { play } from "@/lib/client/feedback";
 import type { PlayerView } from "@/engine";
 import type { ClientAction } from "@/lib/api-schemas";
 import { fillCard } from "@/lib/card-text";
@@ -84,7 +86,7 @@ export function LobbyPhase({ code, view, send, busy }: PhaseProps) {
         )}
       </section>
 
-      <div className="mt-auto grid gap-2">
+      <StickyActions>
         {me.isHost ? (
           <>
             <Button block disabled={busy || missing > 0} onClick={() => send({ type: "START_GAME" })}>
@@ -95,7 +97,7 @@ export function LobbyPhase({ code, view, send, busy }: PhaseProps) {
         ) : (
           <p className="rounded-[14px] bg-breu-2 p-4 text-center font-bold text-texto-2">Esperando {nick(view, view.hostId)} começar a farra...</p>
         )}
-      </div>
+      </StickyActions>
 
       <Sheet open={editing} title="Regras da sala" onClose={() => setEditing(false)}>
         <SettingsControls value={view.settings} onChange={(patch) => void send({ type: "UPDATE_SETTINGS", settings: patch })} />
@@ -130,6 +132,12 @@ export function LobbyPhase({ code, view, send, busy }: PhaseProps) {
 function RoundHud({ view, serverNow }: Pick<PhaseProps, "view" | "serverNow">) {
   const r = view.round!;
   const seconds = useCountdown(r.deadline, serverNow);
+  const { settings } = useLocalSettings();
+  // Tique nos últimos 5 segundos para quem ainda precisa agir.
+  const mustAct = view.phase === "submitting" ? !view.you?.isJudge && !view.you?.submission && !view.you?.waitingNextRound : Boolean(view.you?.isJudge);
+  useEffect(() => {
+    if (settings.sound && mustAct && seconds !== null && seconds > 0 && seconds <= 5) play("tick");
+  }, [seconds, settings.sound, mustAct]);
   const total = view.phase === "judging" ? Math.max(60, view.settings.answerSeconds) : view.settings.answerSeconds;
   return (
     <div className="flex items-center gap-3">
@@ -164,12 +172,14 @@ export function SubmittingPhase({ view, send, busy, serverNow }: PhaseProps) {
   const need = r.blackCard.pick;
 
   function toggle(id: string) {
+    if (settings.sound) play("tap");
     setPicked((cur) => (cur.includes(id) ? cur.filter((x) => x !== id) : need === 1 ? [id] : [...cur, id].slice(-need)));
   }
 
   async function submit() {
     if (picked.length !== need) return;
     const ok = await send({ type: "SUBMIT", cardIds: picked });
+    if (ok && settings.sound) play("send");
     if (ok && settings.vibration) navigator.vibrate?.(30);
   }
 
@@ -224,9 +234,11 @@ export function SubmittingPhase({ view, send, busy, serverNow }: PhaseProps) {
               );
             })}
           </div>
-          <Button block disabled={busy || picked.length !== need} onClick={submit}>
-            {picked.length === need ? "Mandar essa" : need === 2 ? `Escolha ${need - picked.length} carta${need - picked.length > 1 ? "s" : ""}` : "Escolha uma carta"}
-          </Button>
+          <StickyActions>
+            <Button block disabled={busy || picked.length !== need} onClick={submit}>
+              {busy ? "Mandando..." : picked.length === need ? "Mandar essa" : need === 2 ? `Escolha ${need - picked.length} carta${need - picked.length > 1 ? "s" : ""}` : "Escolha uma carta"}
+            </Button>
+          </StickyActions>
         </section>
       )}
     </>
@@ -298,9 +310,11 @@ export function JudgingPhase({ view, send, busy, serverNow }: PhaseProps) {
         })}
       </div>
       {isJudge && (
-        <Button variant="win" block className="mt-auto" disabled={busy || !allRevealed || chosen === null} onClick={() => chosen !== null && send({ type: "PICK_WINNER", answerIndex: chosen })}>
-          {!allRevealed ? "Revele todas" : chosen === null ? "Escolha a melhor" : "Essa é a melhor"}
-        </Button>
+        <StickyActions>
+          <Button variant="win" block disabled={busy || !allRevealed || chosen === null} onClick={() => chosen !== null && send({ type: "PICK_WINNER", answerIndex: chosen })}>
+            {!allRevealed ? "Revele todas" : chosen === null ? "Escolha a melhor" : "Essa é a melhor"}
+          </Button>
+        </StickyActions>
       )}
     </>
   );
@@ -318,9 +332,9 @@ export function RoundResultPhase({ view, send, busy, serverNow }: PhaseProps) {
   return (
     <>
       <span className="text-center font-display text-sm text-texto-2">RODADA {r.number} · RESULTADO</span>
-      <div className="relative mx-auto w-[84%] max-w-[300px]">
+      <div className="relative mx-auto w-[68%] max-w-[260px]">
         <div className="relative flex aspect-[5/7] flex-col justify-between rounded-carta border-2 border-breu-3 bg-carta-preta px-4 pt-[18px] pb-3.5 font-extrabold text-papel shadow-rosa [font-stretch:92%]">
-          <p className="text-xl leading-[1.2]">
+          <p className="text-lg leading-[1.2]">
             {parts.map((p, i) => (
               <span key={i} className={p.type === "answer" ? "text-amarelo" : ""}>
                 {p.value}
@@ -328,7 +342,7 @@ export function RoundResultPhase({ view, send, busy, serverNow }: PhaseProps) {
             ))}
           </p>
           <span className="font-display text-[9px] text-texto-2">SCRAGBADUM!</span>
-          <span className="absolute top-[70%] left-1/2 rounded-[10px] border-4 border-rosa bg-papel/90 px-2.5 py-0.5 font-display text-[26px] text-rosa animate-[stamp_.5s_ease-out_both] [transform:translate(-50%,-50%)_rotate(-14deg)]">
+          <span className="absolute top-[70%] left-1/2 rounded-[10px] border-4 border-[#d61f6e] bg-papel/90 px-2.5 py-0.5 font-display text-[26px] text-[#d61f6e] animate-[stamp_.5s_ease-out_both] [transform:translate(-50%,-50%)_rotate(-14deg)]">
             VENCEU!
           </span>
         </div>
@@ -339,14 +353,14 @@ export function RoundResultPhase({ view, send, busy, serverNow }: PhaseProps) {
         <span className="text-sm text-texto-2">+1 ponto</span>
       </div>
       <Scoreboard players={view.players} highlight={r.winnerId} pointsToWin={view.settings.pointsToWin} />
-      <div className="mt-auto grid gap-2">
+      <StickyActions>
         {view.you?.isHost && (
           <Button block disabled={busy} onClick={() => send({ type: "NEXT_ROUND" })}>
             Próxima rodada
           </Button>
         )}
         {seconds !== null && <p className="text-center text-sm text-texto-2">Próxima rodada em {seconds} s</p>}
-      </div>
+      </StickyActions>
     </>
   );
 }
@@ -400,7 +414,7 @@ export function GameOverPhase({ view, send, busy, onLeave }: PhaseProps & { onLe
         {fastest && <Stat label="Mais rápido" value={`${nick(view, fastest.playerId)} · ${Math.round(fastest.avgMs / 1000)} s`} />}
         {champion && <Stat label="Resposta decisiva" value={champion.text} />}
       </dl>
-      <div className="mt-auto grid gap-2.5">
+      <StickyActions>
         {view.you?.isHost ? (
           <Button block disabled={busy} onClick={() => send({ type: "PLAY_AGAIN" })}>
             Jogar novamente
@@ -411,7 +425,7 @@ export function GameOverPhase({ view, send, busy, onLeave }: PhaseProps & { onLe
         <Button block variant="secondary" onClick={onLeave}>
           Voltar ao menu
         </Button>
-      </div>
+      </StickyActions>
     </>
   );
 }

@@ -4,15 +4,20 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { LevelBadge } from "@/components/game/LevelBadge";
+import { StickyActions } from "@/components/ui/StickyActions";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Hint, Label, TextInput } from "@/components/ui/Field";
 import { Sheet } from "@/components/ui/Modal";
 import { Notice } from "@/components/ui/Notice";
 import { Screen } from "@/components/ui/ScreenHeader";
 import { useNicknameField } from "@/hooks/useDefaultNickname";
+import { useGameEffects } from "@/hooks/useGameEffects";
 import { useRoom } from "@/hooks/useRoom";
+import { useWakeLock } from "@/hooks/useWakeLock";
+import { unlockAudio } from "@/lib/client/feedback";
 import { NICKNAME_MAX, nicknameSchema } from "@/lib/nickname";
 import { normalizeRoomCode } from "@/lib/room-code";
+import { BannerOverlay, Confetti } from "./Celebration";
 import { Level4Warning } from "./Level4Warning";
 import { GameOverPhase, JudgingPhase, LobbyPhase, PausedPhase, RoundResultPhase, SubmittingPhase, type PhaseProps } from "./phases";
 
@@ -23,6 +28,8 @@ export function RoomScreen() {
   const router = useRouter();
   const room = useRoom(code);
   const [confirmLeave, setConfirmLeave] = useState(false);
+  const effects = useGameEffects(room.data?.view ?? null);
+  useWakeLock(Boolean(room.data?.view.you));
 
   async function leave() {
     setConfirmLeave(false);
@@ -45,7 +52,12 @@ export function RoomScreen() {
   const props: PhaseProps = { code, view, send: room.send, busy: room.busy, serverNow: room.serverNow };
 
   return (
+    // O primeiro toque libera o áudio (exigência dos navegadores, principalmente no iPhone).
     <Screen>
+      <div className="contents" onPointerDown={unlockAudio}>
+      <p className="sr-only" aria-live="polite">
+        {effects.announcement}
+      </p>
       <header className="flex items-center justify-between gap-2">
         <button
           type="button"
@@ -92,6 +104,9 @@ export function RoomScreen() {
         </Button>
       </Sheet>
       <Notice message={room.notice?.message ?? null} onClose={room.dismissNotice} />
+      <BannerOverlay banner={effects.banner} />
+      {effects.confettiKey !== null && <Confetti key={effects.confettiKey} seed={effects.confettiKey} />}
+      </div>
     </Screen>
   );
 }
@@ -142,9 +157,11 @@ function JoinGate({ code, levelFour, join, busy, full }: { code: string; levelFo
           {error ?? (full ? "A sala está cheia no momento." : `Até ${NICKNAME_MAX} caracteres.`)}
         </Hint>
       </div>
-      <Button type="submit" block disabled={busy} className="mt-auto">
-        {busy ? "Entrando..." : "Entrar na sala"}
-      </Button>
+      <StickyActions>
+        <Button type="submit" block disabled={busy}>
+          {busy ? "Entrando..." : "Entrar na sala"}
+        </Button>
+      </StickyActions>
       <Level4Warning
         open={askLevel4}
         confirmLabel="Topo, entrar"

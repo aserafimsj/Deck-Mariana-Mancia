@@ -9,9 +9,9 @@ const BASE =
 const VARIANTS: Record<ButtonVariant, string> = {
   primary: "bg-amarelo text-tinta shadow-dura-sm active:shadow-press",
   secondary: "border-2 border-papel text-papel",
-  win: "bg-rosa text-white shadow-dura-sm active:shadow-press",
+  win: "bg-rosa text-tinta shadow-dura-sm active:shadow-press",
   ghost: "min-h-11 bg-breu-3 text-texto text-sm",
-  danger: "bg-vermelho text-white shadow-dura-sm active:shadow-press",
+  danger: "bg-vermelho text-tinta shadow-dura-sm active:shadow-press",
 };
 
 function classes(variant: ButtonVariant, block: boolean, extra?: string) {

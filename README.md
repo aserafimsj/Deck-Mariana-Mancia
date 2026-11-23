@@ -2,7 +2,7 @@
 
 Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cartas resposta e um juiz rotativo. Joga no celular, sem cadastro, entrando por código ou link.
 
-**Status:** Etapas 3 e 4 concluídas. Etapa 5 (multiplayer e telas) jogável localmente; falta publicar no Supabase/Vercel.
+**Status:** Etapas 3, 4 e 6 concluídas. Etapa 5 (multiplayer e telas) jogável localmente; falta publicar no Supabase/Vercel.
 
 - [Plano de desenvolvimento](docs/PLANO_DE_DESENVOLVIMENTO.md)
 - [Identidade visual e protótipo](docs/identidade-visual/index.html)
@@ -19,10 +19,12 @@ Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cart
 | Cartas | 107 perguntas e 308 respostas originais nos 4 níveis, em `content/baralho-base.json`. |
 | Gravação segura do estado da partida | Função atômica com controle de versão e proteção contra ação duplicada. |
 | Login | Anônimo pelo Supabase (sem cadastro). Em desenvolvimento, login local de teste. |
-| PWA | Manifesto e ícones; instalável. Funcionamento offline fica para a Etapa 6. |
+| Experiência | Sons (sem arquivos, gerados na hora), vibração, avisos de rodada, confete, tela sempre acesa durante a partida, botão principal sempre visível, anúncios para leitor de tela. Tudo respeita as Configurações. |
+| PWA | Instalável (botão em Configurações), service worker com página offline. A API nunca é guardada em cache. |
+| Qualidade | Lighthouse mobile: desempenho 92–100, acessibilidade 100. Auditoria automática de acessibilidade (axe) durante a partida. |
 | Motor do jogo | Regras completas em `src/engine/` (função pura, determinística): rodadas, juiz, tempo, desconexões, anfitrião, pausa. Cada jogador recebe só o que pode ver. |
 | Servidor do jogo | Rotas em `src/app/api/rooms`: valida tudo, grava com controle de versão, repete sozinho se duas ações chegam juntas, ignora reenvios e avisa os celulares em tempo real. |
-| Testes e CI | 101 testes unitários (incluindo partidas simuladas), 47 de banco, 10 ponta a ponta. GitHub Actions roda tudo a cada push. |
+| Testes e CI | 115 testes unitários (incluindo partidas simuladas e o baralho), 47 de banco, 11 ponta a ponta (com auditoria de acessibilidade). GitHub Actions roda tudo a cada push. |
 
 ## Tecnologias
 
