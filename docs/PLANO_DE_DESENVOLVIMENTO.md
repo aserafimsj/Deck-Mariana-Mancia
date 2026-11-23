@@ -1,6 +1,6 @@
-# PLANO DE DESENVOLVIMENTO — PATUSCADA
+# PLANO DE DESENVOLVIMENTO — SCRAGBADUM!
 
-> Versão 1.1 · 23/11/2026 · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 2 (identidade visual)
+> Versão 1.2 · 23/11/2026 · Nome provisório: **Scragbadum!** · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 2 (identidade visual)
 > Papéis nesta etapa: Product Manager + Arquiteto de Software
 > Nenhuma linha de código de produto foi escrita. A implementação começa depois da sua aprovação.
 
@@ -39,7 +39,7 @@
 
 ## 2. Entendimento do produto
 
-**Patuscada** é um party game de humor coletivo: uma carta-pergunta (preta) é revelada, cada jogador escolhe uma carta-resposta (branca) da sua mão e um juiz rotativo elege a combinação mais engraçada.
+**Scragbadum!** (nome provisório, definido em 23/11) é um party game próprio, inspirado na mecânica do Patuscada, jogo físico privado. A dinâmica: uma carta-pergunta (preta) é revelada, cada jogador escolhe uma carta-resposta (branca) da sua mão e um juiz rotativo elege a combinação mais engraçada.
 
 ### O que torna o jogo divertido (e que o app não pode estragar)
 
@@ -156,7 +156,7 @@ flowchart LR
 | Validação | **Zod** | Mesmo schema valida no cliente e no servidor. | — |
 | Identidade | **Supabase Auth anônima** | Cada jogador ganha um ID seguro sem cadastro. Permite RLS, reconexão e futura conversão em conta real sem perder histórico. | Token caseiro em localStorage: inseguro e reinventa a roda. |
 | Banco | **Supabase PostgreSQL** | Relacional (cartas, categorias, histórico), RLS nativo, plano gratuito generoso. | Firebase: NoSQL dificulta estatísticas e relações. |
-| Tempo real | **Supabase Realtime (Broadcast + Presence)** | Sem servidor WebSocket próprio para manter. Presence resolve "quem está online". | Servidor dedicado (Socket.io/Colyseus no Fly.io): mais controle, porém mais infraestrutura, custo fixo e ponto único de falha. Só se justifica com jogo de ação em tempo real, o que não é o caso: o Patuscada é baseado em turnos e gera poucos eventos por minuto. |
+| Tempo real | **Supabase Realtime (Broadcast + Presence)** | Sem servidor WebSocket próprio para manter. Presence resolve "quem está online". | Servidor dedicado (Socket.io/Colyseus no Fly.io): mais controle, porém mais infraestrutura, custo fixo e ponto único de falha. Só se justifica com jogo de ação em tempo real, o que não é o caso: o Scragbadum é baseado em turnos e gera poucos eventos por minuto. |
 | Lógica do jogo | **Motor em TypeScript puro**, executado nas rotas de API | Testável com Vitest, tipado, compartilha tipos com a UI, fácil de evoluir (novos modos = novas regras no motor). | Lógica em funções PL/pgSQL: atômica, mas difícil de testar e manter. |
 | Hospedagem | **Vercel** (web) + **Supabase** (dados) | Zero configuração de servidor, HTTPS, CDN, previews por branch. | — |
 
@@ -215,7 +215,7 @@ stateDiagram-v2
 ### 4.7 Estrutura de pastas proposta
 
 ```
-patuscada/
+scragbadum/
 ├── src/
 │   ├── app/                         # Rotas (Next.js App Router)
 │   │   ├── page.tsx                 # Tela inicial
@@ -442,8 +442,8 @@ flowchart TD
 | D5 | **Mínimo/máximo de jogadores.** | 3 a 10. |
 | D6 | **Comportamento de "JOGAR" vs "CRIAR SALA".** | Conforme proposta da seção 6.1. |
 | D7 | **Contas de infraestrutura.** Você cria as contas Supabase e Vercel (gratuitas) e me passa as chaves pelo painel de segredos do ambiente? | Sim; documentarei o passo a passo. Até lá, desenvolvo o motor e a interface com testes locais. |
-| D8 | **Domínio.** Já existe? | Verificar disponibilidade de `patuscada.com.br` / `.app`. |
-| D9 | **Marca.** O nome "Patuscada" está registrado no INPI? | Consultar antes do lançamento público. |
+| D8 | **Domínio.** Já existe? | Verificar disponibilidade de `scragbadum.com.br` / `.app` (depois de fechar o nome definitivo). |
+| D9 | **Marca.** O nome "Scragbadum" (provisório) está livre no INPI? | Consultar antes do lançamento público. |
 | D10 | **Fusão das Fases 3 e 4 do briefing.** | ✅ **Aprovado (23/11).** |
 
 D3 a D9 seguem com as recomendações acima como padrão até você dizer o contrário.

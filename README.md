@@ -1,6 +1,6 @@
-# Patuscada
+# Scragbadum!
 
-Party game digital de humor coletivo: cartas-pergunta, cartas-resposta e um juiz rotativo.
+Nome provisório. Party game digital de humor coletivo: cartas-pergunta, cartas-resposta e um juiz rotativo.
 
 **Status:** Etapa 2 — Identidade visual (em validação). Ainda não há código.
 
