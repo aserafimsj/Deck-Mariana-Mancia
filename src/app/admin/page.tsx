@@ -9,6 +9,7 @@ type Card = { id: string; text: string; humorLevel: number; plays: number; wins:
 type Stats = {
   gamesToday: number;
   gamesWeek: number;
+  gamesPerRoom: number | null;
   completionRate: number | null;
   avgMinutes: number | null;
   playersWeek: number;
@@ -52,6 +53,7 @@ export default function AdminDashboard() {
         <StatTile label="Salas agora" value={stats.roomsNow} hint={`${stats.playingNow} em partida`} />
         <StatTile label="Partidas hoje" value={stats.gamesToday} />
         <StatTile label="Partidas (7 dias)" value={stats.gamesWeek} hint={stats.completionRate === null ? "sem partidas ainda" : `${stats.completionRate}% terminaram`} />
+        <StatTile label="Partidas por sala" value={stats.gamesPerRoom === null ? "—" : stats.gamesPerRoom.toLocaleString("pt-BR")} hint="meta: acima de 1,5 (jogaram de novo)" />
         <StatTile label="Jogadores (7 dias)" value={stats.playersWeek} hint={`${stats.roundsWeek} rodadas`} />
         <StatTile label="Duração média" value={stats.avgMinutes === null ? "—" : `${stats.avgMinutes} min`} hint="partidas que terminaram" />
         <StatTile label="Perguntas ativas" value={stats.activeBlack} />

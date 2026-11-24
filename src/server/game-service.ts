@@ -12,8 +12,9 @@ import { CodeTakenError, type Store } from "./store";
  */
 
 /** Sem sinal de vida por este tempo = desconectado (o celular avisa a cada poucos segundos). */
-export const SILENCE_MS = 20_000;
-const MAX_ATTEMPTS = 4;
+export const SILENCE_MS = Number(process.env.GAME_SILENCE_MS) || 20_000;
+/** Tentativas quando outra ação da mesma sala grava antes (ex.: várias respostas no mesmo instante). */
+const MAX_ATTEMPTS = 8;
 
 export type Notifier = (code: string, version: number) => Promise<void>;
 
@@ -79,22 +80,21 @@ type Plan = {
 async function transition(deps: Deps, userId: string, rawCode: string, plan: Plan): Promise<ServiceResult> {
   const code = normalizeRoomCode(rawCode);
   if (!isValidRoomCode(code)) return ROOM_NOT_FOUND();
-  const room = await deps.store.getOpenRoom(code);
-  if (!room) return ROOM_NOT_FOUND();
-
-  const isJoin = plan.action?.type === "JOIN";
-  await deps.store.touch(room.id, userId);
-  const silent = new Set(await deps.store.silentPlayers(room.id, SILENCE_MS));
   const clientActionId = plan.clientActionId ?? randomUUID();
+  const isJoin = plan.action?.type === "JOIN";
+
+  // Uma ida ao banco: sala, sinal de vida, quem sumiu, reenvio e estado.
+  const ctx0 = await deps.store.openRoomContext(code, userId, SILENCE_MS, plan.clientActionId);
+  if (!ctx0) return ROOM_NOT_FOUND();
+  const room = ctx0.room;
+  const silent = new Set(ctx0.silent);
 
   // Reenvio de uma ação já aplicada (resposta perdida no caminho): devolve o estado atual, sem reaplicar.
-  if (plan.clientActionId && (await deps.store.processedAction(room.id, plan.clientActionId)) !== null) {
-    const current = await deps.store.loadState(room.id);
-    if (current) return respond(code, current.version, current.state, userId, deps.now());
-  }
+  if (ctx0.processedVersion !== null) return respond(code, ctx0.version, ctx0.state, userId, deps.now());
 
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-    const loaded = await deps.store.loadState(room.id);
+    // Primeira tentativa usa o que já veio; as seguintes (após conflito) recarregam o estado.
+    const loaded = attempt === 0 ? { version: ctx0.version, state: ctx0.state } : await deps.store.loadState(room.id);
     if (!loaded) return ROOM_NOT_FOUND();
     const now = deps.now();
     let state = loaded.state;
@@ -152,20 +152,34 @@ async function transition(deps: Deps, userId: string, rawCode: string, plan: Pla
       payload: action.type === "SUBMIT" ? { cards: action.cardIds.length } : {},
     });
 
-    if (committed.status === "conflict") continue; // outra ação chegou antes: recarrega e reaplica
+    if (committed.status === "conflict") {
+      // Outra ação chegou antes: espera um pouco (aleatório, para não colidir de novo) e reaplica.
+      await new Promise((r) => setTimeout(r, 5 + Math.random() * 15 * (attempt + 1)));
+      continue;
+    }
     if (committed.status === "duplicate") {
       const current = await deps.store.loadState(room.id);
       return respond(code, current!.version, current!.state, userId, deps.now());
     }
 
     // Efeitos depois de gravar: espelho público e aviso. Falhas aqui não desfazem a jogada.
-    await deps.store.syncRoom(room.id, state).catch((e) => console.error("syncRoom falhou", e));
+    // O espelho (rooms/room_players) só é regravado quando muda algo que ele guarda.
+    if (publicSignature(loaded.state) !== publicSignature(state)) {
+      await deps.store.syncRoom(room.id, state).catch((e) => console.error("syncRoom falhou", e));
+    }
     await deps.store.recordHistory(room.id, state, events).catch((e) => console.error("recordHistory falhou", e));
     await deps.notify(code, committed.version).catch((e) => console.error("notify falhou", e));
     return respond(code, committed.version, state, userId, now);
   }
 
   return fail(409, "BUSY", "Muita gente jogando ao mesmo tempo. Tenta de novo.");
+}
+
+/** O que o espelho público (rooms, room_players) guarda: se não mudou, não precisa regravar. */
+function publicSignature(s: GameState): string {
+  const bucket = s.phase === "lobby" ? "lobby" : s.phase === "game_over" ? "finished" : "playing";
+  const players = Object.values(s.players).map((p) => [p.id, p.nickname, p.seat, p.status, p.acceptedLevel4]);
+  return JSON.stringify([s.hostId, bucket, s.settings, players]);
 }
 
 export function joinRoom(deps: Deps, userId: string, code: string, input: { nickname: string; acceptedLevel4?: boolean }) {

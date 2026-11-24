@@ -71,3 +71,29 @@ describe("formato das ações vindas do celular", () => {
     expect(actionBody.safeParse({ clientActionId: "123", action: { type: "START_GAME" } }).success).toBe(false);
   });
 });
+
+describe("TLS da conexão com o banco", async () => {
+  const { sslConfig } = await import("@/server/store");
+  const remote = "postgres://u:p@aws-0-sa-east-1.pooler.supabase.com:6543/postgres";
+  const env = (e: Record<string, string>) => e as unknown as NodeJS.ProcessEnv;
+
+  it("local não usa TLS", () => {
+    expect(sslConfig("postgres://postgres@localhost:54329/x", env({}))).toBeUndefined();
+  });
+
+  it("com o certificado do Supabase, verifica", () => {
+    expect(sslConfig(remote, env({ SUPABASE_DB_CA_CERT: "-----BEGIN CERTIFICATE-----\\nabc\\n-----END CERTIFICATE-----", VERCEL_ENV: "production" }))).toEqual({
+      ca: "-----BEGIN CERTIFICATE-----\nabc\n-----END CERTIFICATE-----",
+      rejectUnauthorized: true,
+    });
+  });
+
+  it("produção sem certificado: falha segura (verifica e recusa)", () => {
+    expect(sslConfig(remote, env({ VERCEL_ENV: "production" }))).toEqual({ rejectUnauthorized: true });
+  });
+
+  it("liberação explícita ou fora da produção: cifra sem verificar", () => {
+    expect(sslConfig(remote, env({ VERCEL_ENV: "production", SUPABASE_DB_SSL_INSECURE: "1" }))).toEqual({ rejectUnauthorized: false });
+    expect(sslConfig(remote, env({ VERCEL_ENV: "preview" }))).toEqual({ rejectUnauthorized: false });
+  });
+});

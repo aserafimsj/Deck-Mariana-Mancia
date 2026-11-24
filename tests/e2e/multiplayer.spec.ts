@@ -151,5 +151,46 @@ test.describe("multijogador", () => {
     expect(sw.ok()).toBe(true);
     expect(sw.headers()["cache-control"]).toContain("no-store");
   });
+
+  test("internet cai no meio da rodada e volta: lugar, mão e pontos preservados", async ({ browser }) => {
+    const ctxs = await Promise.all([0, 1, 2].map(() => browser.newContext({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true })));
+    const [ana, beto, cris] = await Promise.all(ctxs.map((c) => c.newPage()));
+    const code = await createRoom(ana!, "Ana");
+    await joinByLink(beto!, code, "Beto");
+    await joinByLink(cris!, code, "Cris");
+    await ana!.getByRole("button", { name: "Começar a farra" }).click();
+    await expect(beto!.getByText(/RODADA 1 ·/)).toBeVisible();
+
+    const handBefore = await beto!.evaluate(async (c) => {
+      const token = localStorage.getItem("scragbadum:dev-session:v1");
+      const res = await fetch(`/api/rooms/${c}`, { headers: { authorization: `Bearer ${token}` } });
+      return ((await res.json()).view.you.hand as { id: string }[]).map((x) => x.id).sort();
+    }, code);
+
+    // Beto perde a internet: o app avisa e os outros veem que ele caiu.
+    await ctxs[1]!.setOffline(true);
+    await expect(beto!.getByText("Sem conexão. Tentando de novo...").first()).toBeVisible({ timeout: 15_000 });
+    // O que o servidor diz para a Ana sobre o Beto (na tela, aparece na lista do juiz e da sala de espera).
+    const betoOnline = () =>
+      ana!.evaluate(async (c) => {
+        const token = localStorage.getItem("scragbadum:dev-session:v1");
+        const v = (await (await fetch(`/api/rooms/${c}`, { headers: { authorization: `Bearer ${token}` } })).json()).view;
+        return (v.players as { nickname: string; online: boolean }[]).find((p) => p.nickname === "Beto")!.online;
+      }, code);
+    await expect.poll(betoOnline, { timeout: 15_000 }).toBe(false);
+
+    // A internet volta: tudo se recupera sozinho.
+    await ctxs[1]!.setOffline(false);
+    await expect(beto!.getByText("Sem conexão. Tentando de novo...")).toHaveCount(0, { timeout: 15_000 });
+    await expect.poll(betoOnline, { timeout: 15_000 }).toBe(true);
+    const handAfter = await beto!.evaluate(async (c) => {
+      const token = localStorage.getItem("scragbadum:dev-session:v1");
+      const res = await fetch(`/api/rooms/${c}`, { headers: { authorization: `Bearer ${token}` } });
+      const v = (await res.json()).view;
+      return { hand: (v.you.hand as { id: string }[]).map((x) => x.id).sort(), phase: v.phase };
+    }, code);
+    expect(handAfter.hand).toEqual(handBefore);
+    expect(handAfter.phase).toBe("submitting");
+  });
 });
 

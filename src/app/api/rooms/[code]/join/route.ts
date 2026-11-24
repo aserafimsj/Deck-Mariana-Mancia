@@ -9,7 +9,7 @@ export async function POST(request: Request, ctx: RouteContext<"/api/rooms/[code
   const userId = await authenticate(request);
   if (!userId) return errors.unauthorized();
   // Limite por IP também: dificulta tentar códigos de sala em massa.
-  if (!limits.action(userId) || !limits.action(`join-ip:${clientIp(request)}`)) return errors.rateLimited();
+  if (!limits.action(userId) || !(await limits.join(clientIp(request)))) return errors.rateLimited();
   const body = await readJson(request, joinRoomBody);
   if (!body) return errors.badRequest();
   const { code } = await ctx.params;

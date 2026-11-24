@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   if (!deps) return errors.notConfigured();
   const userId = await authenticate(request);
   if (!userId) return errors.unauthorized();
-  if (!limits.create(userId) || !limits.create(`ip:${clientIp(request)}`)) return errors.rateLimited();
+  if (!(await limits.create(userId, clientIp(request)))) return errors.rateLimited();
   const body = await readJson(request, createRoomBody);
   if (!body) return errors.badRequest();
   return fromService(await createRoom(deps, userId, body));

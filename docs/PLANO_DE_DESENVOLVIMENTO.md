@@ -1,6 +1,6 @@
 # PLANO DE DESENVOLVIMENTO — SCRAGBADUM!
 
-> Versão 1.7 · 23/11/2026 · Nome provisório: **Scragbadum!** · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 7 concluída (painel administrativo); 5 aguarda publicação
+> Versão 1.8 · 23/11/2026 · Nome provisório: **Scragbadum!** · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 8 concluída (testes, carga e segurança); 5 e 9 aguardam publicação
 > Papéis nesta etapa: Product Manager + Arquiteto de Software
 > Nenhuma linha de código de produto foi escrita. A implementação começa depois da sua aprovação.
 
@@ -503,7 +503,7 @@ Cada etapa termina com uma **entrega verificável** e sua validação antes de s
 | **5. Multiplayer + telas do jogo** | API de salas/ações/visão, Broadcast + Presence, reconexão; telas inicial, criar, entrar, espera, jogo, revelação, placar, resultado, como jogar, configurações | Partida completa entre 4 navegadores no E2E; teste manual com celulares | 🔶 jogável localmente (23/11); falta publicar (tokens Supabase/Vercel) |
 | **6. Polimento de experiência** | Sons sintetizados (incl. "ba-dum-tss" do vencedor), vibração, avisos de rodada, confete, tela sempre acesa durante a partida, barra de ação fixa no rodapé, páginas de erro/404/offline, service worker, instalar app, contraste AA, anúncios para leitor de tela | Lighthouse mobile: desempenho 92–100 e acessibilidade 100 em todas as telas; axe sem violações WCAG A/AA em sala de espera, mão, julgamento e resultado | ✅ concluída (23/11) |
 | **7. Painel administrativo** | Login por link no e-mail; cartas (criar, editar, arquivar, apagar só se nunca usada, importar CSV), categorias, partidas, estatísticas (incl. cartas que mais vencem e as que nunca vencem), equipe com papéis admin/editor; histórico gravado a cada rodada | Carta criada no painel entra na partida seguinte (testado); jogador comum recebe 401/403 na API e tela de acesso restrito (testado); axe sem violações nas telas do painel | ✅ concluída (24/11) |
-| **8. Testes e playtests** | Carga (dezenas de salas simultâneas), desconexões, segurança (revisão + testes), 3 rodadas de playtest com usuários reais | Critérios da seção 7.3 atendidos; bugs críticos zerados | 5–7 dias (+ agenda dos playtests) |
+| **8. Testes e playtests** | Carga (até 600 jogadores simultâneos), queda e volta da internet, revisão de segurança (CSP, HSTS, limite global, TLS do banco com falha segura, termos bloqueados, corpo limitado), roteiro de playtests | Carga realista p95 < 70 ms e 0 falhas (docs/CARGA.md); segurança documentada e testada (docs/SEGURANCA.md); roteiro pronto (docs/PLAYTESTS.md). Playtests com pessoas: aguardam publicação | ✅ concluída (24/11) |
 | **9. Publicação** | Supabase e Vercel de produção, domínio, variáveis, backups, monitoramento, documentação final | App público em domínio próprio; README completo; runbook de incidentes | 2–3 dias |
 
 **Total estimado: 6 a 9 semanas** até a versão pública, dependendo da velocidade das revisões, das decisões pendentes e da agenda dos playtests.

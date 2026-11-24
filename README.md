@@ -95,7 +95,8 @@ npx supabase db push --include-seed
    Sem a CLI: cole no **SQL Editor** do painel, nesta ordem, os arquivos de `supabase/migrations/` e depois `supabase/seed.sql`.
 
 5. Copie a URL do **Transaction pooler** (Painel > Connect, porta 6543) para `SUPABASE_DB_URL`.
-6. Confira: `pnpm dev` e abra http://localhost:3000/api/health. Deve aparecer `"database": "ok"`.
+6. **Certificado do banco (obrigatório em produção):** em **Project Settings > Database > SSL Configuration**, baixe o certificado e coloque o conteúdo em `SUPABASE_DB_CA_CERT` (pode trocar as quebras de linha por `\n`). Sem ele, em produção o jogo recusa a conexão por segurança e `/api/health` mostra a dica. Só para emergência: `SUPABASE_DB_SSL_INSECURE=1` cifra sem verificar (não recomendado).
+7. Confira: `pnpm dev` e abra http://localhost:3000/api/health. Deve aparecer `"database": "ok"`.
 
 ### Limpeza automática de salas
 
@@ -103,6 +104,7 @@ Salas sem atividade há 2 horas são fechadas pela função `close_inactive_room
 
 ```sql
 select cron.schedule('fechar-salas-inativas', '*/15 * * * *', $$select public.close_inactive_rooms()$$);
+select cron.schedule('limpar-limites', '17 4 * * *', $$select public.purge_rate_limits()$$);
 ```
 
 ### Primeiro administrador
@@ -184,12 +186,12 @@ content/            Cartas do baralho base (fonte do seed)
 docs/               Plano, identidade visual, regras
 ```
 
-## Regras de segurança do projeto
+## Segurança e carga
 
-- O servidor é a única fonte da verdade. O navegador só pede ações; quem valida e grava é o servidor.
-- Nenhuma tabela de jogo aceita escrita direta do navegador (RLS). O estado completo da partida (`game_states`) não é legível por jogadores.
-- A chave secreta do Supabase só existe no servidor (`src/server/`, protegido por `server-only`).
-- Toda ação de jogo tem um `client_action_id`: reenvios não duplicam nada.
-- O canal de tempo real só transporta o número da versão; cada celular busca a própria visão.
-- Limite de requisições por usuário e por IP (por instância do servidor; um limite global fica para a Etapa 8).
-- Pendências de segurança registradas para a Etapa 8: verificação do certificado do banco quando `SUPABASE_DB_CA_CERT` não estiver definido, CSP completa e lista de termos bloqueados em apelidos.
+- [Revisão de segurança](docs/SEGURANCA.md): ameaças, proteções, como cada uma é testada e pendências da publicação.
+- [Teste de carga](docs/CARGA.md): 150 jogadores com p95 abaixo de 70 ms; 600 jogadores sem falha. Rode com `node scripts/carga.mjs`.
+- [Roteiro dos testes com pessoas reais](docs/PLAYTESTS.md).
+
+Resumo: o servidor decide tudo e cada jogador recebe só o que pode ver; nenhuma tabela de jogo aceita escrita do navegador; a chave secreta só existe no servidor; reenvios nunca duplicam; limites de requisição compartilhados entre servidores para criar e entrar em salas; CSP e HSTS; conexão com o banco verificada por certificado.
+
+Variáveis opcionais: `DB_POOL_MAX` (conexões por instância, padrão 5). `GAME_SILENCE_MS` só nos testes (tempo sem sinal de vida até marcar offline; padrão 20 s).

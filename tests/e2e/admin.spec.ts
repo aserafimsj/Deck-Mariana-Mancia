@@ -59,7 +59,7 @@ test.describe("painel administrativo", () => {
     await page.getByRole("button", { name: "Salvar" }).click();
     await expect(page.getByText("Carta criada.")).toBeVisible();
 
-    await page.getByLabel("Buscar").fill(text);
+    await page.getByLabel("Buscar", { exact: true }).fill(text);
     const row = page.locator("tbody tr", { hasText: text });
     await expect(row).toHaveCount(1);
     await expect(row).toContainText("Ativa");
@@ -85,7 +85,7 @@ test.describe("painel administrativo", () => {
     await expect(page.getByText("2 linha(s) válida(s).")).toBeVisible();
     await page.getByRole("button", { name: "Importar", exact: true }).click();
     await expect(page.getByText("2 cartas importadas.")).toBeVisible();
-    await page.getByLabel("Buscar").fill(`${stamp}`);
+    await page.getByLabel("Buscar", { exact: true }).fill(`${stamp}`);
     await expect(page.locator("tbody tr")).toHaveCount(2);
 
     // Categorias

@@ -160,6 +160,7 @@ describe.skipIf(!ADMIN_URL)("painel administrativo (banco real)", () => {
       const s = await admin.stats();
       expect(s.gamesWeek).toBeGreaterThanOrEqual(1);
       expect(s.completionRate).toBe(100);
+      expect(s.gamesPerRoom).toBeGreaterThanOrEqual(1);
       expect(s.playersWeek).toBeGreaterThanOrEqual(3);
       expect(s.roundsWeek).toBeGreaterThanOrEqual(3);
       expect(s.activeWhite).toBeGreaterThan(300);

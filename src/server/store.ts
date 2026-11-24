@@ -14,9 +14,21 @@ export type CommitResult = { status: "ok" | "conflict" | "duplicate"; version: n
 
 export class CodeTakenError extends Error {}
 
+/** Tudo o que uma requisição de jogo precisa saber de início, numa única ida ao banco. */
+export type RoomContext = {
+  room: RoomRow;
+  version: number;
+  state: GameState;
+  /** Jogadores sem sinal de vida há mais de `silenceMs`. */
+  silent: string[];
+  /** Versão gravada pela ação, se ela já foi processada antes (reenvio). */
+  processedVersion: number | null;
+};
+
 export interface Store {
+  /** Acha a sala aberta, registra o sinal de vida de quem pediu e carrega o estado (uma consulta). */
+  openRoomContext(code: string, userId: string, silenceMs: number, clientActionId: string | null): Promise<RoomContext | null>;
   createRoom(input: { code: string; hostId: string; nickname: string; state: GameState }): Promise<RoomRow>;
-  getOpenRoom(code: string): Promise<RoomRow | null>;
   loadState(roomId: string): Promise<{ version: number; state: GameState } | null>;
   commit(input: {
     roomId: string;
@@ -27,14 +39,8 @@ export interface Store {
     type: string;
     payload: unknown;
   }): Promise<CommitResult>;
-  /** Versão gravada por uma ação já processada (reenvio), ou null. */
-  processedAction(roomId: string, clientActionId: string): Promise<number | null>;
   /** Copia para as tabelas visíveis (rooms, room_players) o que não é secreto. */
   syncRoom(roomId: string, state: GameState): Promise<void>;
-  /** Registra que o jogador deu sinal de vida agora. */
-  touch(roomId: string, userId: string): Promise<void>;
-  /** Jogadores que pararam de dar sinal de vida há mais de `ms`. */
-  silentPlayers(roomId: string, ms: number): Promise<string[]>;
   loadCards(level: HumorLevel, categorySlugs: string[]): Promise<CardPool>;
   ensureAuthUser(id: string): Promise<void>;
   /** Partidas, rodadas, respostas e placar final (para estatísticas). */
@@ -73,9 +79,42 @@ export function createPgStore(pool: pg.Pool): Store {
       }
     },
 
-    async getOpenRoom(code) {
-      const { rows } = await pool.query<RoomRow>("select id, code, status from public.rooms where code = $1 and status <> 'closed'", [code]);
-      return rows[0] ?? null;
+    async openRoomContext(code, userId, silenceMs, clientActionId) {
+      const { rows } = await pool.query<{
+        id: string;
+        code: string;
+        status: string;
+        version: number;
+        state: GameState;
+        silent: string[] | null;
+        processed: number | null;
+      }>(
+        `with r as (
+           select id, code, status from public.rooms where code = $1 and status <> 'closed'
+         ), touched as (
+           update public.room_players set last_seen_at = now()
+           where room_id = (select id from r) and user_id = $2
+           returning user_id
+         )
+         select r.id, r.code, r.status, gs.version, gs.state,
+                (select array_agg(rp.user_id) from public.room_players rp
+                  where rp.room_id = r.id and rp.status = 'active' and rp.user_id <> $2
+                    and rp.last_seen_at < now() - make_interval(secs => $3::double precision / 1000)) as silent,
+                (select ga.result_version from public.game_actions ga
+                  where ga.room_id = r.id and ga.client_action_id = $4::uuid) as processed,
+                (select count(*) from touched) as _touched
+         from r join public.game_states gs on gs.room_id = r.id`,
+        [code, userId, silenceMs, clientActionId],
+      );
+      const row = rows[0];
+      if (!row) return null;
+      return {
+        room: { id: row.id, code: row.code, status: row.status },
+        version: row.version,
+        state: row.state,
+        silent: row.silent ?? [],
+        processedVersion: row.processed,
+      };
     },
 
     async loadState(roomId) {
@@ -89,14 +128,6 @@ export function createPgStore(pool: pg.Pool): Store {
         [roomId, expectedVersion, JSON.stringify(state), actorId, clientActionId, type, JSON.stringify(payload ?? {})],
       );
       return { status: rows[0]!.out_status, version: rows[0]!.out_version };
-    },
-
-    async processedAction(roomId, clientActionId) {
-      const { rows } = await pool.query<{ result_version: number }>(
-        "select result_version from public.game_actions where room_id = $1 and client_action_id = $2",
-        [roomId, clientActionId],
-      );
-      return rows[0]?.result_version ?? null;
     },
 
     async syncRoom(roomId, state) {
@@ -144,19 +175,6 @@ export function createPgStore(pool: pg.Pool): Store {
       }
     },
 
-    async touch(roomId, userId) {
-      await pool.query("update public.room_players set last_seen_at = now() where room_id = $1 and user_id = $2", [roomId, userId]);
-    },
-
-    async silentPlayers(roomId, ms) {
-      const { rows } = await pool.query<{ user_id: string }>(
-        `select user_id from public.room_players
-         where room_id = $1 and status = 'active' and last_seen_at < now() - make_interval(secs => $2::double precision / 1000)`,
-        [roomId, ms],
-      );
-      return rows.map((r) => r.user_id);
-    },
-
     async loadCards(level, categorySlugs) {
       const params = [level, categorySlugs];
       const filter = `d.is_active and d.is_free and x.status = 'active' and x.humor_level <= $1
@@ -188,14 +206,21 @@ export function createPgStore(pool: pg.Pool): Store {
 }
 
 /**
- * TLS da conexão. Localmente não há TLS. No Supabase, o certificado é emitido pela CA do próprio
- * Supabase: com SUPABASE_DB_CA_CERT (o PEM baixado em Database Settings) o certificado é verificado.
- * Sem ele, a conexão é cifrada mas sem verificar o certificado (pendência registrada para a Etapa 8).
+ * TLS da conexão com o banco.
+ * - Local (localhost): sem TLS.
+ * - Com SUPABASE_DB_CA_CERT (o PEM de Database Settings > SSL): certificado verificado. Recomendado.
+ * - Sem o certificado: em produção a conexão é RECUSADA (falha segura), a não ser que
+ *   SUPABASE_DB_SSL_INSECURE=1 libere explicitamente cifrar sem verificar. Fora da produção, só avisa.
  */
-function sslConfig(url: string): pg.PoolConfig["ssl"] {
+export function sslConfig(url: string, env: NodeJS.ProcessEnv = process.env): pg.PoolConfig["ssl"] {
   if (/@(localhost|127\.0\.0\.1)[:/]/.test(url)) return undefined;
-  const ca = process.env.SUPABASE_DB_CA_CERT;
-  return ca ? { ca: ca.replace(/\\n/g, "\n"), rejectUnauthorized: true } : { rejectUnauthorized: false };
+  const ca = env.SUPABASE_DB_CA_CERT;
+  if (ca) return { ca: ca.replace(/\\n/g, "\n"), rejectUnauthorized: true };
+  if (env.SUPABASE_DB_SSL_INSECURE === "1" || env.VERCEL_ENV !== "production") {
+    if (env.VERCEL_ENV === "production") console.warn("Banco sem verificação de certificado (SUPABASE_DB_SSL_INSECURE=1). Configure SUPABASE_DB_CA_CERT.");
+    return { rejectUnauthorized: false };
+  }
+  return { rejectUnauthorized: true }; // sem a CA do Supabase, a conexão falha: veja o README
 }
 
 let pool: pg.Pool | null = null;
@@ -205,7 +230,7 @@ export function getPool(url: string): pg.Pool {
   if (!pool) {
     pool = new pg.Pool({
       connectionString: url,
-      max: 3,
+      max: Number(process.env.DB_POOL_MAX) || 5,
       idleTimeoutMillis: 10_000,
       ssl: sslConfig(url),
     });

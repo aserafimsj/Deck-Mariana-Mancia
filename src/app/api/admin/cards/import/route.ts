@@ -10,7 +10,7 @@ import { errorResponse, errors, readJson } from "@/server/http";
 export async function POST(request: Request) {
   const ctx = await requireStaff(request);
   if (ctx instanceof Response) return ctx;
-  const body = await readJson(request, z.object({ kind: z.enum(CARD_KINDS), csv: z.string().max(500_000), dryRun: z.boolean().default(false) }));
+  const body = await readJson(request, z.object({ kind: z.enum(CARD_KINDS), csv: z.string().max(500_000), dryRun: z.boolean().default(false) }), 600 * 1024);
   if (!body) return errors.badRequest();
   const parsed = parseCardsCsv(body.csv, body.kind);
   if (parsed.rows.length > 2000) return errorResponse(413, "TOO_MANY", "No máximo 2.000 cartas por importação.");

@@ -55,7 +55,8 @@ test.describe("fundação", () => {
     expect(res.headers()["cache-control"]).toBe("no-store");
     const body = await res.json();
     expect(body).toMatchObject({ status: "ok", app: "scragbadum" });
-    expect(["configured", "not_configured"]).toContain(body.supabase);
+    expect(["ok", "not_configured"]).toContain(body.supabase);
+    expect(body.database).toBe("ok");
   });
 
   test("PWA: manifesto e cabeçalhos de segurança", async ({ request }) => {
@@ -66,5 +67,9 @@ test.describe("fundação", () => {
     for (const icon of manifest.icons) expect((await request.get(icon.src)).ok(), icon.src).toBe(true);
     expect(res.headers()["x-frame-options"]).toBe("DENY");
     expect(res.headers()["x-powered-by"]).toBeUndefined();
+    const csp = res.headers()["content-security-policy"];
+    expect(csp).toContain("default-src 'self'");
+    expect(csp).toContain("frame-ancestors 'none'");
+    expect(res.headers()["strict-transport-security"]).toContain("max-age=");
   });
 });

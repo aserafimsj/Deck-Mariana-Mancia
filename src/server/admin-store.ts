@@ -261,6 +261,9 @@ export function createAdminStore(pool: pg.Pool) {
 
     async stats() {
       const one = async <T>(sql: string): Promise<T> => (await pool.query(sql)).rows[0] as T;
+      const replay = await one<{ per_room: string | null }>(`
+        select round(avg(n), 2)::text as per_room
+        from (select count(*) as n from public.games where started_at >= now() - interval '7 days' group by room_id) x`);
       const [games, live, cards] = await Promise.all([
         one<{ today: number; week: number; finished_week: number; avg_minutes: number | null; players_week: number; rounds_week: number }>(`
           select
@@ -298,6 +301,8 @@ export function createAdminStore(pool: pg.Pool) {
       return {
         gamesToday: games.today,
         gamesWeek: games.week,
+        /** Média de partidas por sala na semana: quem joga de novo achou divertido (métrica principal). */
+        gamesPerRoom: replay.per_room === null ? null : Number(replay.per_room),
         completionRate: games.week ? Math.round((games.finished_week / games.week) * 100) : null,
         avgMinutes: games.avg_minutes,
         playersWeek: games.players_week,

@@ -46,4 +46,20 @@ describe("apelido", () => {
   it("gera a forma de comparação sem acentos e sem leetspeak", () => {
     expect(comparableForm("Ãn@ C1@ra")).toBe("anaciara");
   });
+
+  it("bloqueia termos de ódio da lista padrão, mesmo disfarçados", () => {
+    for (const bad of ["Hitler", "h1tl3r", "x.HITLER.x", "Heil", "heil 88", "Nazista", "Estuprador", "W.h.i.t.e P.o.w.e.r"]) {
+      expect(ok(bad).success, bad).toBe(false);
+    }
+  });
+
+  it("não barra nomes e apelidos comuns (falsos positivos)", () => {
+    const comuns = [
+      "Ana", "Heitor", "Helena", "Heila", "Michele", "Raquel", "Nazaré", "Nazareno", "Estela", "Estevão",
+      "Bia", "Cris", "Duda", "Juju", "Tati", "Vivi", "Mari", "Rafa", "Gabi", "Léo", "Zé", "Tião",
+      "Bichon", "Pedro", "Pedrinho", "Viana", "Viviane", "Travessa", "Boi", "Crisolino", "Neguinha", "Macaxeira",
+    ];
+    for (const name of comuns) expect(ok(name).success, name).toBe(true);
+  });
 });
+

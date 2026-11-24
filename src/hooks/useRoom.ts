@@ -63,15 +63,35 @@ export function useRoom(code: string) {
 
     let unsubscribe = () => {};
     if (REALTIME) {
+      // O canal só diz "mudou" (nunca traz dados). Como qualquer um com a chave pública poderia
+      // mandar avisos falsos, as buscas disparadas por ele são limitadas a uma a cada 500 ms.
+      let lastRealtimeFetch = 0;
+      let pendingFetch: number | null = null;
+      const throttledRun = () => {
+        const wait = 500 - (Date.now() - lastRealtimeFetch);
+        if (wait <= 0) {
+          lastRealtimeFetch = Date.now();
+          run();
+        } else if (pendingFetch === null) {
+          pendingFetch = window.setTimeout(() => {
+            pendingFetch = null;
+            lastRealtimeFetch = Date.now();
+            run();
+          }, wait);
+        }
+      };
       const supabase = getBrowserSupabase();
       const channel = supabase
         .channel(`room:${code}`)
         .on("broadcast", { event: "state" }, (msg) => {
           const v = Number((msg.payload as { version?: number })?.version);
-          if (!Number.isFinite(v) || v > version.current) run();
+          if (Number.isFinite(v) && v > version.current) throttledRun();
         })
         .subscribe();
-      unsubscribe = () => void supabase.removeChannel(channel);
+      unsubscribe = () => {
+        if (pendingFetch !== null) window.clearTimeout(pendingFetch);
+        void supabase.removeChannel(channel);
+      };
     }
 
     return () => {

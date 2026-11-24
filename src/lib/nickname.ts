@@ -1,16 +1,11 @@
 import { z } from "zod";
+import { BLOCKED_TERMS } from "./blocked-terms";
 
 export const NICKNAME_MIN = 2;
 export const NICKNAME_MAX = 16;
 
 /** Nomes que confundiriam os jogadores com papéis ou com o próprio sistema. */
 const RESERVED = ["admin", "administrador", "moderador", "moderacao", "sistema", "scragbadum", "juiz", "anfitriao", "host"];
-
-/**
- * Termos de ódio bloqueados em apelidos. A lista curada entra na Etapa 8 (testes e segurança);
- * o mecanismo de comparação (sem acento, sem leetspeak) já está pronto e testado.
- */
-const BLOCKED_TERMS: string[] = [];
 
 const LEET: Record<string, string> = { "0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", $: "s" };
 
@@ -28,9 +23,18 @@ export function normalizeNickname(value: string): string {
   return value.normalize("NFC").trim().replace(/\s+/g, " ");
 }
 
+/**
+ * Termos longos (5+ letras) bloqueiam em qualquer posição, mesmo grudados ("xxHitlerxx").
+ * Termos curtos só bloqueiam como palavra inteira, para evitar falsos positivos dentro de nomes.
+ */
 function containsBlocked(value: string, terms: readonly string[]): boolean {
-  const form = comparableForm(value);
-  return terms.some((t) => t.length > 0 && form.includes(comparableForm(t)));
+  const whole = comparableForm(value);
+  const words = value.split(/[\s._-]+/).map(comparableForm).filter(Boolean);
+  return terms.some((t) => {
+    const term = comparableForm(t);
+    if (!term) return false;
+    return term.length >= 5 ? whole.includes(term) : words.includes(term);
+  });
 }
 
 export function makeNicknameSchema(blocked: readonly string[] = BLOCKED_TERMS) {

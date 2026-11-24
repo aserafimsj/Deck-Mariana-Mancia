@@ -180,4 +180,27 @@ describe.skipIf(!ADMIN_URL)("banco: integridade e transições", () => {
       await db.pool.query("update public.black_cards set status = 'archived' where id = $1", [cardId]);
     });
   });
+
+  describe("limite de requisições compartilhado", () => {
+    it("conta por chave dentro da janela e libera na janela seguinte", async () => {
+      const hit = async (key: string, limit = 3) => (await db.pool.query("select public.hit_rate_limit($1, $2, 60) as ok", [key, limit])).rows[0].ok;
+      expect([await hit("a"), await hit("a"), await hit("a"), await hit("a")]).toEqual([true, true, true, false]);
+      expect(await hit("b")).toBe(true);
+      await db.pool.query("update public.rate_limits set window_start = now() - interval '2 minutes' where key = 'a'");
+      expect(await hit("a")).toBe(true);
+    });
+
+    it("tentativas simultâneas não passam do limite", async () => {
+      const results = await Promise.all(Array.from({ length: 20 }, () => db.pool.query("select public.hit_rate_limit('c', 5, 60) as ok")));
+      expect(results.filter((r) => r.rows[0].ok)).toHaveLength(5);
+    });
+
+    it("cliente não acessa a tabela nem a função", async () => {
+      await as(db.pool, "authenticated", host, async (c) => {
+        expect((await c.query("select * from public.rate_limits")).rows).toEqual([]);
+        await expectPgError(c.query("select public.hit_rate_limit('x', 1, 60)"), /permission denied/);
+      });
+    });
+  });
 });
+

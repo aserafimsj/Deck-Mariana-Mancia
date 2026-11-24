@@ -21,6 +21,8 @@ export default defineConfig({
     env: {
       SUPABASE_DB_URL: process.env.E2E_DB_URL ?? "postgres://postgres@localhost:54329/scragbadum_e2e",
       DEV_AUTH_SECRET: "e2e-segredo-local-0123456789",
+      // Marca jogador como offline após 2 s sem sinal de vida (no jogo real: 20 s), para o teste de queda.
+      GAME_SILENCE_MS: "2000",
     },
     url: `http://localhost:${PORT}/api/health`,
     reuseExistingServer: !process.env.CI,

@@ -40,9 +40,22 @@ async function call(method: "GET" | "POST", path: string, body?: unknown, retrie
   return { ok: true, data: json as RoomResponse };
 }
 
+/** Servidor ocupado (muitas ações simultâneas na sala): tenta de novo com a mesma ação, que é idempotente. */
+async function withBusyRetry(run: () => Promise<ApiResult>): Promise<ApiResult> {
+  let result = await run();
+  for (let i = 0; i < 2 && !result.ok && result.error.code === "BUSY"; i++) {
+    await new Promise((r) => setTimeout(r, 150 + Math.random() * 250));
+    result = await run();
+  }
+  return result;
+}
+
 export const api = {
   createRoom: (nickname: string, settings: Partial<RoomSettings>) => call("POST", "/api/rooms", { nickname, settings }),
   join: (code: string, nickname: string, acceptedLevel4?: boolean) => call("POST", `/api/rooms/${code}/join`, { nickname, acceptedLevel4 }),
   view: (code: string) => call("GET", `/api/rooms/${code}`),
-  act: (code: string, action: ClientAction) => call("POST", `/api/rooms/${code}/actions`, { clientActionId: crypto.randomUUID(), action }),
+  act: (code: string, action: ClientAction) => {
+    const clientActionId = crypto.randomUUID(); // o mesmo id em todas as tentativas: nunca duplica
+    return withBusyRetry(() => call("POST", `/api/rooms/${code}/actions`, { clientActionId, action }));
+  },
 };
