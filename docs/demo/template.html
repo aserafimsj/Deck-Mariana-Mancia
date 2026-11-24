@@ -1,0 +1,406 @@
+<title>Scragbadum Passa o Celular</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Bungee&display=swap">
+<style>
+/* Versão "passa o celular" do Scragbadum!: um aparelho só, passando de mão em mão.
+   Mesma identidade do app (lambe-lambe de madrugada). Tema único escuro, por decisão de marca. */
+:root {
+  color-scheme: dark;
+  --breu: #15101A; --breu-2: #211A28; --breu-3: #31283B; --carta-preta: #0C090F;
+  --papel: #F3EFE7; --tinta: #15101A; --texto: #EEE7F3; --texto-2: #AE9FBB;
+  --amarelo: #FFCC1A; --rosa: #FF3D8B; --rosa-escuro: #D61F6E; --ciano: #3FE0CF; --vermelho: #FF4B3E;
+  --f-display: "Bungee", Impact, "Arial Black", sans-serif;
+  --f-texto: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0; background: var(--breu); color: var(--texto); font-family: var(--f-texto); font-size: 16px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 18px 28px; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+}
+:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
+h1, h2, p { margin: 0; text-wrap: balance; }
+.app { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; min-height: calc(100dvh - 46px); }
+.logo { font-family: var(--f-display); font-size: clamp(30px, 9vw, 42px); line-height: .95; display: flex; justify-content: center; flex-wrap: nowrap; }
+.logo span { display: inline-block; color: var(--papel); text-shadow: 3px 3px 0 var(--rosa); }
+.logo span:nth-child(odd) { transform: rotate(-5deg); }
+.logo span:nth-child(3n) { transform: rotate(4deg); }
+.logo .b, .logo .bang { color: var(--amarelo); text-shadow: 3px 3px 0 #000; }
+.sub { text-align: center; color: var(--texto-2); font-weight: 700; }
+.demo-note { font-size: 13px; color: var(--texto-2); background: var(--breu-2); border-radius: 12px; padding: 10px 12px; }
+.label { font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--texto-2); }
+.title { font-family: var(--f-display); font-size: 24px; line-height: 1.1; color: var(--papel); }
+.big { font-family: var(--f-display); font-size: clamp(26px, 8vw, 34px); line-height: 1.05; color: var(--amarelo); text-shadow: 3px 3px 0 #000; transform: rotate(-3deg); text-align: center; }
+.muted { color: var(--texto-2); }
+.center { text-align: center; }
+.btn { font-family: var(--f-display); font-size: 17px; text-transform: uppercase; letter-spacing: .02em; min-height: 56px; width: 100%; padding: 0 20px; border-radius: 14px; border: 0; cursor: pointer; background: var(--amarelo); color: var(--tinta); box-shadow: 4px 4px 0 #000; transition: transform .08s, box-shadow .08s; }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+.btn[disabled] { background: var(--breu-3); color: var(--texto-2); box-shadow: none; cursor: not-allowed; }
+.btn.sec { background: transparent; color: var(--papel); border: 2px solid var(--papel); box-shadow: none; }
+.btn.rosa { background: var(--rosa); }
+.btn.ghost { background: var(--breu-3); color: var(--texto); box-shadow: none; font-size: 14px; min-height: 44px; }
+.actions { position: sticky; bottom: 0; margin-top: auto; display: grid; gap: 10px; padding: 18px 0 max(6px, env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, var(--breu) 70%, transparent); }
+.field { display: grid; gap: 6px; }
+.row { display: flex; gap: 8px; }
+.input { min-height: 52px; flex: 1; min-width: 0; border-radius: 12px; border: 2px solid var(--breu-3); background: var(--breu); color: var(--texto); font: 700 18px var(--f-texto); padding: 0 14px; }
+.input:focus { outline: none; border-color: var(--amarelo); }
+.add { min-width: 52px; border-radius: 12px; border: 0; background: var(--breu-3); color: var(--texto); font: 900 24px var(--f-texto); cursor: pointer; }
+.players { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.player { display: flex; align-items: center; gap: 10px; background: var(--breu-2); border-radius: 12px; padding: 8px 10px; }
+.ava { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%; border: 2px solid #000; display: grid; place-items: center; font-family: var(--f-display); font-size: 14px; color: var(--tinta); }
+.player .nm { flex: 1; min-width: 0; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.x { width: 36px; height: 36px; border-radius: 10px; border: 0; background: var(--breu-3); color: var(--texto-2); font-weight: 900; font-size: 18px; cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid var(--breu-3); background: var(--breu-2); color: var(--texto); font: 800 14px var(--f-texto); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--amarelo); border-color: var(--amarelo); color: var(--tinta); }
+.chip.l4[aria-pressed="true"] { background: var(--vermelho); border-color: var(--vermelho); }
+.hint { font-size: 13px; color: var(--texto-2); }
+.err { color: var(--vermelho); font-weight: 700; font-size: 13px; }
+.card { position: relative; border-radius: 16px; padding: 16px 14px 12px; aspect-ratio: 5 / 7; max-width: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; font-weight: 800; font-stretch: 92%; line-height: 1.2; overflow-wrap: anywhere; }
+.card .foot { font-family: var(--f-display); font-size: 9px; letter-spacing: .04em; }
+.card.preta { background: var(--carta-preta); color: var(--papel); border: 2px solid var(--breu-3); box-shadow: 6px 6px 0 var(--rosa); font-size: 19px; }
+.card.preta .foot { color: var(--texto-2); }
+.card.branca { background: var(--papel); color: var(--tinta); box-shadow: 5px 5px 0 #000; font-size: 15px; }
+.card.branca .foot { color: #6b6175; }
+.blank { display: inline-block; min-width: 3em; border-bottom: 3px solid var(--amarelo); transform: translateY(-3px); }
+.fill { color: var(--amarelo); }
+.pick2 { position: absolute; top: -10px; right: 12px; background: var(--amarelo); color: var(--tinta); font-family: var(--f-display); font-size: 11px; padding: 4px 8px; border-radius: 8px; transform: rotate(4deg); box-shadow: 2px 2px 0 #000; }
+.black-wrap { width: 62%; max-width: 240px; margin: 0 auto; }
+.hand { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 16px 16px 12px; margin: 0 -16px; }
+.hand button { flex: 0 0 138px; scroll-snap-align: center; border: 0; padding: 0; background: none; text-align: left; cursor: pointer; transition: transform .15s; position: relative; }
+.hand button:nth-child(odd) { transform: rotate(-2deg); }
+.hand button:nth-child(even) { transform: rotate(2deg); }
+.hand button[aria-pressed="true"] { transform: translateY(-12px) rotate(0); }
+.hand button[aria-pressed="true"] .card { outline: 3px solid var(--amarelo); outline-offset: 2px; box-shadow: 6px 6px 0 var(--amarelo); }
+.order { position: absolute; top: -6px; left: -6px; width: 28px; height: 28px; border-radius: 50%; background: var(--amarelo); color: var(--tinta); font-family: var(--f-display); font-size: 14px; display: grid; place-items: center; box-shadow: 2px 2px 0 #000; z-index: 1; }
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.answers button { border: 0; padding: 0; background: none; text-align: left; cursor: pointer; display: grid; gap: 6px; }
+.answers .cover { aspect-ratio: 5 / 7; border-radius: 16px; border: 2px dashed var(--breu-3); background: var(--breu-2); display: grid; place-items: center; font-family: var(--f-display); font-size: 40px; color: var(--texto-2); }
+.answers .cover.next { border-color: var(--amarelo); color: var(--amarelo); animation: pulse 1.2s ease-in-out infinite; }
+.answers button[aria-pressed="true"] .card { box-shadow: 0 0 0 3px var(--rosa), 6px 6px 0 var(--rosa); }
+.answers .card { font-size: 13px; animation: flip .35s ease-out; }
+.result-card { width: 76%; max-width: 280px; margin: 0 auto; }
+.stamp { position: absolute; left: 50%; top: 70%; transform: translate(-50%, -50%) rotate(-14deg); font-family: var(--f-display); font-size: 26px; color: var(--rosa-escuro); border: 4px solid var(--rosa-escuro); border-radius: 10px; padding: 2px 10px; background: rgba(243, 239, 231, .9); animation: stamp .5s ease-out both; }
+.score { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.score li { display: flex; align-items: center; gap: 10px; background: var(--breu-2); border-radius: 12px; padding: 8px 10px; }
+.score li.lead { box-shadow: inset 0 0 0 2px var(--amarelo); }
+.score .pts { font-family: var(--f-display); font-size: 18px; color: var(--amarelo); font-variant-numeric: tabular-nums; }
+.badge { font-family: var(--f-display); font-size: 12px; padding: 4px 8px; border-radius: 8px; color: var(--tinta); white-space: nowrap; }
+.lv1 { background: var(--ciano); } .lv2 { background: var(--amarelo); } .lv3 { background: var(--rosa); }
+.lv4 { background: repeating-linear-gradient(-45deg, var(--vermelho) 0 10px, #ff7a70 10px 20px); }
+.handoff { margin: auto 0; display: grid; gap: 18px; text-align: center; justify-items: center; }
+.handoff .who { font-family: var(--f-display); font-size: clamp(32px, 11vw, 46px); color: var(--papel); text-shadow: 4px 4px 0 var(--rosa); line-height: 1; overflow-wrap: anywhere; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.top .round { font-family: var(--f-display); font-size: 14px; color: var(--texto-2); }
+.tag { border-radius: 999px; padding: 3px 9px; font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; background: var(--ciano); color: var(--tinta); }
+.link { background: none; border: 0; color: var(--ciano); font: 800 14px var(--f-texto); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 6px 0; }
+.sheet-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, .75); display: flex; align-items: flex-end; justify-content: center; z-index: 20; }
+.sheet { width: 100%; max-width: 440px; background: var(--breu-2); border-top: 4px solid var(--vermelho); border-radius: 22px 22px 0 0; padding: 20px 16px max(20px, env(safe-area-inset-bottom, 0px)); display: grid; gap: 12px; }
+.sheet h2 { font-family: var(--f-display); font-size: 22px; color: var(--vermelho); }
+.sheet ul { margin: 0; padding-left: 18px; color: var(--texto-2); font-size: 14px; display: grid; gap: 3px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 800; font-size: 14px; }
+.check input { width: 22px; height: 22px; accent-color: var(--vermelho); flex: 0 0 22px; }
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 30; }
+.confetti i { position: absolute; top: -20px; width: 10px; height: 16px; border-radius: 2px; animation: fall 1.8s ease-in forwards; }
+@keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+@keyframes pulse { 50% { opacity: .55; } }
+@keyframes flip { from { transform: rotateY(90deg); } }
+@keyframes stamp { from { transform: translate(-50%, -50%) rotate(-14deg) scale(2.4); opacity: 0; } }
+@keyframes rise { from { transform: translateY(14px); opacity: 0; } }
+.screen-in { animation: rise .25s ease-out; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="app" id="app" aria-live="polite"></div>
+
+<script>
+// Cartas originais do baralho base (content/baralho-base.json), geradas por scripts/gerar-demo.mjs.
+const DECK = /*__CARDS__*/{"perguntas":[],"respostas":[]};
+
+const LEVELS = [
+  { n: 1, name: "De Leve", desc: "Absurdo e zoeira do dia a dia. Dá para jogar com a tia." },
+  { n: 2, name: "Picante", desc: "Duplo sentido, palavrão leve, vergonha alheia." },
+  { n: 3, name: "Pesado", desc: "Palavrão, sexo entre adultos, humor negro, escatologia." },
+  { n: 4, name: "Sem Filtro", desc: "Humor negro extremo, religião, política, tragédia, mau gosto proposital." },
+];
+const COLORS = ["#FFCC1A", "#3FE0CF", "#FF3D8B", "#F3EFE7", "#FF4B3E"];
+const HAND = 7;
+const SAVE_KEY = "scragbadum:passa-o-celular:v1";
+
+let s = load() ?? fresh();
+
+function fresh() {
+  return { screen: "setup", players: ["", "", ""], level: 2, points: 5, deckW: [], deckB: [], discardW: [], discardB: [], hands: {}, scores: {}, judge: -1, round: 0, black: null, order: [], turn: 0, subs: {}, reveal: [], revealed: 0, chosen: null, winner: null, picked: [] };
+}
+function load() { try { const raw = localStorage.getItem(SAVE_KEY); return raw ? JSON.parse(raw) : null; } catch { return null; } }
+function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); } catch { /* sem armazenamento: segue sem salvar */ } }
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const blanks = (t) => (t.match(/_{3,}/g) || []).length;
+const pickOf = (t) => (blanks(t) === 2 ? 2 : 1);
+const names = () => s.players.map((p) => p.trim()).filter(Boolean);
+
+// ---------- Som (sintetizado; só depois do primeiro toque) ----------
+let ctx = null;
+function audio() { try { ctx ??= new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === "suspended") ctx.resume(); return ctx; } catch { return null; } }
+function tone(c, f, t, d, type = "sine", g = 0.2, to) { const o = c.createOscillator(), gn = c.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + d); gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(g, t + 0.01); gn.gain.exponentialRampToValueAtTime(0.0001, t + d); o.connect(gn).connect(c.destination); o.start(t); o.stop(t + d + 0.02); }
+function noise(c, t, d, g = 0.18) { const b = c.createBuffer(1, Math.ceil(c.sampleRate * d), c.sampleRate), x = b.getChannelData(0); for (let i = 0; i < x.length; i++) x[i] = Math.random() * 2 - 1; const src = c.createBufferSource(), f = c.createBiquadFilter(), gn = c.createGain(); src.buffer = b; f.type = "highpass"; f.frequency.value = 6000; gn.gain.setValueAtTime(g, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + d); src.connect(f).connect(gn).connect(c.destination); src.start(t); }
+function badumtss() { const c = audio(); if (!c) return; const t = c.currentTime + 0.02; tone(c, 180, t, 0.12, "sine", 0.35, 90); tone(c, 150, t + 0.16, 0.14, "sine", 0.35, 70); noise(c, t + 0.34, 0.6); }
+function tap() { const c = audio(); if (!c) return; tone(c, 660, c.currentTime + 0.01, 0.06, "square", 0.05); }
+function flipSound() { const c = audio(); if (!c) return; const t = c.currentTime + 0.01; noise(c, t, 0.07, 0.1); tone(c, 520, t + 0.02, 0.07, "triangle", 0.08); }
+
+// ---------- Regras ----------
+function draw(n) {
+  const out = [];
+  while (out.length < n) {
+    if (!s.deckW.length) { if (!s.discardW.length) break; s.deckW = shuffle(s.discardW); s.discardW = []; }
+    out.push(s.deckW.pop());
+  }
+  return out;
+}
+function startGame() {
+  const ps = names();
+  s.players = ps;
+  s.deckW = shuffle(DECK.respostas.filter((c) => c.nivel <= s.level).map((c) => c.texto));
+  s.deckB = shuffle(DECK.perguntas.filter((c) => c.nivel <= s.level).map((c) => c.texto));
+  s.discardW = []; s.discardB = [];
+  s.hands = {}; s.scores = {};
+  ps.forEach((p) => { s.hands[p] = draw(HAND); s.scores[p] = 0; });
+  s.judge = Math.floor(Math.random() * ps.length) - 1;
+  s.round = 0;
+  newRound();
+}
+function newRound() {
+  const ps = s.players;
+  s.judge = (s.judge + 1) % ps.length;
+  s.round++;
+  ps.forEach((p) => { const miss = HAND - s.hands[p].length; if (miss > 0) s.hands[p].push(...draw(miss)); });
+  if (!s.deckB.length) { s.deckB = shuffle(s.discardB); s.discardB = []; }
+  s.black = s.deckB.pop();
+  const judge = ps[s.judge];
+  s.order = ps.filter((p) => p !== judge);
+  s.turn = 0; s.subs = {}; s.reveal = []; s.revealed = 0; s.chosen = null; s.winner = null; s.picked = [];
+  go("judge-read");
+}
+function submit(player) {
+  const cards = s.picked.slice();
+  s.hands[player] = s.hands[player].filter((c) => !cards.includes(c));
+  s.subs[player] = cards;
+  s.picked = [];
+  s.turn++;
+  if (s.turn < s.order.length) go("handoff");
+  else { s.reveal = shuffle(Object.keys(s.subs)); go("judge-handoff"); }
+}
+function pickWinner() {
+  const w = s.reveal[s.chosen];
+  s.winner = w;
+  s.scores[w]++;
+  Object.values(s.subs).forEach((cs) => s.discardW.push(...cs));
+  s.discardB.push(s.black);
+  badumtss();
+  try { navigator.vibrate?.([80, 40, 140]); } catch { /* sem vibração */ }
+  go(s.scores[w] >= s.points ? "over" : "result");
+}
+
+// ---------- Desenho das cartas ----------
+function blackHtml(text, filled) {
+  let i = 0;
+  const body = esc(text).replace(/_{3,}/g, () => {
+    const a = filled ? filled[i++] : null;
+    return a ? `<span class="fill">${esc(asBlank(a))}</span>` : '<span class="blank" aria-label="lacuna"></span>';
+  });
+  const extra = filled && blanks(text) === 0 ? ` <span class="fill">${filled.map(esc).join(" / ")}</span>` : "";
+  return `<div class="card preta">${!filled && pickOf(text) === 2 ? '<span class="pick2">ESCOLHA 2</span>' : ""}<p>${body}${extra}</p><span class="foot">SCRAGBADUM!</span></div>`;
+}
+function asBlank(a) {
+  const t = a.trim().replace(/[.!]+$/, "");
+  const w = t.split(/\s+/)[0];
+  return /\p{L}.*\p{L}/u.test(w) && w === w.toUpperCase() ? t : t.charAt(0).toLowerCase() + t.slice(1);
+}
+const whiteHtml = (t) => `<div class="card branca"><p>${esc(t)}</p><span class="foot">SCRAGBADUM!</span></div>`;
+const avatar = (p) => { const i = s.players.indexOf(p); return `<span class="ava" style="background:${COLORS[(i < 0 ? 0 : i) % COLORS.length]}" aria-hidden="true">${esc(p.charAt(0).toUpperCase())}</span>`; };
+function scoreboard(highlight) {
+  const sorted = s.players.slice().sort((a, b) => s.scores[b] - s.scores[a]);
+  const top = s.scores[sorted[0]];
+  return `<ol class="score" aria-label="Placar">${sorted.map((p) => `<li class="${s.scores[p] === top && top > 0 ? "lead" : ""}">${avatar(p)}<span style="flex:1;font-weight:800">${esc(p)}${p === highlight ? " · +1" : ""}</span><span class="pts">${s.scores[p]}</span></li>`).join("")}</ol>`;
+}
+const logo = () => `<div class="logo" role="img" aria-label="Scragbadum!">${"SCRAGBADUM".split("").map((l, i) => `<span class="${i === 5 ? "b" : ""}" aria-hidden="true">${l}</span>`).join("")}<span class="bang" aria-hidden="true">!</span></div>`;
+
+// ---------- Telas ----------
+function go(screen) { s.screen = screen; save(); render(); window.scrollTo(0, 0); }
+
+function render() {
+  const app = document.getElementById("app");
+  const v = VIEWS[s.screen] ?? VIEWS.setup;
+  app.innerHTML = `<div class="screen-in" style="display:flex;flex-direction:column;gap:16px;flex:1">${v()}</div>`;
+  BIND[s.screen]?.(app);
+}
+
+const topBar = () => `<div class="top"><span class="round">RODADA ${s.round}</span><span class="tag">Juiz: ${esc(s.players[s.judge])}</span></div>`;
+
+const VIEWS = {
+  setup: () => {
+    const ps = s.players;
+    const lv = LEVELS[s.level - 1];
+    return `
+      ${logo()}
+      <p class="sub">O jogo das respostas que você não devia dar.</p>
+      <p class="demo-note"><b>Versão passa o celular:</b> um aparelho só, passando de mão em mão. A versão completa, cada um no seu celular, chega em breve.</p>
+      <div class="field">
+        <span class="label">Quem vai jogar (3 a 10)</span>
+        <ul class="players">${ps.map((p, i) => `<li class="player">${`<span class="ava" style="background:${COLORS[i % COLORS.length]}" aria-hidden="true">${esc((p.trim() || String(i + 1)).charAt(0).toUpperCase())}</span>`}<input class="input" id="p${i}" aria-label="Nome do jogador ${i + 1}" placeholder="Jogador ${i + 1}" maxlength="16" value="${esc(p)}">${ps.length > 3 ? `<button class="x" data-del="${i}" aria-label="Remover jogador ${i + 1}">×</button>` : ""}</li>`).join("")}</ul>
+        ${ps.length < 10 ? '<button class="btn ghost" id="addp">+ Adicionar jogador</button>' : ""}
+        <p class="err" id="err" hidden></p>
+      </div>
+      <div class="field">
+        <span class="label">Pontos para vencer</span>
+        <div class="chips">${[3, 5, 7, 10].map((n) => `<button class="chip" data-pts="${n}" aria-pressed="${s.points === n}">${n}</button>`).join("")}</div>
+      </div>
+      <div class="field">
+        <span class="label">Nível de humor</span>
+        <div class="chips">${LEVELS.map((l) => `<button class="chip ${l.n === 4 ? "l4" : ""}" data-lv="${l.n}" aria-pressed="${s.level === l.n}">${l.name}</button>`).join("")}</div>
+        <p class="hint">${esc(lv.desc)}</p>
+      </div>
+      <div class="actions"><button class="btn" id="start">Começar a farra</button>
+      <button class="link" id="how">Como jogar</button></div>`;
+  },
+  how: () => `
+    <p class="title">COMO JOGAR</p>
+    <p><b>1. Alguém é o juiz.</b> Ele lê a carta pergunta em voz alta.</p>
+    <p><b>2. Cada um, na sua vez,</b> pega o celular escondido dos outros e escolhe a resposta mais absurda da sua mão.</p>
+    <p><b>3. O juiz recebe o celular,</b> revela as respostas uma a uma (sem saber de quem é) e escolhe a melhor.</p>
+    <p><b>4. Quem escreveu a vencedora ganha 1 ponto.</b> O juiz muda a cada rodada. Quem chegar aos pontos combinados vence.</p>
+    <div class="actions"><button class="btn" id="back">Entendi, bora</button></div>`,
+  "judge-read": () => `
+    ${topBar()}
+    <div class="handoff" style="margin:0"><span class="label">Passe o celular para o juiz</span><span class="who">${esc(s.players[s.judge])}</span></div>
+    <p class="center muted">Juiz, leia a pergunta em voz alta para todo mundo:</p>
+    <div class="black-wrap">${blackHtml(s.black)}</div>
+    <div class="actions"><button class="btn" id="next">Passar para ${esc(s.order[0])}</button></div>`,
+  handoff: () => `
+    ${topBar()}
+    <div class="handoff"><span class="label">Passe o celular para</span><span class="who">${esc(s.order[s.turn])}</span><p class="muted">Sem espiar! As cartas aparecem quando a pessoa tocar no botão.</p></div>
+    <div class="actions"><button class="btn" id="show">Sou ${esc(s.order[s.turn])}, mostrar minhas cartas</button></div>`,
+  pick: () => {
+    const p = s.order[s.turn];
+    const need = pickOf(s.black);
+    return `
+      ${topBar()}
+      <div class="black-wrap" style="width:54%">${blackHtml(s.black)}</div>
+      <span class="label">${esc(p)}, ${need === 2 ? "escolha 2, na ordem" : "escolha sua resposta"}</span>
+      <div class="hand">${s.hands[p].map((c, i) => { const o = s.picked.indexOf(c); return `<button data-card="${i}" aria-pressed="${o >= 0}">${need === 2 && o >= 0 ? `<span class="order">${o + 1}</span>` : ""}${whiteHtml(c)}</button>`; }).join("")}</div>
+      <div class="actions"><button class="btn" id="send" ${s.picked.length === need ? "" : "disabled"}>${s.picked.length === need ? "Mandar essa" : need === 2 ? `Escolha ${need - s.picked.length}` : "Escolha uma carta"}</button></div>`;
+  },
+  "judge-handoff": () => `
+    ${topBar()}
+    <div class="handoff"><span class="label">Todo mundo respondeu! Passe o celular para o juiz</span><span class="who">${esc(s.players[s.judge])}</span><p class="muted">Leia cada resposta em voz alta. Faz suspense.</p></div>
+    <div class="actions"><button class="btn" id="judge">Sou o juiz, revelar respostas</button></div>`,
+  judging: () => {
+    const all = s.revealed >= s.reveal.length;
+    return `
+      ${topBar()}
+      <div class="black-wrap" style="width:50%">${blackHtml(s.black)}</div>
+      <p class="center muted">${all ? "Toque na sua favorita." : "Toque na carta em destaque para revelar."}</p>
+      <div class="answers">${s.reveal.map((p, i) => i < s.revealed
+        ? `<button data-ans="${i}" aria-pressed="${s.chosen === i}" aria-label="${esc(s.subs[p].join(" + "))}">${s.subs[p].map(whiteHtml).join("")}</button>`
+        : `<button data-ans="${i}" ${i === s.revealed ? "" : "disabled"} aria-label="Resposta ${i + 1}, escondida"><span class="cover ${i === s.revealed ? "next" : ""}">?</span></button>`).join("")}</div>
+      <div class="actions"><button class="btn rosa" id="win" ${all && s.chosen !== null ? "" : "disabled"}>${!all ? "Revele todas" : s.chosen === null ? "Escolha a melhor" : "Essa é a melhor"}</button></div>`;
+  },
+  result: () => `
+    <span class="round center">RODADA ${s.round} · RESULTADO</span>
+    <div class="result-card" style="position:relative">${blackHtml(s.black, s.subs[s.winner])}<span class="stamp">VENCEU!</span></div>
+    <div class="center"><span class="muted">Resposta de</span><p class="title" style="color:var(--rosa)">${esc(s.winner.toUpperCase())}</p></div>
+    ${scoreboard(s.winner)}
+    <div class="actions"><button class="btn" id="next">Próxima rodada</button></div>`,
+  over: () => {
+    const sorted = s.players.slice().sort((a, b) => s.scores[b] - s.scores[a]);
+    return `
+      <div class="center" style="display:grid;gap:6px;margin-top:8px"><span class="label">Fim da partida</span><p class="big">${esc(s.winner.toUpperCase())}<br>VENCEU!</p></div>
+      <div class="result-card" style="position:relative;width:64%">${blackHtml(s.black, s.subs[s.winner])}</div>
+      ${scoreboard()}
+      <p class="center muted">${sorted.length} jogadores · ${s.round} rodadas</p>
+      <div class="actions"><button class="btn" id="again">Jogar de novo</button><button class="btn sec" id="menu">Mudar jogadores</button></div>`;
+  },
+};
+
+function warnLevel4(onOk) {
+  const bg = document.createElement("div");
+  bg.className = "sheet-bg";
+  bg.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="l4t"><h2 id="l4t">Sem Filtro. Sério mesmo.</h2><ul><li>Humor negro com morte, doença e tragédias</li><li>Sexo explícito, sem rodeios</li><li>Religião, política e drogas</li><li>Combinações que podem ofender de verdade</li></ul><p style="font-size:14px;font-weight:700">O que não aparece nem aqui: conteúdo sexual com menores, cartas feitas para atacar um grupo e nomes de pessoas reais.</p><label class="check"><input type="checkbox" id="l4ok"> Todo mundo aqui tem 18 anos ou mais e topa jogar assim.</label><button class="btn" id="l4yes" disabled style="background:var(--vermelho)">Ativar Sem Filtro</button><button class="btn ghost" id="l4no">Melhor não</button></div>`;
+  document.body.appendChild(bg);
+  const close = () => bg.remove();
+  bg.querySelector("#l4ok").addEventListener("change", (e) => { bg.querySelector("#l4yes").disabled = !e.target.checked; });
+  bg.querySelector("#l4yes").addEventListener("click", () => { close(); onOk(); });
+  bg.querySelector("#l4no").addEventListener("click", close);
+  bg.addEventListener("click", (e) => { if (e.target === bg) close(); });
+}
+
+function confetti() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const box = document.createElement("div");
+  box.className = "confetti";
+  for (let i = 0; i < 46; i++) { const c = document.createElement("i"); c.style.left = Math.random() * 100 + "%"; c.style.background = COLORS[i % 4]; c.style.animationDelay = Math.random() * 0.5 + "s"; box.appendChild(c); }
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 2600);
+}
+
+const BIND = {
+  setup: (app) => {
+    app.querySelectorAll(".players input").forEach((inp, i) => inp.addEventListener("input", () => { s.players[i] = inp.value; save(); }));
+    app.querySelectorAll("[data-del]").forEach((b) => b.addEventListener("click", () => { s.players.splice(Number(b.dataset.del), 1); go("setup"); }));
+    app.querySelector("#addp")?.addEventListener("click", () => { s.players.push(""); go("setup"); app.querySelector(`#p${s.players.length - 1}`)?.focus(); });
+    app.querySelectorAll("[data-pts]").forEach((b) => b.addEventListener("click", () => { s.points = Number(b.dataset.pts); go("setup"); }));
+    app.querySelectorAll("[data-lv]").forEach((b) => b.addEventListener("click", () => {
+      const n = Number(b.dataset.lv);
+      if (n === 4) warnLevel4(() => { s.level = 4; go("setup"); }); else { s.level = n; go("setup"); }
+    }));
+    app.querySelector("#how").addEventListener("click", () => go("how"));
+    app.querySelector("#start").addEventListener("click", () => {
+      audio();
+      const ps = names();
+      const err = app.querySelector("#err");
+      const dup = ps.find((p, i) => ps.findIndex((q) => q.toLowerCase() === p.toLowerCase()) !== i);
+      if (ps.length < 3) { err.textContent = "Precisa de pelo menos 3 jogadores com nome."; err.hidden = false; return; }
+      if (dup) { err.textContent = `Tem dois jogadores chamados "${dup}". Diferencia um deles?`; err.hidden = false; return; }
+      startGame();
+    });
+  },
+  how: (app) => app.querySelector("#back").addEventListener("click", () => go("setup")),
+  "judge-read": (app) => app.querySelector("#next").addEventListener("click", () => go("handoff")),
+  handoff: (app) => app.querySelector("#show").addEventListener("click", () => go("pick")),
+  pick: (app) => {
+    const p = s.order[s.turn];
+    const need = pickOf(s.black);
+    app.querySelectorAll("[data-card]").forEach((b) => b.addEventListener("click", () => {
+      tap();
+      const c = s.hands[p][Number(b.dataset.card)];
+      s.picked = s.picked.includes(c) ? s.picked.filter((x) => x !== c) : need === 1 ? [c] : [...s.picked, c].slice(-need);
+      const x = app.querySelector(".hand").scrollLeft;
+      render();
+      document.querySelector(".hand").scrollLeft = x;
+    }));
+    app.querySelector("#send").addEventListener("click", () => submit(p));
+  },
+  "judge-handoff": (app) => app.querySelector("#judge").addEventListener("click", () => go("judging")),
+  judging: (app) => {
+    app.querySelectorAll("[data-ans]").forEach((b) => b.addEventListener("click", () => {
+      const i = Number(b.dataset.ans);
+      if (i === s.revealed && s.revealed < s.reveal.length) { s.revealed++; flipSound(); }
+      else if (i < s.revealed && s.revealed >= s.reveal.length) s.chosen = i;
+      save(); render();
+    }));
+    app.querySelector("#win").addEventListener("click", pickWinner);
+  },
+  result: (app) => { confetti(); app.querySelector("#next").addEventListener("click", newRound); },
+  over: (app) => {
+    confetti();
+    app.querySelector("#again").addEventListener("click", startGame);
+    app.querySelector("#menu").addEventListener("click", () => go("setup"));
+  },
+};
+
+render();
+</script>

@@ -1,0 +1,406 @@
+<title>Scragbadum Passa o Celular</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Bungee&display=swap">
+<style>
+/* Versão "passa o celular" do Scragbadum!: um aparelho só, passando de mão em mão.
+   Mesma identidade do app (lambe-lambe de madrugada). Tema único escuro, por decisão de marca. */
+:root {
+  color-scheme: dark;
+  --breu: #15101A; --breu-2: #211A28; --breu-3: #31283B; --carta-preta: #0C090F;
+  --papel: #F3EFE7; --tinta: #15101A; --texto: #EEE7F3; --texto-2: #AE9FBB;
+  --amarelo: #FFCC1A; --rosa: #FF3D8B; --rosa-escuro: #D61F6E; --ciano: #3FE0CF; --vermelho: #FF4B3E;
+  --f-display: "Bungee", Impact, "Arial Black", sans-serif;
+  --f-texto: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body {
+  margin: 0; background: var(--breu); color: var(--texto); font-family: var(--f-texto); font-size: 16px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 18px 28px; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+}
+:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
+h1, h2, p { margin: 0; text-wrap: balance; }
+.app { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; min-height: calc(100dvh - 46px); }
+.logo { font-family: var(--f-display); font-size: clamp(30px, 9vw, 42px); line-height: .95; display: flex; justify-content: center; flex-wrap: nowrap; }
+.logo span { display: inline-block; color: var(--papel); text-shadow: 3px 3px 0 var(--rosa); }
+.logo span:nth-child(odd) { transform: rotate(-5deg); }
+.logo span:nth-child(3n) { transform: rotate(4deg); }
+.logo .b, .logo .bang { color: var(--amarelo); text-shadow: 3px 3px 0 #000; }
+.sub { text-align: center; color: var(--texto-2); font-weight: 700; }
+.demo-note { font-size: 13px; color: var(--texto-2); background: var(--breu-2); border-radius: 12px; padding: 10px 12px; }
+.label { font-size: 12px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--texto-2); }
+.title { font-family: var(--f-display); font-size: 24px; line-height: 1.1; color: var(--papel); }
+.big { font-family: var(--f-display); font-size: clamp(26px, 8vw, 34px); line-height: 1.05; color: var(--amarelo); text-shadow: 3px 3px 0 #000; transform: rotate(-3deg); text-align: center; }
+.muted { color: var(--texto-2); }
+.center { text-align: center; }
+.btn { font-family: var(--f-display); font-size: 17px; text-transform: uppercase; letter-spacing: .02em; min-height: 56px; width: 100%; padding: 0 20px; border-radius: 14px; border: 0; cursor: pointer; background: var(--amarelo); color: var(--tinta); box-shadow: 4px 4px 0 #000; transition: transform .08s, box-shadow .08s; }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+.btn[disabled] { background: var(--breu-3); color: var(--texto-2); box-shadow: none; cursor: not-allowed; }
+.btn.sec { background: transparent; color: var(--papel); border: 2px solid var(--papel); box-shadow: none; }
+.btn.rosa { background: var(--rosa); }
+.btn.ghost { background: var(--breu-3); color: var(--texto); box-shadow: none; font-size: 14px; min-height: 44px; }
+.actions { position: sticky; bottom: 0; margin-top: auto; display: grid; gap: 10px; padding: 18px 0 max(6px, env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, var(--breu) 70%, transparent); }
+.field { display: grid; gap: 6px; }
+.row { display: flex; gap: 8px; }
+.input { min-height: 52px; flex: 1; min-width: 0; border-radius: 12px; border: 2px solid var(--breu-3); background: var(--breu); color: var(--texto); font: 700 18px var(--f-texto); padding: 0 14px; }
+.input:focus { outline: none; border-color: var(--amarelo); }
+.add { min-width: 52px; border-radius: 12px; border: 0; background: var(--breu-3); color: var(--texto); font: 900 24px var(--f-texto); cursor: pointer; }
+.players { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.player { display: flex; align-items: center; gap: 10px; background: var(--breu-2); border-radius: 12px; padding: 8px 10px; }
+.ava { width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%; border: 2px solid #000; display: grid; place-items: center; font-family: var(--f-display); font-size: 14px; color: var(--tinta); }
+.player .nm { flex: 1; min-width: 0; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.x { width: 36px; height: 36px; border-radius: 10px; border: 0; background: var(--breu-3); color: var(--texto-2); font-weight: 900; font-size: 18px; cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 44px; padding: 0 14px; border-radius: 12px; border: 2px solid var(--breu-3); background: var(--breu-2); color: var(--texto); font: 800 14px var(--f-texto); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--amarelo); border-color: var(--amarelo); color: var(--tinta); }
+.chip.l4[aria-pressed="true"] { background: var(--vermelho); border-color: var(--vermelho); }
+.hint { font-size: 13px; color: var(--texto-2); }
+.err { color: var(--vermelho); font-weight: 700; font-size: 13px; }
+.card { position: relative; border-radius: 16px; padding: 16px 14px 12px; aspect-ratio: 5 / 7; max-width: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; font-weight: 800; font-stretch: 92%; line-height: 1.2; overflow-wrap: anywhere; }
+.card .foot { font-family: var(--f-display); font-size: 9px; letter-spacing: .04em; }
+.card.preta { background: var(--carta-preta); color: var(--papel); border: 2px solid var(--breu-3); box-shadow: 6px 6px 0 var(--rosa); font-size: 19px; }
+.card.preta .foot { color: var(--texto-2); }
+.card.branca { background: var(--papel); color: var(--tinta); box-shadow: 5px 5px 0 #000; font-size: 15px; }
+.card.branca .foot { color: #6b6175; }
+.blank { display: inline-block; min-width: 3em; border-bottom: 3px solid var(--amarelo); transform: translateY(-3px); }
+.fill { color: var(--amarelo); }
+.pick2 { position: absolute; top: -10px; right: 12px; background: var(--amarelo); color: var(--tinta); font-family: var(--f-display); font-size: 11px; padding: 4px 8px; border-radius: 8px; transform: rotate(4deg); box-shadow: 2px 2px 0 #000; }
+.black-wrap { width: 62%; max-width: 240px; margin: 0 auto; }
+.hand { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 16px 16px 12px; margin: 0 -16px; }
+.hand button { flex: 0 0 138px; scroll-snap-align: center; border: 0; padding: 0; background: none; text-align: left; cursor: pointer; transition: transform .15s; position: relative; }
+.hand button:nth-child(odd) { transform: rotate(-2deg); }
+.hand button:nth-child(even) { transform: rotate(2deg); }
+.hand button[aria-pressed="true"] { transform: translateY(-12px) rotate(0); }
+.hand button[aria-pressed="true"] .card { outline: 3px solid var(--amarelo); outline-offset: 2px; box-shadow: 6px 6px 0 var(--amarelo); }
+.order { position: absolute; top: -6px; left: -6px; width: 28px; height: 28px; border-radius: 50%; background: var(--amarelo); color: var(--tinta); font-family: var(--f-display); font-size: 14px; display: grid; place-items: center; box-shadow: 2px 2px 0 #000; z-index: 1; }
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.answers button { border: 0; padding: 0; background: none; text-align: left; cursor: pointer; display: grid; gap: 6px; }
+.answers .cover { aspect-ratio: 5 / 7; border-radius: 16px; border: 2px dashed var(--breu-3); background: var(--breu-2); display: grid; place-items: center; font-family: var(--f-display); font-size: 40px; color: var(--texto-2); }
+.answers .cover.next { border-color: var(--amarelo); color: var(--amarelo); animation: pulse 1.2s ease-in-out infinite; }
+.answers button[aria-pressed="true"] .card { box-shadow: 0 0 0 3px var(--rosa), 6px 6px 0 var(--rosa); }
+.answers .card { font-size: 13px; animation: flip .35s ease-out; }
+.result-card { width: 76%; max-width: 280px; margin: 0 auto; }
+.stamp { position: absolute; left: 50%; top: 70%; transform: translate(-50%, -50%) rotate(-14deg); font-family: var(--f-display); font-size: 26px; color: var(--rosa-escuro); border: 4px solid var(--rosa-escuro); border-radius: 10px; padding: 2px 10px; background: rgba(243, 239, 231, .9); animation: stamp .5s ease-out both; }
+.score { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.score li { display: flex; align-items: center; gap: 10px; background: var(--breu-2); border-radius: 12px; padding: 8px 10px; }
+.score li.lead { box-shadow: inset 0 0 0 2px var(--amarelo); }
+.score .pts { font-family: var(--f-display); font-size: 18px; color: var(--amarelo); font-variant-numeric: tabular-nums; }
+.badge { font-family: var(--f-display); font-size: 12px; padding: 4px 8px; border-radius: 8px; color: var(--tinta); white-space: nowrap; }
+.lv1 { background: var(--ciano); } .lv2 { background: var(--amarelo); } .lv3 { background: var(--rosa); }
+.lv4 { background: repeating-linear-gradient(-45deg, var(--vermelho) 0 10px, #ff7a70 10px 20px); }
+.handoff { margin: auto 0; display: grid; gap: 18px; text-align: center; justify-items: center; }
+.handoff .who { font-family: var(--f-display); font-size: clamp(32px, 11vw, 46px); color: var(--papel); text-shadow: 4px 4px 0 var(--rosa); line-height: 1; overflow-wrap: anywhere; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.top .round { font-family: var(--f-display); font-size: 14px; color: var(--texto-2); }
+.tag { border-radius: 999px; padding: 3px 9px; font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; background: var(--ciano); color: var(--tinta); }
+.link { background: none; border: 0; color: var(--ciano); font: 800 14px var(--f-texto); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 6px 0; }
+.sheet-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, .75); display: flex; align-items: flex-end; justify-content: center; z-index: 20; }
+.sheet { width: 100%; max-width: 440px; background: var(--breu-2); border-top: 4px solid var(--vermelho); border-radius: 22px 22px 0 0; padding: 20px 16px max(20px, env(safe-area-inset-bottom, 0px)); display: grid; gap: 12px; }
+.sheet h2 { font-family: var(--f-display); font-size: 22px; color: var(--vermelho); }
+.sheet ul { margin: 0; padding-left: 18px; color: var(--texto-2); font-size: 14px; display: grid; gap: 3px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 800; font-size: 14px; }
+.check input { width: 22px; height: 22px; accent-color: var(--vermelho); flex: 0 0 22px; }
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 30; }
+.confetti i { position: absolute; top: -20px; width: 10px; height: 16px; border-radius: 2px; animation: fall 1.8s ease-in forwards; }
+@keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+@keyframes pulse { 50% { opacity: .55; } }
+@keyframes flip { from { transform: rotateY(90deg); } }
+@keyframes stamp { from { transform: translate(-50%, -50%) rotate(-14deg) scale(2.4); opacity: 0; } }
+@keyframes rise { from { transform: translateY(14px); opacity: 0; } }
+.screen-in { animation: rise .25s ease-out; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="app" id="app" aria-live="polite"></div>
+
+<script>
+// Cartas originais do baralho base (content/baralho-base.json), geradas por scripts/gerar-demo.mjs.
+const DECK = {"perguntas":[{"texto":"Qual é o segredo para conquistar alguém?","nivel":1},{"texto":"Qual é o verdadeiro motivo do grupo da família estar em silêncio?","nivel":1},{"texto":"Minha terapeuta disse que eu preciso parar com ___.","nivel":1},{"texto":"O síndico mandou um comunicado proibindo ___ na piscina.","nivel":1},{"texto":"___ + ___ = sexta-feira perfeita.","nivel":1},{"texto":"Na reunião de segunda, o chefe apresentou a nova estratégia: ___.","nivel":1},{"texto":"O que a vovó guarda dentro do pote de sorvete?","nivel":1},{"texto":"Qual é o próximo grande sucesso das redes sociais?","nivel":1},{"texto":"No meu currículo, em \"outras habilidades\": ___.","nivel":1},{"texto":"O que estragou o churrasco de domingo?","nivel":1},{"texto":"Meu horóscopo de hoje: cuidado com ___.","nivel":1},{"texto":"Nunca subestime o poder de ___.","nivel":1},{"texto":"O que tem dentro da gaveta de bagunça da sua casa?","nivel":1},{"texto":"A nova novela das nove conta a história de ___.","nivel":1},{"texto":"Qual é o pior presente de amigo secreto?","nivel":1},{"texto":"O Brasil só vai pra frente quando acabar com ___.","nivel":1},{"texto":"Qual é o cheiro oficial de segunda-feira?","nivel":1},{"texto":"A vizinha de baixo bateu na porta reclamando de ___.","nivel":1},{"texto":"O que o cachorro pensa quando olha para você?","nivel":1},{"texto":"Minha mãe disse que, na minha idade, ela já tinha ___.","nivel":1},{"texto":"Promoção imperdível no supermercado: leve ___ e ganhe ___.","nivel":1},{"texto":"O segredo da receita da vovó é ___.","nivel":1},{"texto":"Por que o motorista de aplicativo cancelou a corrida?","nivel":1},{"texto":"Qual é a última coisa que você quer ouvir de um dentista?","nivel":1},{"texto":"No churrasco, o tio sempre traz ___.","nivel":1},{"texto":"A próxima moda das redes sociais vai ser ___.","nivel":1},{"texto":"Qual é o verdadeiro motivo do atraso do ônibus?","nivel":1},{"texto":"O que tem no fundo da bolsa da sua tia?","nivel":1},{"texto":"Meu plano para ficar rico: ___.","nivel":1},{"texto":"O que realmente acontece na reunião de condomínio?","nivel":1},{"texto":"Minha tatuagem tem um significado profundo: ___.","nivel":1},{"texto":"O que o professor de educação física faz nas férias?","nivel":1},{"texto":"Fui ao médico e ele receitou ___.","nivel":1},{"texto":"Qual é o maior mistério do universo?","nivel":1},{"texto":"O que a Receita Federal descobriu sobre mim?","nivel":1},{"texto":"Meu talento escondido é ___.","nivel":1},{"texto":"Qual é o tema da festa de 40 anos do seu primo?","nivel":1},{"texto":"Ganhei na loteria e a primeira coisa que comprei foi ___.","nivel":1},{"texto":"Qual é a pior coisa para fazer numa entrevista de emprego?","nivel":1},{"texto":"___: o filme. Em breve nos cinemas.","nivel":1},{"texto":"O que vai acontecer quando a internet cair para sempre?","nivel":1},{"texto":"Antes de dormir, eu sempre penso em ___.","nivel":1},{"texto":"Primeiro ___, depois ___. É assim que a vida funciona.","nivel":1},{"texto":"O que o GPS diz quando você erra o caminho pela terceira vez?","nivel":1},{"texto":"Qual é o ingrediente secreto do pastel da feira?","nivel":1},{"texto":"Por que o jogo de domingo foi interrompido?","nivel":1},{"texto":"Primeiro encontro perfeito: jantar, vinho e ___.","nivel":2},{"texto":"O que tem no histórico de pesquisa do seu tio?","nivel":2},{"texto":"Eu não estava bêbado, eu só estava ___.","nivel":2},{"texto":"Meu ex me trocou por ___.","nivel":2},{"texto":"Fui demitido por causa de ___ e, sinceramente, faria de novo.","nivel":2},{"texto":"Na despedida de solteiro, tudo deu errado por causa de ___ e ___.","nivel":2},{"texto":"O que o padre confessou para o padre?","nivel":2},{"texto":"A nova fantasia de Carnaval mais vendida do ano: ___.","nivel":2},{"texto":"No meu velório, quero que toque ___.","nivel":2},{"texto":"O que fez a festa da firma acabar mais cedo?","nivel":2},{"texto":"O que eu encontrei no celular do meu namorado?","nivel":2},{"texto":"Por que me expulsaram do bloco de Carnaval?","nivel":2},{"texto":"A minha ressaca tem nome e sobrenome: ___.","nivel":2},{"texto":"O que não pode faltar num primeiro encontro de aplicativo?","nivel":2},{"texto":"Meu histórico do navegador em uma palavra: ___.","nivel":2},{"texto":"Por que eu fui bloqueado no grupo do condomínio?","nivel":2},{"texto":"Qual é o verdadeiro motivo do divórcio da vizinha?","nivel":2},{"texto":"Eu só bebo socialmente. Quer dizer, ___.","nivel":2},{"texto":"No meu perfil de namoro está escrito: \"Gosto de ___ e ___\".","nivel":2},{"texto":"O que o meu chefe faz trancado na sala dele?","nivel":2},{"texto":"Qual é a pior coisa para gritar na hora errada?","nivel":2},{"texto":"O que a vizinha ouviu através da parede?","nivel":2},{"texto":"Minha mãe me pegou fazendo ___.","nivel":2},{"texto":"O que eu falei bêbado no áudio de quatro minutos?","nivel":2},{"texto":"O que tem de especial no meu story de melhores amigos?","nivel":2},{"texto":"Apaguei a mensagem, mas todo mundo já tinha visto ___.","nivel":2},{"texto":"O que me fez vomitar no Réveillon?","nivel":2},{"texto":"A nova lei aprovada em Brasília proíbe ___.","nivel":2},{"texto":"Por que o casamento foi cancelado no altar?","nivel":2},{"texto":"O que tem de verdade dentro do salgadinho da festa?","nivel":2},{"texto":"O que realmente acontece no motel da beira da estrada?","nivel":3},{"texto":"Meu testamento tem uma cláusula só: ___.","nivel":3},{"texto":"O que me faz pensar na morte toda segunda-feira?","nivel":3},{"texto":"Sexo bom é aquele que termina com ___.","nivel":3},{"texto":"O que realmente acontece na sauna do clube?","nivel":3},{"texto":"Meu último arrependimento antes de morrer vai ser ___.","nivel":3},{"texto":"Qual é o fetiche mais estranho da cidade?","nivel":3},{"texto":"O que eu deveria ter apagado antes de emprestar o celular?","nivel":3},{"texto":"O médico olhou o exame e disse: \"Isso explica ___\".","nivel":3},{"texto":"Por que o padre foi transferido de paróquia às pressas?","nivel":3},{"texto":"O que o legista encontrou?","nivel":3},{"texto":"A pior coisa para sussurrar durante o sexo: ___.","nivel":3},{"texto":"O que tem no pote escondido debaixo da cama?","nivel":3},{"texto":"Fui preso por ___ e solto por ___.","nivel":3},{"texto":"O segredo de uma vida sexual longa e feliz é ___.","nivel":3},{"texto":"O que aconteceu no banheiro da rodoviária?","nivel":3},{"texto":"Meu terapeuta pediu demissão depois que eu contei sobre ___.","nivel":3},{"texto":"O que o vovô deixou de herança no fundo do armário?","nivel":3},{"texto":"O que Deus faz quando ninguém está rezando?","nivel":4},{"texto":"Qual vai ser a causa da minha morte, segundo a minha família?","nivel":4},{"texto":"No inferno tem fila especial para quem ___.","nivel":4},{"texto":"O que o coveiro faz no plantão da madrugada?","nivel":4},{"texto":"A última coisa que o paciente ouviu antes de apagar foi ___.","nivel":4},{"texto":"Qual é o verdadeiro destino do dinheiro do dízimo?","nivel":4},{"texto":"O candidato prometeu ___ e entregou ___.","nivel":4},{"texto":"Meu plano funerário inclui ___.","nivel":4},{"texto":"O que rolou no after do velório?","nivel":4},{"texto":"Jesus voltou e a primeira coisa que ele fez foi ___.","nivel":4},{"texto":"O que o deputado realmente cheira no gabinete?","nivel":4},{"texto":"Causa da morte no atestado: ___.","nivel":4},{"texto":"A nova doença venérea foi batizada em homenagem a ___.","nivel":4}],"respostas":[{"texto":"Um áudio de 7 minutos da sogra.","nivel":1},{"texto":"Um pombo com problemas de autoestima.","nivel":1},{"texto":"Pix de R$ 3,50 com a descrição \"saudades\".","nivel":1},{"texto":"Uma reunião que poderia ser um e-mail.","nivel":1},{"texto":"O tio do pavê em modo turbo.","nivel":1},{"texto":"Chinelo voador de alta precisão.","nivel":1},{"texto":"Coach quântico de autoconhecimento.","nivel":1},{"texto":"Um boleto vencido.","nivel":1},{"texto":"A última coxinha da festa.","nivel":1},{"texto":"Responder \"kkkk\" sem ter rido.","nivel":1},{"texto":"Dançar forró com o ex no casamento do primo.","nivel":1},{"texto":"Um grupo de WhatsApp chamado \"Família 100% Unida\".","nivel":1},{"texto":"Um ventilador de teto girando no máximo.","nivel":1},{"texto":"Fingir que está digitando para não atender a ligação.","nivel":1},{"texto":"Uma planilha com abas coloridas e nenhum propósito.","nivel":1},{"texto":"O vizinho furando a parede às 7h de domingo.","nivel":1},{"texto":"Um pastel de vento.","nivel":1},{"texto":"A cobrança do condomínio.","nivel":1},{"texto":"Uma capivara influencer.","nivel":1},{"texto":"A senha do Wi-Fi escrita num guardanapo.","nivel":1},{"texto":"O cachorro do vizinho latindo em código Morse.","nivel":1},{"texto":"Uma tia que manda bom dia com GIF de flor.","nivel":1},{"texto":"Um estagiário com acesso de administrador.","nivel":1},{"texto":"Um \"vamos marcar\" que nunca vai acontecer.","nivel":1},{"texto":"Trinta abas abertas no navegador.","nivel":1},{"texto":"Um sofá que já foi de três donos.","nivel":1},{"texto":"O silêncio constrangedor do elevador.","nivel":1},{"texto":"Uma pochete cheia de moedas de cinco centavos.","nivel":1},{"texto":"A tampa de pote que não fecha nenhum pote.","nivel":1},{"texto":"Uma live de três horas sobre produtividade.","nivel":1},{"texto":"Um feedback \"construtivo\" na frente de todo mundo.","nivel":1},{"texto":"Um bolo de pote sem bolo.","nivel":1},{"texto":"Um cupom de desconto vencido ontem.","nivel":1},{"texto":"Um ganso com crise existencial.","nivel":1},{"texto":"Acordar com uma música de comercial na cabeça.","nivel":1},{"texto":"Um pen drive de 2 GB com a vida inteira dentro.","nivel":1},{"texto":"A tia que pergunta \"e os namoradinhos?\".","nivel":1},{"texto":"Um cachorro caramelo dono da rua.","nivel":1},{"texto":"O som da internet discada.","nivel":1},{"texto":"Uma panela de pressão apitando às 11h.","nivel":1},{"texto":"Arroz requentado pela quarta vez.","nivel":1},{"texto":"Um vendedor de pano de prato no semáforo.","nivel":1},{"texto":"A fila do banco às 15h59.","nivel":1},{"texto":"Um mosquito que sobreviveu a três raquetes elétricas.","nivel":1},{"texto":"Um guarda-chuva esquecido no ônibus.","nivel":1},{"texto":"Dormir de meia.","nivel":1},{"texto":"O controle remoto embrulhado em plástico.","nivel":1},{"texto":"Uma briga de família pela herança de uma geladeira.","nivel":1},{"texto":"Achar dinheiro no bolso da calça lavada.","nivel":1},{"texto":"O \"visualizou e não respondeu\".","nivel":1},{"texto":"Um influencer de pão de queijo.","nivel":1},{"texto":"Um gato que derruba tudo da mesa olhando nos seus olhos.","nivel":1},{"texto":"Um galo que canta às 3 da manhã.","nivel":1},{"texto":"O aplicativo do banco pedindo atualização.","nivel":1},{"texto":"O cunhado que entende de tudo.","nivel":1},{"texto":"Um pacote de salgadinho que só vem com ar.","nivel":1},{"texto":"Uma senha que exige letra, número, símbolo e sangue.","nivel":1},{"texto":"Um ex-participante de reality fazendo publi de chá.","nivel":1},{"texto":"Um avô que manda áudio com o celular colado no ouvido.","nivel":1},{"texto":"A professora de Matemática da quinta série.","nivel":1},{"texto":"O pagode de domingo do vizinho.","nivel":1},{"texto":"Uma pizza de banana com canela.","nivel":1},{"texto":"Um chinelo arrebentado amarrado com arame.","nivel":1},{"texto":"O carro do ovo passando na rua.","nivel":1},{"texto":"O silêncio depois do \"precisamos conversar\".","nivel":1},{"texto":"Trinta notificações do grupo da escola.","nivel":1},{"texto":"Um casamento com open bar de refrigerante.","nivel":1},{"texto":"Esquecer o nome da pessoa no meio da conversa.","nivel":1},{"texto":"Um pombo com cargo de gerência.","nivel":1},{"texto":"A conta de luz de dezembro.","nivel":1},{"texto":"Um pastel de feira do tamanho de um travesseiro.","nivel":1},{"texto":"Um sofá-cama que nunca vira cama.","nivel":1},{"texto":"Bater o dedinho na quina da cama.","nivel":1},{"texto":"Um papagaio que xinga a vizinha pelo nome.","nivel":1},{"texto":"A tia do zap jurando que a vacina pega Wi-Fi.","nivel":1},{"texto":"Um elevador que para em todos os andares.","nivel":1},{"texto":"Um vizinho que lava a calçada com mangueira por duas horas.","nivel":1},{"texto":"Comer o recheio e devolver o biscoito.","nivel":1},{"texto":"Uma lasanha congelada às 2 da manhã.","nivel":1},{"texto":"Um currículo com \"pacote Office avançado\".","nivel":1},{"texto":"Um jacaré no lago do condomínio.","nivel":1},{"texto":"Um amigo que diz \"tô chegando\" ainda em casa.","nivel":1},{"texto":"O motorista de aplicativo que conta a vida inteira.","nivel":1},{"texto":"Um karaokê com microfone que dá choque.","nivel":1},{"texto":"Uma pomada que serve para tudo.","nivel":1},{"texto":"O potinho de pomada mentolada da vó.","nivel":1},{"texto":"Um feriado que cai no sábado.","nivel":1},{"texto":"Assistir série na velocidade 2x.","nivel":1},{"texto":"Uma coleção de sachês de ketchup.","nivel":1},{"texto":"Um chuveiro que só esquenta de um lado.","nivel":1},{"texto":"Uma plantinha que morreu de tanto ser regada.","nivel":1},{"texto":"A prova de direção na ladeira.","nivel":1},{"texto":"Velas de aniversário que não apagam nunca.","nivel":1},{"texto":"Um curso de inglês que promete fluência em três semanas.","nivel":1},{"texto":"Um cachorro que late para a própria sombra.","nivel":1},{"texto":"O eco da sala vazia no dia da mudança.","nivel":1},{"texto":"Uma briga de trânsito entre dois carrinhos de supermercado.","nivel":1},{"texto":"A internet do vizinho com a senha \"12345678\".","nivel":1},{"texto":"Uma capivara atravessando a marginal.","nivel":1},{"texto":"Um frango assado girando hipnoticamente na padaria.","nivel":1},{"texto":"Um despertador com soneca infinita.","nivel":1},{"texto":"Uma figurinha repetida do álbum da Copa.","nivel":1},{"texto":"Um narrador gritando gol por quatro minutos.","nivel":1},{"texto":"A taxa de conveniência do ingresso.","nivel":1},{"texto":"Um balde de pipoca de 60 reais.","nivel":1},{"texto":"Um formulário que precisa ser impresso, assinado e escaneado.","nivel":1},{"texto":"Um tio no churrasco com a camisa aberta até o umbigo.","nivel":1},{"texto":"Um pato de estimação chamado Roberto.","nivel":1},{"texto":"O ronco do pai que faz a parede tremer.","nivel":1},{"texto":"Uma cadeira de plástico que racha quando você senta.","nivel":1},{"texto":"Um bebê reborn com consulta marcada no pediatra.","nivel":1},{"texto":"Um primo que vende suplemento milagroso.","nivel":1},{"texto":"Uma sobremesa que leva leite condensado e mais leite condensado.","nivel":1},{"texto":"Uma marmita com o nome escrito na tampa.","nivel":1},{"texto":"Gente que bate palma quando o avião pousa.","nivel":1},{"texto":"Ficar de olho no status \"online\" do crush.","nivel":2},{"texto":"Uma ressaca que dura até quarta-feira.","nivel":2},{"texto":"Um nude acidentalmente enviado no grupo do trabalho.","nivel":2},{"texto":"Beijar alguém só porque o bloco parou.","nivel":2},{"texto":"Um \"oi sumida\" às 3 da manhã.","nivel":2},{"texto":"A conta do bar dividida igualmente mesmo eu tendo bebido água.","nivel":2},{"texto":"Uma tatuagem com o nome do ex.","nivel":2},{"texto":"Fingir orgasmo e fingir que gostou do presente no mesmo dia.","nivel":2},{"texto":"Um date que levou a mãe.","nivel":2},{"texto":"Um banheiro químico no terceiro dia de festival.","nivel":2},{"texto":"O primo que vende curso de enriquecimento.","nivel":2},{"texto":"Uma cueca da sorte que nunca foi lavada.","nivel":2},{"texto":"Vomitar no carro de aplicativo e dar cinco estrelas para o motorista.","nivel":2},{"texto":"Uma calcinha esquecida no carro do pai.","nivel":2},{"texto":"Um happy hour que virou sequestro emocional.","nivel":2},{"texto":"Mandar áudio chorando e depois apagar.","nivel":2},{"texto":"O corretor automático trocando \"amor\" por \"ânus\".","nivel":2},{"texto":"Um date que pediu Pix da metade do refrigerante.","nivel":2},{"texto":"Acordar de ressaca abraçado num cone de trânsito.","nivel":2},{"texto":"Um \"sextou\" às 9h da manhã de terça.","nivel":2},{"texto":"Dar match com o próprio chefe.","nivel":2},{"texto":"Uma calcinha bege de vó.","nivel":2},{"texto":"Um encontro às cegas com a ex do seu irmão.","nivel":2},{"texto":"O áudio que era para ser só para o amigo.","nivel":2},{"texto":"Peidar no silêncio da prova.","nivel":2},{"texto":"Acenar de volta para quem estava acenando para outra pessoa.","nivel":2},{"texto":"Uma cueca furada no dia do exame médico.","nivel":2},{"texto":"Beijar e descobrir que a pessoa comeu alho.","nivel":2},{"texto":"Uma ressaca moral nível campeonato.","nivel":2},{"texto":"Um tio que fica pelado na piscina depois da quinta cerveja.","nivel":2},{"texto":"Uma foto de perfil de dez anos atrás.","nivel":2},{"texto":"Vomitar no sapato do segurança.","nivel":2},{"texto":"Um nude com o dedão na frente da câmera.","nivel":2},{"texto":"Um fiscal de cu alheio.","nivel":2},{"texto":"Um \"kkk\" seco depois de uma piada pesada.","nivel":2},{"texto":"O cara do bar que jura que já foi jogador profissional.","nivel":2},{"texto":"Uma camisinha guardada na carteira desde 2015.","nivel":2},{"texto":"O amigo que some quando chega a conta.","nivel":2},{"texto":"Fazer xixi na piscina e fingir que não.","nivel":2},{"texto":"Um crush que responde com \"kkk\" e mais nada.","nivel":2},{"texto":"A mãe que descobriu o perfil secreto.","nivel":2},{"texto":"Ficar pelado e descobrir que a janela estava aberta.","nivel":2},{"texto":"Um boy lixo reciclável.","nivel":2},{"texto":"Um casamento de três dias com DJ de pagode.","nivel":2},{"texto":"Cachaça artesanal destilada no banheiro.","nivel":2},{"texto":"Um tapa na bunda na hora errada.","nivel":2},{"texto":"Uma vovó arrasando no baile da terceira idade.","nivel":2},{"texto":"O ex que voltou só para buscar o carregador.","nivel":2},{"texto":"Uma tatuagem de golfinho no cóccix.","nivel":2},{"texto":"Um \"oi, tudo bem?\" que vira pedido de dinheiro.","nivel":2},{"texto":"Dormir na casa do date e acordar com a família toda na sala.","nivel":2},{"texto":"O cheiro do banheiro depois do feijão da sogra.","nivel":2},{"texto":"Um rolê que começou no bar e terminou no hospital.","nivel":2},{"texto":"Uma DR por causa de uma curtida antiga.","nivel":2},{"texto":"O cara que pede \"só um gole\" e bebe metade.","nivel":2},{"texto":"Descobrir pelo story que você levou um bolo.","nivel":2},{"texto":"Uma tanga de crochê na praia.","nivel":2},{"texto":"Um bafo de cachaça de Carnaval.","nivel":2},{"texto":"Chorar no banheiro da balada.","nivel":2},{"texto":"O tio que conta piada de pavê com duplo sentido.","nivel":2},{"texto":"Um motel com espelho no teto e cheiro de desinfetante.","nivel":2},{"texto":"Uma ex que virou coach de relacionamento.","nivel":2},{"texto":"Fingir que está bêbado para justificar o beijo.","nivel":2},{"texto":"Um \"boa noite, linda\" do contato salvo como \"Não Atender\".","nivel":2},{"texto":"Mandar o print da conversa para a própria pessoa da conversa.","nivel":2},{"texto":"Um aplicativo de namoro só para síndicos.","nivel":2},{"texto":"A conta do motel no cartão da empresa.","nivel":2},{"texto":"Um cachorro que se lambe na frente das visitas.","nivel":2},{"texto":"A depilação com cera quente.","nivel":2},{"texto":"Acordar sem saber onde estacionou o carro e a dignidade.","nivel":2},{"texto":"Uma piscina de plástico cheia de cerveja.","nivel":2},{"texto":"O ex que curte foto de 2016 às 4h.","nivel":2},{"texto":"O \"foi mal, galera\" depois de destruir o churrasco.","nivel":2},{"texto":"Um banheiro de festa sem tranca.","nivel":2},{"texto":"Os amigos do pai no grupo \"Só Tiozão\".","nivel":2},{"texto":"Um primeiro beijo com aparelho nos dentes.","nivel":2},{"texto":"Um vizinho que canta no chuveiro às 6h.","nivel":2},{"texto":"Sair do banheiro com papel higiênico preso no sapato.","nivel":2},{"texto":"Um encontro romântico num rodízio de pizza.","nivel":2},{"texto":"A sogra perguntando se o casal \"já está encomendando\".","nivel":2},{"texto":"Um sexo tão ruim que virou amizade.","nivel":3},{"texto":"Uma diarreia em pleno casamento.","nivel":3},{"texto":"O velório mais animado da cidade.","nivel":3},{"texto":"Um brinquedo erótico que vibra sozinho na reunião.","nivel":3},{"texto":"Herdar só as dívidas.","nivel":3},{"texto":"Uma camisinha furada e muita fé.","nivel":3},{"texto":"A carne misteriosa do churrasco de beira de estrada.","nivel":3},{"texto":"O plano de saúde negando tudo, inclusive a sua existência.","nivel":3},{"texto":"Uma suruba organizada por planilha.","nivel":3},{"texto":"Um vibrador com a bateria fraca.","nivel":3},{"texto":"Gemer baixinho para não acordar a sogra.","nivel":3},{"texto":"Uma gonorreia de estimação.","nivel":3},{"texto":"Pegar no sono durante o sexo.","nivel":3},{"texto":"Um ménage com a vizinha e muito arrependimento.","nivel":3},{"texto":"Um pau de selfie usado para outra coisa.","nivel":3},{"texto":"Uma diarreia explosiva no primeiro encontro.","nivel":3},{"texto":"O vídeo íntimo que vazou no grupo da família.","nivel":3},{"texto":"Um enterro com o caixão errado.","nivel":3},{"texto":"Uma camisinha sabor feijoada.","nivel":3},{"texto":"Sexo no carro com o freio de mão na lombar.","nivel":3},{"texto":"Uma calcinha comestível vencida.","nivel":3},{"texto":"Uma ereção na hora do hino nacional.","nivel":3},{"texto":"Uma cagada que entupiu o prédio inteiro.","nivel":3},{"texto":"Um swing que terminou em divórcio.","nivel":3},{"texto":"O tio que morreu e deixou um pen drive cheio de pornô.","nivel":3},{"texto":"Um fio de cabelo no lugar errado.","nivel":3},{"texto":"A ressaca de cocaína de segunda-feira.","nivel":3},{"texto":"Fazer cocô na casa do crush e a descarga não funcionar.","nivel":3},{"texto":"Um orgasmo fingido digno de Oscar.","nivel":3},{"texto":"Um consolo esquecido na mala da viagem em família.","nivel":3},{"texto":"Um velório com open bar.","nivel":3},{"texto":"Uma herpes que volta todo Carnaval.","nivel":3},{"texto":"Um sex shop com promoção de Black Friday.","nivel":3},{"texto":"O cheiro de maconha no elevador do condomínio.","nivel":3},{"texto":"Uma fantasia sexual envolvendo o carteiro.","nivel":3},{"texto":"Uma vasectomia feita no ponto de ônibus.","nivel":3},{"texto":"Chupar picolé de um jeito sensual demais na frente da sogra.","nivel":3},{"texto":"Um sonho erótico com o chefe.","nivel":3},{"texto":"Mijar no carro do ex.","nivel":3},{"texto":"O coveiro tirando selfie.","nivel":3},{"texto":"Um nude enviado para o grupo da igreja.","nivel":3},{"texto":"Uma bunda branca brilhando na praia de nudismo.","nivel":3},{"texto":"Um exame de toque com médico de mão gelada.","nivel":3},{"texto":"Morrer engasgado com uma azeitona.","nivel":3},{"texto":"A pornografia que o algoritmo acha que você curte.","nivel":3},{"texto":"Uma suruba com regimento interno de condomínio.","nivel":3},{"texto":"Um drink com nome de doença venérea.","nivel":3},{"texto":"O vizinho que transa gritando o próprio nome.","nivel":3},{"texto":"Vomitar dentro da própria bolsa.","nivel":3},{"texto":"Um laxante no café da firma.","nivel":3},{"texto":"Uma cueca freada exposta no varal.","nivel":3},{"texto":"Fazer amor de meia.","nivel":3},{"texto":"A camisinha que ficou lá dentro.","nivel":3},{"texto":"Uma brochada épica no aniversário de namoro.","nivel":3},{"texto":"O papel higiênico acabar no pior momento.","nivel":3},{"texto":"Um testamento que só deixa dívidas e um papagaio.","nivel":3},{"texto":"Uma lap dance desastrosa na despedida de solteira.","nivel":3},{"texto":"Um pau pequeno com muita autoestima.","nivel":3},{"texto":"A cerveja quente da festa depois do enterro.","nivel":3},{"texto":"Uma alergia a látex descoberta tarde demais.","nivel":3},{"texto":"Um baseado do tamanho de uma baguete.","nivel":3},{"texto":"O espelho do motel que caiu no meio da noite.","nivel":3},{"texto":"Um cachorro que trouxe a cueca do vizinho de presente.","nivel":3},{"texto":"Uma foto íntima mal enquadrada.","nivel":3},{"texto":"Um sexo tão silencioso que parecia velório.","nivel":3},{"texto":"Uma lavagem intestinal ao vivo.","nivel":3},{"texto":"Uma dentadura que caiu no meio do beijo.","nivel":3},{"texto":"Um peido durante o sexo oral.","nivel":4},{"texto":"O dinheiro do dízimo pagando a lancha do pastor.","nivel":4},{"texto":"Um enterro em que o morto abriu o olho.","nivel":4},{"texto":"Morrer no meio do sexo e ser encontrado assim.","nivel":4},{"texto":"A urna com as cinzas da vó usada como cinzeiro.","nivel":4},{"texto":"Uma orgia no retiro espiritual.","nivel":4},{"texto":"O deputado com a cueca recheada de dinheiro.","nivel":4},{"texto":"A cocaína do camarote VIP.","nivel":4},{"texto":"Uma doença venérea com nome em latim.","nivel":4},{"texto":"Rezar para o ex morrer.","nivel":4},{"texto":"O inferno, mas com fila do INSS.","nivel":4},{"texto":"Um velório com transmissão ao vivo e patrocínio.","nivel":4},{"texto":"Pomada para hemorroida usada como protetor labial.","nivel":4},{"texto":"O padre que sabe os pecados do bairro inteiro e conta tudo no bar.","nivel":4},{"texto":"Ressuscitar só para cobrar uma dívida.","nivel":4},{"texto":"Sexo anal sem aviso prévio.","nivel":4},{"texto":"Um atestado de óbito com a causa \"burrice\".","nivel":4},{"texto":"Um santo que só faz milagre mediante Pix.","nivel":4},{"texto":"Uma overdose de energético no velório.","nivel":4},{"texto":"A alma vendida em dez parcelas sem juros.","nivel":4},{"texto":"Uma autópsia feita com faca de churrasco.","nivel":4},{"texto":"Um candidato que compra voto com dentadura.","nivel":4},{"texto":"Gozar e chorar ao mesmo tempo.","nivel":4},{"texto":"Um necrotério com som automotivo.","nivel":4},{"texto":"Uma igreja que aceita cartão no confessionário.","nivel":4},{"texto":"Um exame de fezes entregue em pote de sorvete.","nivel":4},{"texto":"Satanás pedindo para sair do grupo da família.","nivel":4},{"texto":"Jesus multiplicando cervejas no churrasco.","nivel":4},{"texto":"Um esquema de corrupção controlado por planilha.","nivel":4},{"texto":"Um caixão alugado.","nivel":4},{"texto":"Masturbação no banheiro do avião.","nivel":4},{"texto":"Herdar o pulmão do vovô fumante.","nivel":4},{"texto":"Morrer atropelado pelo carro de som de um candidato.","nivel":4},{"texto":"O pastor curando uma ereção ao vivo na TV.","nivel":4},{"texto":"Transar no confessionário.","nivel":4},{"texto":"O cheiro do necrotério no verão.","nivel":4},{"texto":"A camisinha furada que virou herdeiro.","nivel":4},{"texto":"Um surto de diarreia no navio de cruzeiro.","nivel":4},{"texto":"Um traficante que aceita vale-refeição.","nivel":4},{"texto":"A tia que morreu e continua mandando bom dia por mensagem agendada.","nivel":4},{"texto":"Uma colonoscopia sem anestesia.","nivel":4},{"texto":"Ser cremado com o celular no bolso e ele explodir.","nivel":4},{"texto":"Ser enterrado no jazigo errado.","nivel":4},{"texto":"O Diabo fazendo hora extra no Brasil.","nivel":4},{"texto":"Uma sessão de descarrego com o ex.","nivel":4},{"texto":"Transar no cemitério para \"sentir a energia\".","nivel":4}]};
+
+const LEVELS = [
+  { n: 1, name: "De Leve", desc: "Absurdo e zoeira do dia a dia. Dá para jogar com a tia." },
+  { n: 2, name: "Picante", desc: "Duplo sentido, palavrão leve, vergonha alheia." },
+  { n: 3, name: "Pesado", desc: "Palavrão, sexo entre adultos, humor negro, escatologia." },
+  { n: 4, name: "Sem Filtro", desc: "Humor negro extremo, religião, política, tragédia, mau gosto proposital." },
+];
+const COLORS = ["#FFCC1A", "#3FE0CF", "#FF3D8B", "#F3EFE7", "#FF4B3E"];
+const HAND = 7;
+const SAVE_KEY = "scragbadum:passa-o-celular:v1";
+
+let s = load() ?? fresh();
+
+function fresh() {
+  return { screen: "setup", players: ["", "", ""], level: 2, points: 5, deckW: [], deckB: [], discardW: [], discardB: [], hands: {}, scores: {}, judge: -1, round: 0, black: null, order: [], turn: 0, subs: {}, reveal: [], revealed: 0, chosen: null, winner: null, picked: [] };
+}
+function load() { try { const raw = localStorage.getItem(SAVE_KEY); return raw ? JSON.parse(raw) : null; } catch { return null; } }
+function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(s)); } catch { /* sem armazenamento: segue sem salvar */ } }
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const blanks = (t) => (t.match(/_{3,}/g) || []).length;
+const pickOf = (t) => (blanks(t) === 2 ? 2 : 1);
+const names = () => s.players.map((p) => p.trim()).filter(Boolean);
+
+// ---------- Som (sintetizado; só depois do primeiro toque) ----------
+let ctx = null;
+function audio() { try { ctx ??= new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === "suspended") ctx.resume(); return ctx; } catch { return null; } }
+function tone(c, f, t, d, type = "sine", g = 0.2, to) { const o = c.createOscillator(), gn = c.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + d); gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(g, t + 0.01); gn.gain.exponentialRampToValueAtTime(0.0001, t + d); o.connect(gn).connect(c.destination); o.start(t); o.stop(t + d + 0.02); }
+function noise(c, t, d, g = 0.18) { const b = c.createBuffer(1, Math.ceil(c.sampleRate * d), c.sampleRate), x = b.getChannelData(0); for (let i = 0; i < x.length; i++) x[i] = Math.random() * 2 - 1; const src = c.createBufferSource(), f = c.createBiquadFilter(), gn = c.createGain(); src.buffer = b; f.type = "highpass"; f.frequency.value = 6000; gn.gain.setValueAtTime(g, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + d); src.connect(f).connect(gn).connect(c.destination); src.start(t); }
+function badumtss() { const c = audio(); if (!c) return; const t = c.currentTime + 0.02; tone(c, 180, t, 0.12, "sine", 0.35, 90); tone(c, 150, t + 0.16, 0.14, "sine", 0.35, 70); noise(c, t + 0.34, 0.6); }
+function tap() { const c = audio(); if (!c) return; tone(c, 660, c.currentTime + 0.01, 0.06, "square", 0.05); }
+function flipSound() { const c = audio(); if (!c) return; const t = c.currentTime + 0.01; noise(c, t, 0.07, 0.1); tone(c, 520, t + 0.02, 0.07, "triangle", 0.08); }
+
+// ---------- Regras ----------
+function draw(n) {
+  const out = [];
+  while (out.length < n) {
+    if (!s.deckW.length) { if (!s.discardW.length) break; s.deckW = shuffle(s.discardW); s.discardW = []; }
+    out.push(s.deckW.pop());
+  }
+  return out;
+}
+function startGame() {
+  const ps = names();
+  s.players = ps;
+  s.deckW = shuffle(DECK.respostas.filter((c) => c.nivel <= s.level).map((c) => c.texto));
+  s.deckB = shuffle(DECK.perguntas.filter((c) => c.nivel <= s.level).map((c) => c.texto));
+  s.discardW = []; s.discardB = [];
+  s.hands = {}; s.scores = {};
+  ps.forEach((p) => { s.hands[p] = draw(HAND); s.scores[p] = 0; });
+  s.judge = Math.floor(Math.random() * ps.length) - 1;
+  s.round = 0;
+  newRound();
+}
+function newRound() {
+  const ps = s.players;
+  s.judge = (s.judge + 1) % ps.length;
+  s.round++;
+  ps.forEach((p) => { const miss = HAND - s.hands[p].length; if (miss > 0) s.hands[p].push(...draw(miss)); });
+  if (!s.deckB.length) { s.deckB = shuffle(s.discardB); s.discardB = []; }
+  s.black = s.deckB.pop();
+  const judge = ps[s.judge];
+  s.order = ps.filter((p) => p !== judge);
+  s.turn = 0; s.subs = {}; s.reveal = []; s.revealed = 0; s.chosen = null; s.winner = null; s.picked = [];
+  go("judge-read");
+}
+function submit(player) {
+  const cards = s.picked.slice();
+  s.hands[player] = s.hands[player].filter((c) => !cards.includes(c));
+  s.subs[player] = cards;
+  s.picked = [];
+  s.turn++;
+  if (s.turn < s.order.length) go("handoff");
+  else { s.reveal = shuffle(Object.keys(s.subs)); go("judge-handoff"); }
+}
+function pickWinner() {
+  const w = s.reveal[s.chosen];
+  s.winner = w;
+  s.scores[w]++;
+  Object.values(s.subs).forEach((cs) => s.discardW.push(...cs));
+  s.discardB.push(s.black);
+  badumtss();
+  try { navigator.vibrate?.([80, 40, 140]); } catch { /* sem vibração */ }
+  go(s.scores[w] >= s.points ? "over" : "result");
+}
+
+// ---------- Desenho das cartas ----------
+function blackHtml(text, filled) {
+  let i = 0;
+  const body = esc(text).replace(/_{3,}/g, () => {
+    const a = filled ? filled[i++] : null;
+    return a ? `<span class="fill">${esc(asBlank(a))}</span>` : '<span class="blank" aria-label="lacuna"></span>';
+  });
+  const extra = filled && blanks(text) === 0 ? ` <span class="fill">${filled.map(esc).join(" / ")}</span>` : "";
+  return `<div class="card preta">${!filled && pickOf(text) === 2 ? '<span class="pick2">ESCOLHA 2</span>' : ""}<p>${body}${extra}</p><span class="foot">SCRAGBADUM!</span></div>`;
+}
+function asBlank(a) {
+  const t = a.trim().replace(/[.!]+$/, "");
+  const w = t.split(/\s+/)[0];
+  return /\p{L}.*\p{L}/u.test(w) && w === w.toUpperCase() ? t : t.charAt(0).toLowerCase() + t.slice(1);
+}
+const whiteHtml = (t) => `<div class="card branca"><p>${esc(t)}</p><span class="foot">SCRAGBADUM!</span></div>`;
+const avatar = (p) => { const i = s.players.indexOf(p); return `<span class="ava" style="background:${COLORS[(i < 0 ? 0 : i) % COLORS.length]}" aria-hidden="true">${esc(p.charAt(0).toUpperCase())}</span>`; };
+function scoreboard(highlight) {
+  const sorted = s.players.slice().sort((a, b) => s.scores[b] - s.scores[a]);
+  const top = s.scores[sorted[0]];
+  return `<ol class="score" aria-label="Placar">${sorted.map((p) => `<li class="${s.scores[p] === top && top > 0 ? "lead" : ""}">${avatar(p)}<span style="flex:1;font-weight:800">${esc(p)}${p === highlight ? " · +1" : ""}</span><span class="pts">${s.scores[p]}</span></li>`).join("")}</ol>`;
+}
+const logo = () => `<div class="logo" role="img" aria-label="Scragbadum!">${"SCRAGBADUM".split("").map((l, i) => `<span class="${i === 5 ? "b" : ""}" aria-hidden="true">${l}</span>`).join("")}<span class="bang" aria-hidden="true">!</span></div>`;
+
+// ---------- Telas ----------
+function go(screen) { s.screen = screen; save(); render(); window.scrollTo(0, 0); }
+
+function render() {
+  const app = document.getElementById("app");
+  const v = VIEWS[s.screen] ?? VIEWS.setup;
+  app.innerHTML = `<div class="screen-in" style="display:flex;flex-direction:column;gap:16px;flex:1">${v()}</div>`;
+  BIND[s.screen]?.(app);
+}
+
+const topBar = () => `<div class="top"><span class="round">RODADA ${s.round}</span><span class="tag">Juiz: ${esc(s.players[s.judge])}</span></div>`;
+
+const VIEWS = {
+  setup: () => {
+    const ps = s.players;
+    const lv = LEVELS[s.level - 1];
+    return `
+      ${logo()}
+      <p class="sub">O jogo das respostas que você não devia dar.</p>
+      <p class="demo-note"><b>Versão passa o celular:</b> um aparelho só, passando de mão em mão. A versão completa, cada um no seu celular, chega em breve.</p>
+      <div class="field">
+        <span class="label">Quem vai jogar (3 a 10)</span>
+        <ul class="players">${ps.map((p, i) => `<li class="player">${`<span class="ava" style="background:${COLORS[i % COLORS.length]}" aria-hidden="true">${esc((p.trim() || String(i + 1)).charAt(0).toUpperCase())}</span>`}<input class="input" id="p${i}" aria-label="Nome do jogador ${i + 1}" placeholder="Jogador ${i + 1}" maxlength="16" value="${esc(p)}">${ps.length > 3 ? `<button class="x" data-del="${i}" aria-label="Remover jogador ${i + 1}">×</button>` : ""}</li>`).join("")}</ul>
+        ${ps.length < 10 ? '<button class="btn ghost" id="addp">+ Adicionar jogador</button>' : ""}
+        <p class="err" id="err" hidden></p>
+      </div>
+      <div class="field">
+        <span class="label">Pontos para vencer</span>
+        <div class="chips">${[3, 5, 7, 10].map((n) => `<button class="chip" data-pts="${n}" aria-pressed="${s.points === n}">${n}</button>`).join("")}</div>
+      </div>
+      <div class="field">
+        <span class="label">Nível de humor</span>
+        <div class="chips">${LEVELS.map((l) => `<button class="chip ${l.n === 4 ? "l4" : ""}" data-lv="${l.n}" aria-pressed="${s.level === l.n}">${l.name}</button>`).join("")}</div>
+        <p class="hint">${esc(lv.desc)}</p>
+      </div>
+      <div class="actions"><button class="btn" id="start">Começar a farra</button>
+      <button class="link" id="how">Como jogar</button></div>`;
+  },
+  how: () => `
+    <p class="title">COMO JOGAR</p>
+    <p><b>1. Alguém é o juiz.</b> Ele lê a carta pergunta em voz alta.</p>
+    <p><b>2. Cada um, na sua vez,</b> pega o celular escondido dos outros e escolhe a resposta mais absurda da sua mão.</p>
+    <p><b>3. O juiz recebe o celular,</b> revela as respostas uma a uma (sem saber de quem é) e escolhe a melhor.</p>
+    <p><b>4. Quem escreveu a vencedora ganha 1 ponto.</b> O juiz muda a cada rodada. Quem chegar aos pontos combinados vence.</p>
+    <div class="actions"><button class="btn" id="back">Entendi, bora</button></div>`,
+  "judge-read": () => `
+    ${topBar()}
+    <div class="handoff" style="margin:0"><span class="label">Passe o celular para o juiz</span><span class="who">${esc(s.players[s.judge])}</span></div>
+    <p class="center muted">Juiz, leia a pergunta em voz alta para todo mundo:</p>
+    <div class="black-wrap">${blackHtml(s.black)}</div>
+    <div class="actions"><button class="btn" id="next">Passar para ${esc(s.order[0])}</button></div>`,
+  handoff: () => `
+    ${topBar()}
+    <div class="handoff"><span class="label">Passe o celular para</span><span class="who">${esc(s.order[s.turn])}</span><p class="muted">Sem espiar! As cartas aparecem quando a pessoa tocar no botão.</p></div>
+    <div class="actions"><button class="btn" id="show">Sou ${esc(s.order[s.turn])}, mostrar minhas cartas</button></div>`,
+  pick: () => {
+    const p = s.order[s.turn];
+    const need = pickOf(s.black);
+    return `
+      ${topBar()}
+      <div class="black-wrap" style="width:54%">${blackHtml(s.black)}</div>
+      <span class="label">${esc(p)}, ${need === 2 ? "escolha 2, na ordem" : "escolha sua resposta"}</span>
+      <div class="hand">${s.hands[p].map((c, i) => { const o = s.picked.indexOf(c); return `<button data-card="${i}" aria-pressed="${o >= 0}">${need === 2 && o >= 0 ? `<span class="order">${o + 1}</span>` : ""}${whiteHtml(c)}</button>`; }).join("")}</div>
+      <div class="actions"><button class="btn" id="send" ${s.picked.length === need ? "" : "disabled"}>${s.picked.length === need ? "Mandar essa" : need === 2 ? `Escolha ${need - s.picked.length}` : "Escolha uma carta"}</button></div>`;
+  },
+  "judge-handoff": () => `
+    ${topBar()}
+    <div class="handoff"><span class="label">Todo mundo respondeu! Passe o celular para o juiz</span><span class="who">${esc(s.players[s.judge])}</span><p class="muted">Leia cada resposta em voz alta. Faz suspense.</p></div>
+    <div class="actions"><button class="btn" id="judge">Sou o juiz, revelar respostas</button></div>`,
+  judging: () => {
+    const all = s.revealed >= s.reveal.length;
+    return `
+      ${topBar()}
+      <div class="black-wrap" style="width:50%">${blackHtml(s.black)}</div>
+      <p class="center muted">${all ? "Toque na sua favorita." : "Toque na carta em destaque para revelar."}</p>
+      <div class="answers">${s.reveal.map((p, i) => i < s.revealed
+        ? `<button data-ans="${i}" aria-pressed="${s.chosen === i}" aria-label="${esc(s.subs[p].join(" + "))}">${s.subs[p].map(whiteHtml).join("")}</button>`
+        : `<button data-ans="${i}" ${i === s.revealed ? "" : "disabled"} aria-label="Resposta ${i + 1}, escondida"><span class="cover ${i === s.revealed ? "next" : ""}">?</span></button>`).join("")}</div>
+      <div class="actions"><button class="btn rosa" id="win" ${all && s.chosen !== null ? "" : "disabled"}>${!all ? "Revele todas" : s.chosen === null ? "Escolha a melhor" : "Essa é a melhor"}</button></div>`;
+  },
+  result: () => `
+    <span class="round center">RODADA ${s.round} · RESULTADO</span>
+    <div class="result-card" style="position:relative">${blackHtml(s.black, s.subs[s.winner])}<span class="stamp">VENCEU!</span></div>
+    <div class="center"><span class="muted">Resposta de</span><p class="title" style="color:var(--rosa)">${esc(s.winner.toUpperCase())}</p></div>
+    ${scoreboard(s.winner)}
+    <div class="actions"><button class="btn" id="next">Próxima rodada</button></div>`,
+  over: () => {
+    const sorted = s.players.slice().sort((a, b) => s.scores[b] - s.scores[a]);
+    return `
+      <div class="center" style="display:grid;gap:6px;margin-top:8px"><span class="label">Fim da partida</span><p class="big">${esc(s.winner.toUpperCase())}<br>VENCEU!</p></div>
+      <div class="result-card" style="position:relative;width:64%">${blackHtml(s.black, s.subs[s.winner])}</div>
+      ${scoreboard()}
+      <p class="center muted">${sorted.length} jogadores · ${s.round} rodadas</p>
+      <div class="actions"><button class="btn" id="again">Jogar de novo</button><button class="btn sec" id="menu">Mudar jogadores</button></div>`;
+  },
+};
+
+function warnLevel4(onOk) {
+  const bg = document.createElement("div");
+  bg.className = "sheet-bg";
+  bg.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="l4t"><h2 id="l4t">Sem Filtro. Sério mesmo.</h2><ul><li>Humor negro com morte, doença e tragédias</li><li>Sexo explícito, sem rodeios</li><li>Religião, política e drogas</li><li>Combinações que podem ofender de verdade</li></ul><p style="font-size:14px;font-weight:700">O que não aparece nem aqui: conteúdo sexual com menores, cartas feitas para atacar um grupo e nomes de pessoas reais.</p><label class="check"><input type="checkbox" id="l4ok"> Todo mundo aqui tem 18 anos ou mais e topa jogar assim.</label><button class="btn" id="l4yes" disabled style="background:var(--vermelho)">Ativar Sem Filtro</button><button class="btn ghost" id="l4no">Melhor não</button></div>`;
+  document.body.appendChild(bg);
+  const close = () => bg.remove();
+  bg.querySelector("#l4ok").addEventListener("change", (e) => { bg.querySelector("#l4yes").disabled = !e.target.checked; });
+  bg.querySelector("#l4yes").addEventListener("click", () => { close(); onOk(); });
+  bg.querySelector("#l4no").addEventListener("click", close);
+  bg.addEventListener("click", (e) => { if (e.target === bg) close(); });
+}
+
+function confetti() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const box = document.createElement("div");
+  box.className = "confetti";
+  for (let i = 0; i < 46; i++) { const c = document.createElement("i"); c.style.left = Math.random() * 100 + "%"; c.style.background = COLORS[i % 4]; c.style.animationDelay = Math.random() * 0.5 + "s"; box.appendChild(c); }
+  document.body.appendChild(box);
+  setTimeout(() => box.remove(), 2600);
+}
+
+const BIND = {
+  setup: (app) => {
+    app.querySelectorAll(".players input").forEach((inp, i) => inp.addEventListener("input", () => { s.players[i] = inp.value; save(); }));
+    app.querySelectorAll("[data-del]").forEach((b) => b.addEventListener("click", () => { s.players.splice(Number(b.dataset.del), 1); go("setup"); }));
+    app.querySelector("#addp")?.addEventListener("click", () => { s.players.push(""); go("setup"); app.querySelector(`#p${s.players.length - 1}`)?.focus(); });
+    app.querySelectorAll("[data-pts]").forEach((b) => b.addEventListener("click", () => { s.points = Number(b.dataset.pts); go("setup"); }));
+    app.querySelectorAll("[data-lv]").forEach((b) => b.addEventListener("click", () => {
+      const n = Number(b.dataset.lv);
+      if (n === 4) warnLevel4(() => { s.level = 4; go("setup"); }); else { s.level = n; go("setup"); }
+    }));
+    app.querySelector("#how").addEventListener("click", () => go("how"));
+    app.querySelector("#start").addEventListener("click", () => {
+      audio();
+      const ps = names();
+      const err = app.querySelector("#err");
+      const dup = ps.find((p, i) => ps.findIndex((q) => q.toLowerCase() === p.toLowerCase()) !== i);
+      if (ps.length < 3) { err.textContent = "Precisa de pelo menos 3 jogadores com nome."; err.hidden = false; return; }
+      if (dup) { err.textContent = `Tem dois jogadores chamados "${dup}". Diferencia um deles?`; err.hidden = false; return; }
+      startGame();
+    });
+  },
+  how: (app) => app.querySelector("#back").addEventListener("click", () => go("setup")),
+  "judge-read": (app) => app.querySelector("#next").addEventListener("click", () => go("handoff")),
+  handoff: (app) => app.querySelector("#show").addEventListener("click", () => go("pick")),
+  pick: (app) => {
+    const p = s.order[s.turn];
+    const need = pickOf(s.black);
+    app.querySelectorAll("[data-card]").forEach((b) => b.addEventListener("click", () => {
+      tap();
+      const c = s.hands[p][Number(b.dataset.card)];
+      s.picked = s.picked.includes(c) ? s.picked.filter((x) => x !== c) : need === 1 ? [c] : [...s.picked, c].slice(-need);
+      const x = app.querySelector(".hand").scrollLeft;
+      render();
+      document.querySelector(".hand").scrollLeft = x;
+    }));
+    app.querySelector("#send").addEventListener("click", () => submit(p));
+  },
+  "judge-handoff": (app) => app.querySelector("#judge").addEventListener("click", () => go("judging")),
+  judging: (app) => {
+    app.querySelectorAll("[data-ans]").forEach((b) => b.addEventListener("click", () => {
+      const i = Number(b.dataset.ans);
+      if (i === s.revealed && s.revealed < s.reveal.length) { s.revealed++; flipSound(); }
+      else if (i < s.revealed && s.revealed >= s.reveal.length) s.chosen = i;
+      save(); render();
+    }));
+    app.querySelector("#win").addEventListener("click", pickWinner);
+  },
+  result: (app) => { confetti(); app.querySelector("#next").addEventListener("click", newRound); },
+  over: (app) => {
+    confetti();
+    app.querySelector("#again").addEventListener("click", startGame);
+    app.querySelector("#menu").addEventListener("click", () => go("setup"));
+  },
+};
+
+render();
+</script>
