@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { applyAction, createGameState, projectFor, seedFromBytes, type Actor, type GameAction, type GameError, type GameState, type PlayerView } from "@/engine";
+import { applyAction, createGameState, projectFor, seedFromBytes, type Actor, type GameAction, type GameError, type GameEvent, type GameState, type PlayerView } from "@/engine";
 import { roomSettingsSchema, type RoomSettings } from "@/lib/game-config";
 import { nicknameSchema } from "@/lib/nickname";
 import { generateRoomCode, isValidRoomCode, normalizeRoomCode } from "@/lib/room-code";
@@ -117,11 +117,13 @@ async function transition(deps: Deps, userId: string, rawCode: string, plan: Pla
       }
     }
     let changed = false;
+    const events: GameEvent[] = [];
     for (const a of presence) {
       const r = applyAction(state, a, system, { now });
       if (r.ok) {
         state = r.state;
         changed ||= r.changed;
+        events.push(...r.events);
       }
     }
 
@@ -136,6 +138,7 @@ async function transition(deps: Deps, userId: string, rawCode: string, plan: Pla
     }
     state = result.state;
     changed ||= result.changed;
+    events.push(...result.events);
 
     if (!changed) return respond(code, loaded.version, state, userId, now);
 
@@ -157,6 +160,7 @@ async function transition(deps: Deps, userId: string, rawCode: string, plan: Pla
 
     // Efeitos depois de gravar: espelho público e aviso. Falhas aqui não desfazem a jogada.
     await deps.store.syncRoom(room.id, state).catch((e) => console.error("syncRoom falhou", e));
+    await deps.store.recordHistory(room.id, state, events).catch((e) => console.error("recordHistory falhou", e));
     await deps.notify(code, committed.version).catch((e) => console.error("notify falhou", e));
     return respond(code, committed.version, state, userId, now);
   }

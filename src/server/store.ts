@@ -1,6 +1,7 @@
 import pg from "pg";
-import type { CardPool, GameState } from "@/engine";
+import type { CardPool, GameEvent, GameState } from "@/engine";
 import type { HumorLevel } from "@/lib/game-config";
+import { recordHistory } from "./history";
 
 /**
  * Acesso ao banco para o servidor do jogo. Usa conexão direta com o Postgres
@@ -36,6 +37,8 @@ export interface Store {
   silentPlayers(roomId: string, ms: number): Promise<string[]>;
   loadCards(level: HumorLevel, categorySlugs: string[]): Promise<CardPool>;
   ensureAuthUser(id: string): Promise<void>;
+  /** Partidas, rodadas, respostas e placar final (para estatísticas). */
+  recordHistory(roomId: string, state: GameState, events: GameEvent[]): Promise<void>;
 }
 
 const UNIQUE_VIOLATION = "23505";
@@ -175,6 +178,8 @@ export function createPgStore(pool: pg.Pool): Store {
         white: white.rows.map((r) => ({ id: r.id, text: r.text, humorLevel: r.humor_level })),
       };
     },
+
+    recordHistory: (roomId, state, events) => recordHistory(pool, roomId, state, events),
 
     async ensureAuthUser(id) {
       await pool.query("insert into auth.users (id, is_anonymous) values ($1, true) on conflict (id) do nothing", [id]);
