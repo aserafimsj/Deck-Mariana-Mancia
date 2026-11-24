@@ -29,9 +29,12 @@ export function PlayerList({ players, meId, showSubmitted, onKick }: { players: 
   return (
     <ul className="grid gap-2" aria-label="Jogadores">
       {players.map((p) => (
-        <li key={p.id} className={`flex min-w-0 items-center gap-3 rounded-xl bg-breu-2 px-3 py-2.5 ${p.online ? "" : "opacity-50"}`}>
-          <Avatar name={p.nickname} seat={p.seat} />
-          <span className="min-w-0 flex-1 truncate font-extrabold">
+        <li key={p.id} className="flex min-w-0 items-center gap-3 rounded-xl bg-breu-2 px-3 py-2.5">
+          {/* Offline: só o avatar fica apagado; o texto mantém contraste legível. */}
+          <span className={p.online ? "" : "opacity-40 grayscale"}>
+            <Avatar name={p.nickname} seat={p.seat} />
+          </span>
+          <span className={`min-w-0 flex-1 truncate font-extrabold ${p.online ? "" : "text-texto-2"}`}>
             {p.nickname}
             {p.id === meId && <span className="font-normal text-texto-2"> (você)</span>}
           </span>

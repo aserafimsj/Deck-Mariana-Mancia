@@ -2,7 +2,7 @@
 
 Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cartas resposta e um juiz rotativo. Joga no celular, sem cadastro, entrando por código ou link.
 
-**Status:** Etapas 3, 4 e 6 concluídas. Etapa 5 (multiplayer e telas) jogável localmente; falta publicar no Supabase/Vercel.
+**Status:** Etapas 3, 4, 6 e 7 concluídas. Etapa 5 (multiplayer e telas) jogável localmente; falta publicar no Supabase/Vercel.
 
 - [Plano de desenvolvimento](docs/PLANO_DE_DESENVOLVIMENTO.md)
 - [Identidade visual e protótipo](docs/identidade-visual/index.html)
@@ -17,6 +17,8 @@ Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cart
 | Identidade visual (cores, fontes, cartas, botões) | Componentes prontos em `src/components`. |
 | Banco de dados | Esquema completo e regras de acesso (RLS). |
 | Cartas | 107 perguntas e 308 respostas originais nos 4 níveis, em `content/baralho-base.json`. |
+| Painel administrativo | `/admin`: números da semana, cartas que mais vencem e as encalhadas, gerenciar cartas (criar, editar, arquivar, importar CSV), categorias, partidas e equipe. Editor cuida do conteúdo; admin também apaga e gerencia a equipe. |
+| Histórico | Cada partida, rodada, resposta e placar final fica gravado para as estatísticas. |
 | Gravação segura do estado da partida | Função atômica com controle de versão e proteção contra ação duplicada. |
 | Login | Anônimo pelo Supabase (sem cadastro). Em desenvolvimento, login local de teste. |
 | Experiência | Sons (sem arquivos, gerados na hora), vibração, avisos de rodada, confete, tela sempre acesa durante a partida, botão principal sempre visível, anúncios para leitor de tela. Tudo respeita as Configurações. |
@@ -24,7 +26,7 @@ Nome provisório. Party game digital de humor coletivo: uma carta pergunta, cart
 | Qualidade | Lighthouse mobile: desempenho 92–100, acessibilidade 100. Auditoria automática de acessibilidade (axe) durante a partida. |
 | Motor do jogo | Regras completas em `src/engine/` (função pura, determinística): rodadas, juiz, tempo, desconexões, anfitrião, pausa. Cada jogador recebe só o que pode ver. |
 | Servidor do jogo | Rotas em `src/app/api/rooms`: valida tudo, grava com controle de versão, repete sozinho se duas ações chegam juntas, ignora reenvios e avisa os celulares em tempo real. |
-| Testes e CI | 115 testes unitários (incluindo partidas simuladas e o baralho), 47 de banco, 11 ponta a ponta (com auditoria de acessibilidade). GitHub Actions roda tudo a cada push. |
+| Testes e CI | 124 testes unitários, 59 de banco, 14 ponta a ponta (partida com 3 navegadores, painel, auditoria de acessibilidade). GitHub Actions roda tudo a cada push. |
 
 ## Tecnologias
 
@@ -112,7 +114,9 @@ insert into public.user_roles (user_id, role)
 select id, 'admin' from auth.users where email = 'voce@exemplo.com';
 ```
 
-O painel administrativo chega na Etapa 7.
+Depois, entre em `/admin` com esse e-mail: você recebe um link de acesso (sem senha). Novos membros da equipe são adicionados pela tela Equipe, desde que a conta já exista no Supabase.
+
+Para o link funcionar, cadastre em **Authentication > URL Configuration** o endereço do site (ex.: `https://seu-dominio/admin`) como URL de redirecionamento.
 
 ## Cartas
 
@@ -127,7 +131,7 @@ pnpm cartas
 pnpm test
 ```
 
-Na Etapa 7, o painel administrativo passa a ser o jeito principal de gerenciar cartas, sem mexer em código.
+No dia a dia, use o painel (`/admin` > Cartas): criar, editar, arquivar e importar CSV, sem mexer em código. O JSON continua sendo o baralho inicial de cada banco novo.
 
 ## Testes
 

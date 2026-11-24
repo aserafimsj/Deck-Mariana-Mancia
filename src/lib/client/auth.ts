@@ -47,3 +47,41 @@ export function forgetSession() {
     /* nada a fazer */
   }
 }
+
+/**
+ * Token da sessão atual, SEM criar login anônimo (usado no painel: admin entra por e-mail).
+ * null = ninguém logado neste navegador.
+ */
+export async function getExistingToken(): Promise<string | null> {
+  if (DEV_AUTH) {
+    try {
+      return window.localStorage.getItem(DEV_KEY);
+    } catch {
+      return null;
+    }
+  }
+  const { data } = await getBrowserSupabase().auth.getSession();
+  return data.session?.access_token ?? null;
+}
+
+/** Login local de administrador de teste (só desenvolvimento). */
+export async function devAdminLogin(): Promise<void> {
+  const res = await fetch("/api/dev/session?admin=1", { method: "POST" });
+  if (!res.ok) throw new Error("Login de teste indisponível.");
+  const { token } = (await res.json()) as { token: string };
+  window.localStorage.setItem(DEV_KEY, token);
+}
+
+/** Login de administrador por link mágico no e-mail. Só contas já cadastradas no Supabase. */
+export async function sendAdminMagicLink(email: string): Promise<void> {
+  const { error } = await getBrowserSupabase().auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: `${window.location.origin}/admin`, shouldCreateUser: false },
+  });
+  if (error) throw new Error("Não conseguimos enviar o link. Confere o e-mail ou fala com um administrador.");
+}
+
+export async function signOut(): Promise<void> {
+  forgetSession();
+  if (!DEV_AUTH) await getBrowserSupabase().auth.signOut();
+}

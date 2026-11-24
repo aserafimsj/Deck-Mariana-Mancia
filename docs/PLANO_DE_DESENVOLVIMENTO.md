@@ -1,6 +1,6 @@
 # PLANO DE DESENVOLVIMENTO — SCRAGBADUM!
 
-> Versão 1.6 · 23/11/2026 · Nome provisório: **Scragbadum!** · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 6 concluída (polimento); 5 aguarda publicação
+> Versão 1.7 · 23/11/2026 · Nome provisório: **Scragbadum!** · Status: **aprovado com decisões D1, D2 e D10 registradas** · Etapa atual: 7 concluída (painel administrativo); 5 aguarda publicação
 > Papéis nesta etapa: Product Manager + Arquiteto de Software
 > Nenhuma linha de código de produto foi escrita. A implementação começa depois da sua aprovação.
 
@@ -502,7 +502,7 @@ Cada etapa termina com uma **entrega verificável** e sua validação antes de s
 | **4. Motor de jogo** | `src/engine/` completo: tipos, regras, projeção por jogador, baralho, rodízio de juiz, temporizador, desconexões, anfitrião, pausa/retomada; testes unitários + simulação de partidas aleatórias | Cobertura 99% das linhas do motor; zero vazamento em todas as visões testadas; 2.000 partidas caóticas sem estado inválido | ✅ concluída (23/11) |
 | **5. Multiplayer + telas do jogo** | API de salas/ações/visão, Broadcast + Presence, reconexão; telas inicial, criar, entrar, espera, jogo, revelação, placar, resultado, como jogar, configurações | Partida completa entre 4 navegadores no E2E; teste manual com celulares | 🔶 jogável localmente (23/11); falta publicar (tokens Supabase/Vercel) |
 | **6. Polimento de experiência** | Sons sintetizados (incl. "ba-dum-tss" do vencedor), vibração, avisos de rodada, confete, tela sempre acesa durante a partida, barra de ação fixa no rodapé, páginas de erro/404/offline, service worker, instalar app, contraste AA, anúncios para leitor de tela | Lighthouse mobile: desempenho 92–100 e acessibilidade 100 em todas as telas; axe sem violações WCAG A/AA em sala de espera, mão, julgamento e resultado | ✅ concluída (23/11) |
-| **7. Painel administrativo** | Login admin, CRUD de cartas e categorias, importação CSV, partidas, estatísticas, gestão de admins | Admin cadastra carta e ela aparece na partida seguinte; jogador comum não acessa `/admin` (testado) | 4–6 dias |
+| **7. Painel administrativo** | Login por link no e-mail; cartas (criar, editar, arquivar, apagar só se nunca usada, importar CSV), categorias, partidas, estatísticas (incl. cartas que mais vencem e as que nunca vencem), equipe com papéis admin/editor; histórico gravado a cada rodada | Carta criada no painel entra na partida seguinte (testado); jogador comum recebe 401/403 na API e tela de acesso restrito (testado); axe sem violações nas telas do painel | ✅ concluída (24/11) |
 | **8. Testes e playtests** | Carga (dezenas de salas simultâneas), desconexões, segurança (revisão + testes), 3 rodadas de playtest com usuários reais | Critérios da seção 7.3 atendidos; bugs críticos zerados | 5–7 dias (+ agenda dos playtests) |
 | **9. Publicação** | Supabase e Vercel de produção, domínio, variáveis, backups, monitoramento, documentação final | App público em domínio próprio; README completo; runbook de incidentes | 2–3 dias |
 
