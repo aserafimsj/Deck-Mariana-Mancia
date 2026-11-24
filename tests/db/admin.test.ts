@@ -20,7 +20,7 @@ describe.skipIf(!ADMIN_URL)("painel administrativo (banco real)", () => {
   let admin: AdminStore;
   let deps: Deps;
   let editorId: string;
-  let clock = Date.now();
+  const clock = Date.now();
 
   beforeAll(async () => {
     db = await createTestDb();
